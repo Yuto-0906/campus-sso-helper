@@ -1,0 +1,37 @@
+{
+  "manifest_version": 3,
+  "name": "Waseda Moodle Login Helper",
+  "short_name": "Waseda Login Helper",
+  "description": "パスワードを保存せず，Waseda MoodleのMicrosoft SSOを補助します。",
+  "version": "1.1.0",
+  "permissions": ["storage"],
+  "host_permissions": [
+    "https://wsdmoodle.waseda.jp/*",
+    "https://login.microsoftonline.com/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["https://wsdmoodle.waseda.jp/*"],
+      "js": ["core.js", "moodle.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://login.microsoftonline.com/*"],
+      "js": ["core.js", "microsoft.js"],
+      "run_at": "document_start"
+    }
+  ],
+  "action": {
+    "default_title": "Waseda Moodle Login Helper",
+    "default_popup": "popup/popup.html"
+  },
+  "icons": {
+    "128": "icons/icon.svg",
+    "512": "icons/icon.svg"
+  },
+  "browser_specific_settings": {
+    "safari": {
+      "strict_min_version": "15.4"
+    }
+  }
+}

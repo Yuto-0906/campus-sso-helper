@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Waseda Moodle Login Helper</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <main>
+      <header>
+        <img src="../icons/icon.svg" alt="" />
+        <div>
+          <h1>Waseda Moodle</h1>
+          <p>Login Helper</p>
+        </div>
+      </header>
+
+      <form id="settings-form">
+        <label class="toggle-row">
+          <span>ログイン補助</span>
+          <input id="enabled" type="checkbox" />
+        </label>
+
+        <label>
+          Wasedaメールアドレス
+          <input id="user-id" type="email" autocomplete="username" placeholder="example@ruri.waseda.jp" required />
+        </label>
+
+        <button class="primary" type="submit">設定を保存</button>
+      </form>
+
+      <p id="status" role="status" aria-live="polite"></p>
+
+      <div class="actions">
+        <button id="open-moodle" type="button">Waseda Moodleを開く</button>
+        <button id="clear-settings" class="danger" type="button">保存データを削除</button>
+      </div>
+
+      <section class="notice" aria-label="プライバシー情報">
+        <strong>パスワードは保存・入力しません</strong>
+        <p>保存するのはメールアドレスと設定だけです。パスワード入力はSafariまたはiCloudキーチェーンを利用してください。</p>
+      </section>
+      <p class="disclaimer">本拡張機能は早稲田大学およびMicrosoftの公式アプリではありません。</p>
+    </main>
+    <script src="../core.js"></script>
+    <script src="popup.js"></script>
+  </body>
+</html>

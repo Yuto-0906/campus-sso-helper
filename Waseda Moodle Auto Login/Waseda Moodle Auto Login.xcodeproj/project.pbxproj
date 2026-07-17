@@ -1,0 +1,626 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		D19A40AB300A43FD0063AF71 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D19A40AA300A43FD0063AF71 /* AppDelegate.swift */; };
+		D19A40AF300A43FD0063AF71 /* Main.html in Resources */ = {isa = PBXBuildFile; fileRef = D19A40AD300A43FD0063AF71 /* Main.html */; };
+		D19A40B1300A43FD0063AF71 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = D19A40B0300A43FD0063AF71 /* Icon.png */; };
+		D19A40B3300A43FD0063AF71 /* Style.css in Resources */ = {isa = PBXBuildFile; fileRef = D19A40B2300A43FD0063AF71 /* Style.css */; };
+		D19A40B5300A43FD0063AF71 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D19A40B4300A43FD0063AF71 /* SceneDelegate.swift */; };
+		D19A40B7300A43FD0063AF71 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D19A40B6300A43FD0063AF71 /* ViewController.swift */; };
+		D19A40BA300A43FD0063AF71 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D19A40B8300A43FD0063AF71 /* LaunchScreen.storyboard */; };
+		D19A40BD300A43FD0063AF71 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D19A40BB300A43FD0063AF71 /* Main.storyboard */; };
+		D19A40C5300A43FE0063AF71 /* Waseda Moodle Auto Login Extension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = D19A40C4300A43FE0063AF71 /* Waseda Moodle Auto Login Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		D19A40CA300A43FE0063AF71 /* SafariWebExtensionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D19A40C9300A43FE0063AF71 /* SafariWebExtensionHandler.swift */; };
+		D19A40CC300A43FE0063AF71 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D19A40BE300A43FE0063AF71 /* Assets.xcassets */; };
+		D19A40DD300A43FE0063AF71 /* popup in Resources */ = {isa = PBXBuildFile; fileRef = D19A40D7300A43FE0063AF71 /* popup */; };
+		D19A40DE300A43FE0063AF71 /* core.js in Resources */ = {isa = PBXBuildFile; fileRef = D19A40D8300A43FE0063AF71 /* core.js */; };
+		D19A40DF300A43FE0063AF71 /* microsoft.js in Resources */ = {isa = PBXBuildFile; fileRef = D19A40D9300A43FE0063AF71 /* microsoft.js */; };
+		D19A40E0300A43FE0063AF71 /* moodle.js in Resources */ = {isa = PBXBuildFile; fileRef = D19A40DA300A43FE0063AF71 /* moodle.js */; };
+		D19A40E1300A43FE0063AF71 /* icons in Resources */ = {isa = PBXBuildFile; fileRef = D19A40DB300A43FE0063AF71 /* icons */; };
+		D19A40E2300A43FE0063AF71 /* manifest.json in Resources */ = {isa = PBXBuildFile; fileRef = D19A40DC300A43FE0063AF71 /* manifest.json */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		D19A40C6300A43FE0063AF71 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D19A409F300A43FC0063AF71 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D19A40C3300A43FE0063AF71;
+			remoteInfo = "Waseda Moodle Auto Login Extension";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		D19A40D2300A43FE0063AF71 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				D19A40C5300A43FE0063AF71 /* Waseda Moodle Auto Login Extension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		D19A40A7300A43FD0063AF71 /* Waseda Moodle Auto Login.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Waseda Moodle Auto Login.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D19A40AA300A43FD0063AF71 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		D19A40AE300A43FD0063AF71 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = Base; path = Base.lproj/Main.html; sourceTree = "<group>"; };
+		D19A40B0300A43FD0063AF71 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
+		D19A40B2300A43FD0063AF71 /* Style.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; path = Style.css; sourceTree = "<group>"; };
+		D19A40B4300A43FD0063AF71 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		D19A40B6300A43FD0063AF71 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		D19A40B9300A43FD0063AF71 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		D19A40BC300A43FD0063AF71 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		D19A40BE300A43FE0063AF71 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		D19A40BF300A43FE0063AF71 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D19A40C4300A43FE0063AF71 /* Waseda Moodle Auto Login Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Waseda Moodle Auto Login Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D19A40C9300A43FE0063AF71 /* SafariWebExtensionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafariWebExtensionHandler.swift; sourceTree = "<group>"; };
+		D19A40CB300A43FE0063AF71 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D19A40D7300A43FE0063AF71 /* popup */ = {isa = PBXFileReference; lastKnownFileType = folder; name = popup; path = Resources/popup; sourceTree = "<group>"; };
+		D19A40D8300A43FE0063AF71 /* core.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = core.js; path = Resources/core.js; sourceTree = "<group>"; };
+		D19A40D9300A43FE0063AF71 /* microsoft.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = microsoft.js; path = Resources/microsoft.js; sourceTree = "<group>"; };
+		D19A40DA300A43FE0063AF71 /* moodle.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = moodle.js; path = Resources/moodle.js; sourceTree = "<group>"; };
+		D19A40DB300A43FE0063AF71 /* icons */ = {isa = PBXFileReference; lastKnownFileType = folder; name = icons; path = Resources/icons; sourceTree = "<group>"; };
+		D19A40DC300A43FE0063AF71 /* manifest.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = manifest.json; path = Resources/manifest.json; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D19A40A4300A43FD0063AF71 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D19A40C1300A43FE0063AF71 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		D19A409E300A43FC0063AF71 = {
+			isa = PBXGroup;
+			children = (
+				D19A40A9300A43FD0063AF71 /* Waseda Moodle Auto Login */,
+				D19A40C8300A43FE0063AF71 /* Waseda Moodle Auto Login Extension */,
+				D19A40A8300A43FD0063AF71 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		D19A40A8300A43FD0063AF71 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D19A40A7300A43FD0063AF71 /* Waseda Moodle Auto Login.app */,
+				D19A40C4300A43FE0063AF71 /* Waseda Moodle Auto Login Extension.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D19A40A9300A43FD0063AF71 /* Waseda Moodle Auto Login */ = {
+			isa = PBXGroup;
+			children = (
+				D19A40AA300A43FD0063AF71 /* AppDelegate.swift */,
+				D19A40B4300A43FD0063AF71 /* SceneDelegate.swift */,
+				D19A40B6300A43FD0063AF71 /* ViewController.swift */,
+				D19A40B8300A43FD0063AF71 /* LaunchScreen.storyboard */,
+				D19A40BB300A43FD0063AF71 /* Main.storyboard */,
+				D19A40BE300A43FE0063AF71 /* Assets.xcassets */,
+				D19A40BF300A43FE0063AF71 /* Info.plist */,
+				D19A40AC300A43FD0063AF71 /* Resources */,
+			);
+			path = "Waseda Moodle Auto Login";
+			sourceTree = "<group>";
+		};
+		D19A40AC300A43FD0063AF71 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				D19A40AD300A43FD0063AF71 /* Main.html */,
+				D19A40B0300A43FD0063AF71 /* Icon.png */,
+				D19A40B2300A43FD0063AF71 /* Style.css */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		D19A40C8300A43FE0063AF71 /* Waseda Moodle Auto Login Extension */ = {
+			isa = PBXGroup;
+			children = (
+				D19A40D6300A43FE0063AF71 /* Resources */,
+				D19A40C9300A43FE0063AF71 /* SafariWebExtensionHandler.swift */,
+				D19A40CB300A43FE0063AF71 /* Info.plist */,
+			);
+			path = "Waseda Moodle Auto Login Extension";
+			sourceTree = "<group>";
+		};
+		D19A40D6300A43FE0063AF71 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				D19A40D7300A43FE0063AF71 /* popup */,
+				D19A40D8300A43FE0063AF71 /* core.js */,
+				D19A40D9300A43FE0063AF71 /* microsoft.js */,
+				D19A40DA300A43FE0063AF71 /* moodle.js */,
+				D19A40DB300A43FE0063AF71 /* icons */,
+				D19A40DC300A43FE0063AF71 /* manifest.json */,
+			);
+			name = Resources;
+			path = "Waseda Moodle Auto Login Extension";
+			sourceTree = SOURCE_ROOT;
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		D19A40A6300A43FD0063AF71 /* Waseda Moodle Auto Login */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D19A40D3300A43FE0063AF71 /* Build configuration list for PBXNativeTarget "Waseda Moodle Auto Login" */;
+			buildPhases = (
+				D19A40A3300A43FD0063AF71 /* Sources */,
+				D19A40A4300A43FD0063AF71 /* Frameworks */,
+				D19A40A5300A43FD0063AF71 /* Resources */,
+				D19A40D2300A43FE0063AF71 /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D19A40C7300A43FE0063AF71 /* PBXTargetDependency */,
+			);
+			name = "Waseda Moodle Auto Login";
+			packageProductDependencies = (
+			);
+			productName = "Waseda Moodle Auto Login";
+			productReference = D19A40A7300A43FD0063AF71 /* Waseda Moodle Auto Login.app */;
+			productType = "com.apple.product-type.application";
+		};
+		D19A40C3300A43FE0063AF71 /* Waseda Moodle Auto Login Extension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D19A40CF300A43FE0063AF71 /* Build configuration list for PBXNativeTarget "Waseda Moodle Auto Login Extension" */;
+			buildPhases = (
+				D19A40C0300A43FE0063AF71 /* Sources */,
+				D19A40C1300A43FE0063AF71 /* Frameworks */,
+				D19A40C2300A43FE0063AF71 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Waseda Moodle Auto Login Extension";
+			packageProductDependencies = (
+			);
+			productName = "Waseda Moodle Auto Login Extension";
+			productReference = D19A40C4300A43FE0063AF71 /* Waseda Moodle Auto Login Extension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D19A409F300A43FC0063AF71 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 2640;
+				LastUpgradeCheck = 2640;
+				TargetAttributes = {
+					D19A40A6300A43FD0063AF71 = {
+						CreatedOnToolsVersion = 26.4.1;
+					};
+					D19A40C3300A43FE0063AF71 = {
+						CreatedOnToolsVersion = 26.4.1;
+					};
+				};
+			};
+			buildConfigurationList = D19A40A2300A43FC0063AF71 /* Build configuration list for PBXProject "Waseda Moodle Auto Login" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = D19A409E300A43FC0063AF71;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = D19A40A8300A43FD0063AF71 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D19A40A6300A43FD0063AF71 /* Waseda Moodle Auto Login */,
+				D19A40C3300A43FE0063AF71 /* Waseda Moodle Auto Login Extension */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		D19A40A5300A43FD0063AF71 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D19A40B1300A43FD0063AF71 /* Icon.png in Resources */,
+				D19A40BD300A43FD0063AF71 /* Main.storyboard in Resources */,
+				D19A40BA300A43FD0063AF71 /* LaunchScreen.storyboard in Resources */,
+				D19A40AF300A43FD0063AF71 /* Main.html in Resources */,
+				D19A40CC300A43FE0063AF71 /* Assets.xcassets in Resources */,
+				D19A40B3300A43FD0063AF71 /* Style.css in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D19A40C2300A43FE0063AF71 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D19A40E0300A43FE0063AF71 /* moodle.js in Resources */,
+				D19A40DF300A43FE0063AF71 /* microsoft.js in Resources */,
+				D19A40DD300A43FE0063AF71 /* popup in Resources */,
+				D19A40E1300A43FE0063AF71 /* icons in Resources */,
+				D19A40E2300A43FE0063AF71 /* manifest.json in Resources */,
+				D19A40DE300A43FE0063AF71 /* core.js in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D19A40A3300A43FD0063AF71 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D19A40B7300A43FD0063AF71 /* ViewController.swift in Sources */,
+				D19A40AB300A43FD0063AF71 /* AppDelegate.swift in Sources */,
+				D19A40B5300A43FD0063AF71 /* SceneDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D19A40C0300A43FE0063AF71 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D19A40CA300A43FE0063AF71 /* SafariWebExtensionHandler.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		D19A40C7300A43FE0063AF71 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D19A40C3300A43FE0063AF71 /* Waseda Moodle Auto Login Extension */;
+			targetProxy = D19A40C6300A43FE0063AF71 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		D19A40AD300A43FD0063AF71 /* Main.html */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D19A40AE300A43FD0063AF71 /* Base */,
+			);
+			name = Main.html;
+			sourceTree = "<group>";
+		};
+		D19A40B8300A43FD0063AF71 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D19A40B9300A43FD0063AF71 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		D19A40BB300A43FD0063AF71 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D19A40BC300A43FD0063AF71 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		D19A40CD300A43FE0063AF71 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.4;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		D19A40CE300A43FE0063AF71 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.4;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		D19A40D0300A43FE0063AF71 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = BBV3F75BKG;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Waseda Moodle Auto Login Extension/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Waseda Moodle Login Helper";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.1.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = jp.yuto.wasedamoodleautologin.Extension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		D19A40D1300A43FE0063AF71 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = BBV3F75BKG;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Waseda Moodle Auto Login Extension/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Waseda Moodle Login Helper";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.1.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = jp.yuto.wasedamoodleautologin.Extension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		D19A40D4300A43FE0063AF71 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = BBV3F75BKG;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Waseda Moodle Auto Login/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Waseda Moodle Login Helper";
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.1.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+					"-framework",
+					WebKit,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = jp.yuto.wasedamoodleautologin;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		D19A40D5300A43FE0063AF71 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = BBV3F75BKG;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Waseda Moodle Auto Login/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Waseda Moodle Login Helper";
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.1.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+					"-framework",
+					WebKit,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = jp.yuto.wasedamoodleautologin;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		D19A40A2300A43FC0063AF71 /* Build configuration list for PBXProject "Waseda Moodle Auto Login" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D19A40CD300A43FE0063AF71 /* Debug */,
+				D19A40CE300A43FE0063AF71 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D19A40CF300A43FE0063AF71 /* Build configuration list for PBXNativeTarget "Waseda Moodle Auto Login Extension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D19A40D0300A43FE0063AF71 /* Debug */,
+				D19A40D1300A43FE0063AF71 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D19A40D3300A43FE0063AF71 /* Build configuration list for PBXNativeTarget "Waseda Moodle Auto Login" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D19A40D4300A43FE0063AF71 /* Debug */,
+				D19A40D5300A43FE0063AF71 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = D19A409F300A43FC0063AF71 /* Project object */;
+}

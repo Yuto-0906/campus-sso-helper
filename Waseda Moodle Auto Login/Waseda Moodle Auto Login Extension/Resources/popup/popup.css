@@ -1,0 +1,177 @@
+:root {
+  color-scheme: light dark;
+  font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  width: min(360px, 100vw);
+  margin: 0;
+  background: #f4f6fb;
+  color: #17213a;
+}
+
+main {
+  padding: 18px;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+header img {
+  width: 44px;
+  height: 44px;
+}
+
+h1,
+header p {
+  margin: 0;
+}
+
+h1 {
+  font-size: 18px;
+}
+
+header p {
+  margin-top: 2px;
+  color: #66708a;
+  font-size: 13px;
+}
+
+form,
+.actions {
+  display: grid;
+  gap: 12px;
+}
+
+label {
+  display: grid;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.toggle-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+input[type="email"] {
+  width: 100%;
+  border: 1px solid #c7cede;
+  border-radius: 10px;
+  padding: 11px 12px;
+  background: #fff;
+  color: #17213a;
+  font: inherit;
+  font-weight: 400;
+}
+
+input[type="checkbox"] {
+  width: 22px;
+  height: 22px;
+  accent-color: #3857d6;
+}
+
+button {
+  min-height: 42px;
+  border: 1px solid #c7cede;
+  border-radius: 10px;
+  padding: 9px 12px;
+  background: #fff;
+  color: #17213a;
+  font: inherit;
+  font-weight: 600;
+}
+
+button:active {
+  transform: scale(0.99);
+}
+
+.primary {
+  border-color: #3857d6;
+  background: #3857d6;
+  color: #fff;
+}
+
+.danger {
+  color: #b42318;
+}
+
+#status,
+.notice,
+.disclaimer {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.notice p,
+.disclaimer {
+  color: #66708a;
+}
+
+#status {
+  min-height: 18px;
+  margin: 10px 0;
+  color: #236b3d;
+}
+
+#status.error {
+  color: #b42318;
+}
+
+.actions {
+  margin-top: 4px;
+}
+
+.notice {
+  margin-top: 14px;
+  border: 1px solid #c7cede;
+  border-radius: 10px;
+  padding: 12px;
+}
+
+.notice strong {
+  font-size: 13px;
+}
+
+.notice p {
+  margin: 5px 0 0;
+}
+
+.disclaimer {
+  margin: 10px 0 0;
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    background: #161a24;
+    color: #f3f5fa;
+  }
+
+  header p,
+  .notice p,
+  .disclaimer {
+    color: #aeb7cc;
+  }
+
+  input[type="email"],
+  button {
+    border-color: #3c455b;
+    background: #222838;
+    color: #f3f5fa;
+  }
+
+  .notice {
+    border-color: #3c455b;
+  }
+}
