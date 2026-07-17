@@ -5,15 +5,14 @@
   const api = globalThis.browser;
   if (!core || !api?.storage?.local) return;
 
-  await core.purgeLegacySecrets(api.storage.local);
-
-  const { enabled, userId, flowStartedAt } = await api.storage.local.get([
+  const { enabled, userId, password, flowStartedAt } = await api.storage.local.get([
     core.STORAGE_KEYS.enabled,
     core.STORAGE_KEYS.userId,
+    core.STORAGE_KEYS.password,
     core.STORAGE_KEYS.flowStartedAt,
   ]);
 
-  if (!enabled || !userId) return;
+  if (!enabled || !userId || !password) return;
 
   const isLoginPage = location.pathname === "/login/index.php" || location.pathname === "/login/";
   if (isLoginPage) {

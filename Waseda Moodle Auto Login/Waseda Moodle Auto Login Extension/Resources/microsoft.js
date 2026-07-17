@@ -5,15 +5,14 @@
   const api = globalThis.browser;
   if (!core || !api?.storage?.local) return;
 
-  await core.purgeLegacySecrets(api.storage.local);
-
   const settings = await api.storage.local.get([
     core.STORAGE_KEYS.enabled,
     core.STORAGE_KEYS.userId,
+    core.STORAGE_KEYS.password,
     core.STORAGE_KEYS.flowStartedAt,
   ]);
 
-  if (!settings.enabled || !settings.userId) return;
+  if (!settings.enabled || !settings.userId || !settings.password) return;
   if (!core.isFlowActive(settings.flowStartedAt)) {
     await api.storage.local.remove(core.STORAGE_KEYS.flowStartedAt);
     return;
@@ -59,6 +58,8 @@
     return {
       accountTile,
       otherAccountTile: document.getElementById("otherTile"),
+      passwordInput: document.querySelector('input[name="passwd"]'),
+      loginInput: document.querySelector('input[name="login"]'),
       emailInput: document.querySelector('input[name="loginfmt"]'),
       submitButton: document.getElementById("idSIButton9"),
       kmsiForm: document.querySelector('form[action*="/kmsi"]'),
@@ -68,26 +69,36 @@
 
   function proceed() {
     const state = readPageState();
+    const step = core.classifyMicrosoftPage(state);
 
-    if (state.accountTile) {
-      scheduleClick("account", state.accountTile);
+    if (step === "account") {
+      scheduleClick(step, state.accountTile);
       return;
     }
 
-    if (state.emailInput && state.submitButton) {
-      scheduleClick("email", state.submitButton, () => setInputValue(state.emailInput, settings.userId));
+    if (step === "password") {
+      scheduleClick(step, state.submitButton, () => {
+        if (state.loginInput) setInputValue(state.loginInput, settings.userId);
+        if (state.emailInput) setInputValue(state.emailInput, settings.userId);
+        setInputValue(state.passwordInput, settings.password);
+      });
       return;
     }
 
-    if (state.otherAccountTile) {
-      scheduleClick("otherAccount", state.otherAccountTile);
+    if (step === "email") {
+      scheduleClick(step, state.submitButton, () => setInputValue(state.emailInput, settings.userId));
       return;
     }
 
-    if (state.kmsiForm && state.kmsiBackButton) {
+    if (step === "otherAccount") {
+      scheduleClick(step, state.otherAccountTile);
+      return;
+    }
+
+    if (step === "kmsi") {
       api.storage.local.remove(core.STORAGE_KEYS.flowStartedAt);
       sessionStorage.removeItem(tabFlowKey);
-      scheduleClick("kmsi", state.kmsiBackButton);
+      scheduleClick(step, state.kmsiBackButton);
     }
   }
 

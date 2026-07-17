@@ -18,7 +18,7 @@
 
       <form id="settings-form">
         <label class="toggle-row">
-          <span>ログイン補助</span>
+          <span>自動ログイン</span>
           <input id="enabled" type="checkbox" />
         </label>
 
@@ -27,6 +27,12 @@
           <input id="user-id" type="email" autocomplete="username" placeholder="example@ruri.waseda.jp" required />
         </label>
 
+        <label>
+          パスワード
+          <input id="password" type="password" autocomplete="current-password" placeholder="変更するときだけ入力" />
+        </label>
+        <p id="password-note" class="note"></p>
+
         <button class="primary" type="submit">設定を保存</button>
       </form>
 
@@ -34,12 +40,12 @@
 
       <div class="actions">
         <button id="open-moodle" type="button">Waseda Moodleを開く</button>
-        <button id="clear-settings" class="danger" type="button">保存データを削除</button>
+        <button id="clear-settings" class="danger" type="button">資格情報を削除</button>
       </div>
 
-      <section class="notice" aria-label="プライバシー情報">
-        <strong>パスワードは保存・入力しません</strong>
-        <p>保存するのはメールアドレスと設定だけです。パスワード入力はSafariまたはiCloudキーチェーンを利用してください。</p>
+      <section class="notice" aria-label="セキュリティ情報">
+        <strong>パスワードの保存について</strong>
+        <p>資格情報はこのSafari拡張機能のローカル領域に保存され，Microsoftのログイン画面への自動入力だけに使用されます。</p>
       </section>
       <p class="disclaimer">本拡張機能は早稲田大学およびMicrosoftの公式アプリではありません。</p>
     </main>

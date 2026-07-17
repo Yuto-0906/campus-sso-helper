@@ -10,6 +10,7 @@
   const STORAGE_KEYS = Object.freeze({
     enabled: "enabled",
     userId: "userId",
+    password: "password",
     flowStartedAt: "flowStartedAt",
   });
   const MOODLE_HOME_URL = "https://wsdmoodle.waseda.jp/my/";
@@ -35,8 +36,13 @@
     return Number.isFinite(timestamp) && timestamp > 0 && now - timestamp >= 0 && now - timestamp <= FLOW_TIMEOUT_MS;
   }
 
-  async function purgeLegacySecrets(storage) {
-    if (storage?.remove) await storage.remove("password");
+  function classifyMicrosoftPage(state) {
+    if (state.accountTile) return "account";
+    if (state.passwordInput && state.submitButton) return "password";
+    if (state.emailInput && state.submitButton) return "email";
+    if (state.otherAccountTile) return "otherAccount";
+    if (state.kmsiForm && state.kmsiBackButton) return "kmsi";
+    return null;
   }
 
   return Object.freeze({
@@ -44,8 +50,8 @@
     STORAGE_KEYS,
     MOODLE_HOME_URL,
     MOODLE_SAML_LOGIN_URL,
+    classifyMicrosoftPage,
     isFlowActive,
     isWasedaSamlUrl,
-    purgeLegacySecrets,
   });
 });

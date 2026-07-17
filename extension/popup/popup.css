@@ -64,7 +64,8 @@ label {
   align-items: center;
 }
 
-input[type="email"] {
+input[type="email"],
+input[type="password"] {
   width: 100%;
   border: 1px solid #c7cede;
   border-radius: 10px;
@@ -106,6 +107,7 @@ button:active {
   color: #b42318;
 }
 
+.note,
 #status,
 .notice,
 .disclaimer {
@@ -114,6 +116,7 @@ button:active {
   line-height: 1.5;
 }
 
+.note,
 .notice p,
 .disclaimer {
   color: #66708a;
@@ -159,12 +162,14 @@ button:active {
   }
 
   header p,
+  .note,
   .notice p,
   .disclaimer {
     color: #aeb7cc;
   }
 
   input[type="email"],
+  input[type="password"],
   button {
     border-color: #3c455b;
     background: #222838;
