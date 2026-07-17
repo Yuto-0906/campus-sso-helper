@@ -2,7 +2,7 @@
 
 最終更新日：2026年7月17日
 
-Waseda Moodle Login Helper（以下「本アプリ」という）は，Waseda MoodleからMicrosoft SSOへのログイン操作を補助するSafari機能拡張である。本アプリは早稲田大学およびMicrosoftの公式アプリではない。
+Campus SSO Helper（以下「本アプリ」という）は，早稲田大学が提供するWaseda MoodleからMicrosoft SSOへのログイン操作を補助するSafari機能拡張である。本アプリは早稲田大学，Moodle Pty LtdおよびMicrosoftの公式アプリではない。
 
 ## 保存する情報
 

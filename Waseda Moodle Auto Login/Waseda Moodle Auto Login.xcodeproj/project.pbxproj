@@ -452,7 +452,7 @@
 				DEVELOPMENT_TEAM = BBV3F75BKG;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Waseda Moodle Auto Login Extension/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "Waseda Moodle Login Helper";
+				INFOPLIST_KEY_CFBundleDisplayName = "Campus SSO Helper";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -460,7 +460,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.2.0;
+				MARKETING_VERSION = 1.2.1;
 				OTHER_LDFLAGS = (
 					"-framework",
 					SafariServices,
@@ -485,7 +485,7 @@
 				DEVELOPMENT_TEAM = BBV3F75BKG;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Waseda Moodle Auto Login Extension/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "Waseda Moodle Login Helper";
+				INFOPLIST_KEY_CFBundleDisplayName = "Campus SSO Helper";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -493,7 +493,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.2.0;
+				MARKETING_VERSION = 1.2.1;
 				OTHER_LDFLAGS = (
 					"-framework",
 					SafariServices,
@@ -520,7 +520,7 @@
 				DEVELOPMENT_TEAM = BBV3F75BKG;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Waseda Moodle Auto Login/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "Waseda Moodle Login Helper";
+				INFOPLIST_KEY_CFBundleDisplayName = "Campus SSO Helper";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -531,7 +531,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2.0;
+				MARKETING_VERSION = 1.2.1;
 				OTHER_LDFLAGS = (
 					"-framework",
 					SafariServices,
@@ -560,7 +560,7 @@
 				DEVELOPMENT_TEAM = BBV3F75BKG;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Waseda Moodle Auto Login/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "Waseda Moodle Login Helper";
+				INFOPLIST_KEY_CFBundleDisplayName = "Campus SSO Helper";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -571,7 +571,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2.0;
+				MARKETING_VERSION = 1.2.1;
 				OTHER_LDFLAGS = (
 					"-framework",
 					SafariServices,

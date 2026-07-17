@@ -1,4 +1,4 @@
-# Waseda Moodle Login Helper
+# Campus SSO Helper
 
 Waseda MoodleからMicrosoft SSOへのログイン操作を補助するSafari Web Extensionである。早稲田大学およびMicrosoftの公式アプリではない。
 
@@ -26,4 +26,4 @@ Waseda MoodleからMicrosoft SSOへのログイン操作を補助するSafari We
 
 ## バージョン
 
-現在のバージョンは`1.2.0`である。
+現在のバージョンは`1.2.1`である。
