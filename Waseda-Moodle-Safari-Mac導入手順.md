@@ -71,7 +71,7 @@ xcrun safari-web-extension-packager --copy-resources ./extension
 - Platform：`iOS`を含める。
 - Language：`Swift`。
 - App Name：`Campus SSO Helper`。
-- Bundle Identifier：自分だけの一意な値。例は`jp.yuto.wasedamoodleautologin`。
+- Bundle Identifier：自分だけの一意な値。例は`jp.yuto.campusssohelper`。
 
 変換後にXcodeプロジェクトが開かない場合は，生成された`.xcodeproj`をFinderから開く。
 
@@ -88,8 +88,8 @@ Xcodeのプロジェクト画面で次を設定する。
 
 Bundle Identifierが既に使われているというエラーが出た場合は，包含アプリと拡張機能の両方を一意な値へ変更する。例は次のとおりである。
 
-- 包含アプリ：`jp.yuto.wasedamoodleautologin`
-- 拡張機能：`jp.yuto.wasedamoodleautologin.Extension`
+- 包含アプリ：`jp.yuto.campusssohelper`
+- 拡張機能：`jp.yuto.campusssohelper.Extension`
 
 ## 5．iPadへインストールする
 
