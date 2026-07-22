@@ -9,21 +9,69 @@
 </head>
 <body>
     <main>
-        <img src="../Icon.png" width="112" height="112" alt="Campus SSO Helperのアイコン">
-        <h1>Campus SSO Helper</h1>
-        <p class="lead">Safari機能拡張を有効にすると，大学のMicrosoft SSOへ自動ログインします。</p>
+        <header class="hero">
+            <img class="app-icon" src="../Icon.png" width="76" height="76" alt="Campus SSO Helperのアイコン">
+            <div>
+                <p class="eyebrow">初回設定ガイド</p>
+                <h1>Campus SSO Helper</h1>
+                <p class="lead">3ステップでSafariの自動ログインを準備できます。</p>
+            </div>
+        </header>
 
-        <section>
-            <h2>利用手順</h2>
-            <ol>
-                <li>「設定」→「アプリ」→「Safari」→「機能拡張」を開く。</li>
-                <li>本機能拡張を有効にし，対象サイトへのアクセスを許可する。</li>
-                <li>Safariの機能拡張メニューでメールアドレスとパスワードを保存する。</li>
-            </ol>
+        <a class="primary-action" href="campus-sso-helper://extension-settings">
+            <span class="action-icon" aria-hidden="true">⚙︎</span>
+            Safari機能拡張の設定を開く
+        </a>
+        <p id="action-status" class="action-status" role="status" aria-live="polite"></p>
+        <p class="fallback-note">iOS 26.2以降では，Campus SSO Helperの設定画面を直接開きます。</p>
+
+        <section class="guide" aria-labelledby="guide-title">
+            <div class="section-heading">
+                <p class="eyebrow">SETUP</p>
+                <h2 id="guide-title">設定はこの順番です</h2>
+            </div>
+
+            <article class="step-card">
+                <span class="step-number">1</span>
+                <div class="step-copy">
+                    <h3>機能拡張をオンにする</h3>
+                    <p>上のボタンから設定を開き，「機能拡張を許可」をオンにします。</p>
+                    <figure class="guide-image">
+                        <img src="../SetupExtensionSettings.png" alt="Campus SSO Helperの機能拡張設定画面。機能拡張を許可するスイッチとアクセス権が表示されている。">
+                        <figcaption><span aria-hidden="true">↑</span> 画像中央の「機能拡張を許可」をオンにします。</figcaption>
+                    </figure>
+                </div>
+            </article>
+
+            <article class="step-card">
+                <span class="step-number">2</span>
+                <div class="step-copy">
+                    <h3>Webサイトへのアクセスを許可</h3>
+                    <p>同じ画面の「アクセス権」で，大学の学習支援サイトとMicrosoftのログイン画面へのアクセスを「許可」にします。</p>
+                </div>
+            </article>
+
+            <article class="step-card">
+                <span class="step-number">3</span>
+                <div class="step-copy">
+                    <h3>Safariで資格情報を保存</h3>
+                    <p>Safariのアドレスバーにある機能拡張メニューからCampus SSO Helperを開き，大学メールアドレスとパスワードを保存します。</p>
+                    <figure class="guide-image">
+                        <img src="../SetupCredentials.png" alt="Campus SSO Helperの資格情報入力画面。自動ログイン，大学メールアドレス，パスワード，設定を保存ボタンが表示されている。">
+                        <figcaption>「自動ログイン」をオンにして，入力後に「設定を保存」を押します。</figcaption>
+                    </figure>
+                </div>
+            </article>
+
+            <details>
+                <summary>設定画面が直接開かない場合</summary>
+                <p>「設定」→「アプリ」→「Safari」→「機能拡張」→「Campus SSO Helper」の順に開いてください。</p>
+                <a class="secondary-action" href="campus-sso-helper://app-settings">アプリ設定を開く</a>
+            </details>
         </section>
 
         <section class="privacy">
-            <h2>プライバシー</h2>
+            <h2>資格情報は端末内だけに保存</h2>
             <p>メールアドレスとパスワードはSafari機能拡張のローカル領域に保存し，Microsoftのログイン画面への自動入力だけに使用します。開発者のサーバーへは送信しません。</p>
         </section>
 

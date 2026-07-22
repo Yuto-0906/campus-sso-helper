@@ -5,6 +5,16 @@
 :root {
     color-scheme: light dark;
     font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", sans-serif;
+    --background: #f5f7fb;
+    --surface: #ffffff;
+    --text: #17213a;
+    --muted: #5f6b84;
+    --border: #dfe4ee;
+    --accent: #315bd6;
+    --accent-strong: #2449b8;
+    --accent-soft: #e9efff;
+    --success-soft: #e9f7ef;
+    --success-text: #25643b;
 }
 
 html {
@@ -14,87 +24,276 @@ html {
 body {
     min-height: 100%;
     margin: 0;
-    padding: 32px 20px;
-    background: #f4f6fb;
-    color: #17213a;
+    padding: max(30px, env(safe-area-inset-top)) 18px max(34px, env(safe-area-inset-bottom));
+    background:
+        radial-gradient(circle at 100% 0, rgba(49, 91, 214, 0.13), transparent 34%),
+        var(--background);
+    color: var(--text);
 }
 
 main {
-    width: min(620px, 100%);
+    width: min(680px, 100%);
     margin: 0 auto;
-    text-align: center;
 }
 
-img {
+.hero {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.app-icon {
     display: block;
-    border-radius: 24px;
-    margin: 0 auto 18px;
+    flex: 0 0 auto;
+    border-radius: 19px;
+    box-shadow: 0 10px 26px rgba(35, 55, 110, 0.17);
+}
+
+.eyebrow {
+    margin: 0 0 5px;
+    color: var(--accent);
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+}
+
+h1,
+h2,
+h3,
+p {
+    margin-top: 0;
 }
 
 h1 {
-    margin: 0;
-    font-size: 28px;
+    margin-bottom: 5px;
+    font-size: clamp(24px, 6vw, 32px);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
 }
 
 .lead {
-    margin: 12px auto 24px;
-    color: #556079;
-    line-height: 1.7;
+    margin-bottom: 0;
+    color: var(--muted);
+    line-height: 1.5;
+}
+
+.primary-action,
+.secondary-action {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    min-height: 54px;
+    border-radius: 15px;
+    text-decoration: none;
+    font-weight: 750;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.primary-action {
+    background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+    box-shadow: 0 10px 22px rgba(49, 91, 214, 0.24);
+    color: #ffffff;
+}
+
+.primary-action:active,
+.secondary-action:active {
+    transform: scale(0.99);
+}
+
+.action-icon {
+    font-size: 22px;
+    line-height: 1;
+}
+
+.action-status {
+    min-height: 18px;
+    margin: 10px 4px 0;
+    color: var(--success-text);
+    font-size: 12px;
+    line-height: 1.5;
+    text-align: center;
+}
+
+.action-status.error {
+    color: #b42318;
+}
+
+.fallback-note {
+    margin: 0 8px 22px;
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.5;
+    text-align: center;
 }
 
 section {
-    margin-top: 16px;
-    border: 1px solid #c7cede;
-    border-radius: 14px;
-    padding: 18px;
-    background: #fff;
-    text-align: left;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    background: var(--surface);
+    box-shadow: 0 8px 28px rgba(31, 44, 82, 0.07);
+}
+
+.guide {
+    padding: 20px;
+}
+
+.section-heading {
+    margin-bottom: 16px;
 }
 
 h2 {
-    margin: 0 0 10px;
-    font-size: 17px;
+    margin-bottom: 0;
+    font-size: 20px;
+    letter-spacing: -0.01em;
 }
 
-ol,
-section p {
-    margin: 0;
-    padding-left: 22px;
-    line-height: 1.7;
+.step-card {
+    display: grid;
+    grid-template-columns: 36px 1fr;
+    gap: 12px;
+    padding: 16px 0;
+    border-top: 1px solid var(--border);
 }
 
-section p {
-    padding-left: 0;
+.step-card:first-of-type {
+    border-top: 0;
+}
+
+.step-number {
+    display: grid;
+    width: 34px;
+    height: 34px;
+    place-items: center;
+    border-radius: 50%;
+    background: var(--accent-soft);
+    color: var(--accent);
+    font-weight: 800;
+}
+
+.step-copy h3 {
+    margin-bottom: 6px;
+    font-size: 16px;
+}
+
+.step-copy p,
+details p,
+.privacy p {
+    margin-bottom: 0;
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.65;
+}
+
+.guide-image {
+    margin: 14px 0 2px;
+}
+
+.guide-image img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: #f2f3f8;
+    box-shadow: 0 5px 16px rgba(31, 44, 82, 0.08);
+}
+
+.guide-image figcaption {
+    margin-top: 8px;
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.55;
+}
+
+details {
+    margin-top: 8px;
+    border-radius: 14px;
+    background: var(--background);
+    padding: 14px;
+}
+
+summary {
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+details p {
+    margin-top: 10px;
+}
+
+.secondary-action {
+    min-height: 44px;
+    margin-top: 12px;
+    border: 1px solid #b9c8f4;
+    background: var(--accent-soft);
+    color: var(--accent-strong);
+    font-size: 14px;
 }
 
 .privacy {
-    border-color: #9aa9e8;
+    margin-top: 16px;
+    border-color: #b7dfc5;
+    background: var(--success-soft);
+    padding: 18px;
+}
+
+.privacy h2 {
+    margin-bottom: 8px;
+    color: var(--success-text);
+    font-size: 16px;
 }
 
 .disclaimer {
-    margin: 18px 0 0;
-    color: #66708a;
-    font-size: 13px;
+    margin: 18px 8px 0;
+    color: var(--muted);
+    font-size: 12px;
     line-height: 1.6;
+    text-align: center;
+}
+
+@media (min-width: 620px) {
+    body {
+        padding-right: 28px;
+        padding-left: 28px;
+    }
+
+    .guide {
+        padding: 26px;
+    }
 }
 
 @media (prefers-color-scheme: dark) {
+    :root {
+        --background: #131722;
+        --surface: #1d2330;
+        --text: #f4f6fb;
+        --muted: #aeb7ca;
+        --border: #343d50;
+        --accent: #8eabff;
+        --accent-strong: #6f91ef;
+        --accent-soft: #28375f;
+        --success-soft: #1d3328;
+        --success-text: #8bd3a7;
+    }
+
     body {
-        background: #161a24;
-        color: #f3f5fa;
+        background:
+            radial-gradient(circle at 100% 0, rgba(88, 125, 229, 0.18), transparent 34%),
+            var(--background);
     }
 
-    .lead,
-    .disclaimer {
-        color: #aeb7cc;
+    .primary-action {
+        color: #ffffff;
     }
 
-    section {
-        border-color: #3c455b;
-        background: #222838;
+    .secondary-action {
+        border-color: #465c99;
     }
 
     .privacy {
-        border-color: #6578cf;
+        border-color: #31543f;
     }
 }

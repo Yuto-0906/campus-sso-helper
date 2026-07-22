@@ -3,7 +3,7 @@
   "name": "Campus SSO Helper",
   "short_name": "Campus SSO",
   "description": "大学のMicrosoft SSOに資格情報を自動入力する非公式のSafari機能拡張です。",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "permissions": ["storage"],
   "host_permissions": [
     "https://wsdmoodle.waseda.jp/*",

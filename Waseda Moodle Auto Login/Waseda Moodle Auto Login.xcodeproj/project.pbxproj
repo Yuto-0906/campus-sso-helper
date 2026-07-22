@@ -11,6 +11,8 @@
 		D19A40AF300A43FD0063AF71 /* Main.html in Resources */ = {isa = PBXBuildFile; fileRef = D19A40AD300A43FD0063AF71 /* Main.html */; };
 		D19A40B1300A43FD0063AF71 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = D19A40B0300A43FD0063AF71 /* Icon.png */; };
 		D19A40B3300A43FD0063AF71 /* Style.css in Resources */ = {isa = PBXBuildFile; fileRef = D19A40B2300A43FD0063AF71 /* Style.css */; };
+		D19A40E3300A43FE0063AF71 /* SetupExtensionSettings.png in Resources */ = {isa = PBXBuildFile; fileRef = D19A40E5300A43FE0063AF71 /* SetupExtensionSettings.png */; };
+		D19A40E4300A43FE0063AF71 /* SetupCredentials.png in Resources */ = {isa = PBXBuildFile; fileRef = D19A40E6300A43FE0063AF71 /* SetupCredentials.png */; };
 		D19A40B5300A43FD0063AF71 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D19A40B4300A43FD0063AF71 /* SceneDelegate.swift */; };
 		D19A40B7300A43FD0063AF71 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D19A40B6300A43FD0063AF71 /* ViewController.swift */; };
 		D19A40BA300A43FD0063AF71 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D19A40B8300A43FD0063AF71 /* LaunchScreen.storyboard */; };
@@ -56,6 +58,8 @@
 		D19A40AE300A43FD0063AF71 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = Base; path = Base.lproj/Main.html; sourceTree = "<group>"; };
 		D19A40B0300A43FD0063AF71 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		D19A40B2300A43FD0063AF71 /* Style.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; path = Style.css; sourceTree = "<group>"; };
+		D19A40E5300A43FE0063AF71 /* SetupExtensionSettings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SetupExtensionSettings.png; sourceTree = "<group>"; };
+		D19A40E6300A43FE0063AF71 /* SetupCredentials.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SetupCredentials.png; sourceTree = "<group>"; };
 		D19A40B4300A43FD0063AF71 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		D19A40B6300A43FD0063AF71 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		D19A40B9300A43FD0063AF71 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -129,6 +133,8 @@
 			children = (
 				D19A40AD300A43FD0063AF71 /* Main.html */,
 				D19A40B0300A43FD0063AF71 /* Icon.png */,
+				D19A40E5300A43FE0063AF71 /* SetupExtensionSettings.png */,
+				D19A40E6300A43FE0063AF71 /* SetupCredentials.png */,
 				D19A40B2300A43FD0063AF71 /* Style.css */,
 			);
 			path = Resources;
@@ -245,6 +251,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				D19A40B1300A43FD0063AF71 /* Icon.png in Resources */,
+				D19A40E3300A43FE0063AF71 /* SetupExtensionSettings.png in Resources */,
+				D19A40E4300A43FE0063AF71 /* SetupCredentials.png in Resources */,
 				D19A40BD300A43FD0063AF71 /* Main.storyboard in Resources */,
 				D19A40BA300A43FD0063AF71 /* LaunchScreen.storyboard in Resources */,
 				D19A40AF300A43FD0063AF71 /* Main.html in Resources */,
@@ -460,7 +468,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.2.1;
+				MARKETING_VERSION = 1.2.2;
 				OTHER_LDFLAGS = (
 					"-framework",
 					SafariServices,
@@ -493,7 +501,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.2.1;
+				MARKETING_VERSION = 1.2.2;
 				OTHER_LDFLAGS = (
 					"-framework",
 					SafariServices,
@@ -531,7 +539,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2.1;
+				MARKETING_VERSION = 1.2.2;
 				OTHER_LDFLAGS = (
 					"-framework",
 					SafariServices,
@@ -571,7 +579,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2.1;
+				MARKETING_VERSION = 1.2.2;
 				OTHER_LDFLAGS = (
 					"-framework",
 					SafariServices,
