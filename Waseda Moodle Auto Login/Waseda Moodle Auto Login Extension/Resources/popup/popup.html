@@ -4,11 +4,11 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Campus SSO Helper</title>
-    <link rel="stylesheet" href="popup.css" />
+    <link rel="stylesheet" href="popup.css?v=1.2.2-centered" />
   </head>
   <body>
     <main>
-      <header>
+      <header class="brand">
         <img src="../icons/icon.svg" alt="" />
         <div>
           <h1>Campus SSO</h1>
@@ -17,21 +17,26 @@
       </header>
 
       <form id="settings-form">
-        <label class="toggle-row">
-          <span>自動ログイン</span>
-          <input id="enabled" type="checkbox" />
-        </label>
+        <div class="settings-card">
+          <label class="toggle-row">
+            <span class="toggle-copy">
+              <strong>自動ログイン</strong>
+              <small>対象サイトでログインを補助</small>
+            </span>
+            <input id="enabled" type="checkbox" role="switch" />
+          </label>
 
-        <label>
-          大学メールアドレス
-          <input id="user-id" type="email" autocomplete="username" placeholder="大学のメールアドレス" required />
-        </label>
+          <label>
+            大学メールアドレス
+            <input id="user-id" type="email" autocomplete="username" placeholder="大学のメールアドレス" required />
+          </label>
 
-        <label>
-          パスワード
-          <input id="password" type="password" autocomplete="current-password" placeholder="変更するときだけ入力" />
-        </label>
-        <p id="password-note" class="note"></p>
+          <label>
+            パスワード
+            <input id="password" type="password" autocomplete="current-password" placeholder="変更するときだけ入力" />
+          </label>
+          <p id="password-note" class="note"></p>
+        </div>
 
         <button class="primary" type="submit">設定を保存</button>
       </form>
