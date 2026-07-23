@@ -15,14 +15,50 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6HG-Um-bch">
-                                <rect key="frame" x="142" y="385" width="128" height="128"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                                <imageReference key="image" image="LargeIcon"/>
-                            </imageView>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="2tv-cZ-JpW">
+                                <rect key="frame" x="67" y="322" width="280" height="252"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" alignment="top" spacing="-7" translatesAutoresizingMaskIntoConstraints="NO" id="hZM-TL-9sa">
+                                        <rect key="frame" x="76.5" y="0.0" width="127" height="94"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="W" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" translatesAutoresizingMaskIntoConstraints="NO" id="OlO-i0-6fo">
+                                                <rect key="frame" x="0.0" y="0.0" width="98" height="94"/>
+                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="78"/>
+                                                <color key="textColor" name="LaunchMuted"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="✓" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" translatesAutoresizingMaskIntoConstraints="NO" id="yR6-OP-CcZ">
+                                                <rect key="frame" x="91" y="0.0" width="36" height="38"/>
+                                                <fontDescription key="fontDescription" type="system" weight="bold" pointSize="30"/>
+                                                <color key="textColor" name="LaunchMuted"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Campus SSO Helper" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" translatesAutoresizingMaskIntoConstraints="NO" id="fLC-gF-x2d">
+                                        <rect key="frame" x="32" y="106" width="216" height="29"/>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="24"/>
+                                        <color key="textColor" name="LaunchText"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LOGIN HELPER" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" translatesAutoresizingMaskIntoConstraints="NO" id="7KU-7p-kDb">
+                                        <rect key="frame" x="91.5" y="147" width="97" height="15"/>
+                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="12"/>
+                                        <color key="textColor" name="LaunchMuted"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="280" id="FWb-cN-Tgg"/>
+                                </constraints>
+                            </stackView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
-                        <color key="backgroundColor" xcode11CocoaTouchSystemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <color key="backgroundColor" name="LaunchBackground"/>
+                        <constraints>
+                            <constraint firstItem="2tv-cZ-JpW" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="Rdl-36-cpe"/>
+                            <constraint firstItem="2tv-cZ-JpW" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" constant="-28" id="sxJ-0g-Kfq"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -31,6 +67,14 @@
         </scene>
     </scenes>
     <resources>
-        <image name="LargeIcon" width="128" height="128"/>
+        <namedColor name="LaunchBackground">
+            <color red="0.96862745098039216" green="0.94901960784313721" blue="0.90980392156862744" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="LaunchMuted">
+            <color red="0.45882352941176469" green="0.41176470588235292" blue="0.36862745098039218" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="LaunchText">
+            <color red="0.14117647058823529" green="0.10980392156862745" blue="0.090196078431372548" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
     </resources>
 </document>
