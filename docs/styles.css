@@ -1,11 +1,13 @@
 :root {
   color-scheme: light;
-  --ink: #151a32;
-  --muted: #626a86;
-  --paper: #f4f6ff;
-  --blue: #3857d6;
-  --violet: #7355d9;
-  --line: rgba(21, 26, 50, 0.14);
+  --ink: #241c17;
+  --muted: #75695e;
+  --paper: #f7f2e8;
+  --surface: #fffcf7;
+  --cocoa: #6f4e37;
+  --sand: #c5a37c;
+  --line: rgba(83, 59, 44, 0.18);
+  --shadow: rgba(76, 52, 39, 0.11);
 }
 
 * {
@@ -31,10 +33,10 @@ a {
 
 .hero,
 .page-header {
-  color: #fff;
+  color: #fffaf3;
   background:
-    radial-gradient(circle at 74% 18%, rgba(151, 121, 255, 0.44), transparent 30rem),
-    linear-gradient(145deg, #16246f, #3b2c8f 58%, #171b42);
+    radial-gradient(circle at 74% 18%, rgba(224, 196, 160, 0.28), transparent 30rem),
+    linear-gradient(145deg, #261c17, #5a4032 58%, #2e211b);
 }
 
 .hero {
@@ -76,14 +78,14 @@ a {
 .eyebrow,
 .section-label {
   margin: 0 0 12px;
-  color: #c8bcff;
+  color: #e0c4a0;
   font-size: 0.74rem;
   font-weight: 750;
   letter-spacing: 0.18em;
 }
 
 .section-label {
-  color: var(--violet);
+  color: var(--cocoa);
 }
 
 h1,
@@ -147,7 +149,8 @@ h3 {
 .faq-grid article {
   border: 1px solid var(--line);
   border-radius: 24px;
-  background: rgba(255, 255, 255, 0.58);
+  background: rgba(255, 252, 247, 0.8);
+  box-shadow: 0 12px 32px var(--shadow);
 }
 
 .steps li {
@@ -162,7 +165,7 @@ h3 {
   place-items: center;
   border-radius: 999px;
   color: #fff;
-  background: var(--blue);
+  background: var(--cocoa);
   font-size: 0.82rem;
   font-weight: 750;
 }
@@ -185,7 +188,7 @@ h3 {
   z-index: -1;
   inset: 28px -28px;
   border-radius: 36px;
-  background: rgba(115, 85, 217, 0.09);
+  background: rgba(197, 163, 124, 0.18);
   content: "";
 }
 
@@ -213,7 +216,8 @@ h3 {
   padding: 13px 22px;
   border-radius: 999px;
   color: #fff;
-  background: var(--blue);
+  background: var(--cocoa);
+  box-shadow: 0 8px 20px rgba(76, 52, 39, 0.2);
   text-decoration: none;
   font-weight: 700;
 }

@@ -1,15 +1,17 @@
 :root {
   color-scheme: light dark;
   font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic", sans-serif;
-  --background: #f4f6fb;
-  --surface: #ffffff;
-  --surface-muted: #f8f9fc;
-  --text: #17213a;
-  --muted: #66708a;
-  --border: #d7ddec;
-  --accent: #3857d6;
-  --accent-strong: #2f4cc5;
-  --danger: #b42318;
+  --background: #f7f2e8;
+  --surface: #fffcf7;
+  --surface-muted: #f3eadf;
+  --text: #241c17;
+  --muted: #75695e;
+  --border: #d8c7b5;
+  --accent: #6f4e37;
+  --accent-strong: #4b3428;
+  --danger: #8b3f35;
+  --positive: #5b5148;
+  --shadow: rgba(76, 52, 39, 0.13);
 }
 
 * {
@@ -26,7 +28,7 @@ body {
   min-width: 320px;
   margin: 0 auto;
   background:
-    radial-gradient(circle at 50% -70px, rgba(56, 87, 214, 0.16), transparent 230px),
+    radial-gradient(circle at 50% -70px, rgba(197, 163, 124, 0.25), transparent 240px),
     var(--background);
   color: var(--text);
 }
@@ -51,7 +53,7 @@ main {
   width: 58px;
   height: 58px;
   border-radius: 14px;
-  filter: drop-shadow(0 9px 16px rgba(47, 76, 197, 0.22));
+  filter: drop-shadow(0 10px 18px rgba(76, 52, 39, 0.2));
 }
 
 h1,
@@ -87,7 +89,7 @@ form,
   border-radius: 18px;
   padding: 16px;
   background: var(--surface);
-  box-shadow: 0 9px 28px rgba(31, 44, 82, 0.08);
+  box-shadow: 0 10px 30px var(--shadow);
 }
 
 label {
@@ -140,7 +142,7 @@ input[type="email"]:focus,
 input[type="password"]:focus {
   border-color: var(--accent);
   background: var(--surface);
-  box-shadow: 0 0 0 3px rgba(56, 87, 214, 0.14);
+  box-shadow: 0 0 0 3px rgba(111, 78, 55, 0.14);
 }
 
 input[type="checkbox"] {
@@ -148,11 +150,11 @@ input[type="checkbox"] {
   width: 48px;
   height: 28px;
   margin: 0;
-  border: 1px solid #b8c0d3;
+  border: 1px solid #c5b29e;
   border-radius: 999px;
   appearance: none;
   -webkit-appearance: none;
-  background: #dfe3ed;
+  background: #e7ddd2;
   cursor: pointer;
   transition: background 160ms ease, border-color 160ms ease;
 }
@@ -164,8 +166,8 @@ input[type="checkbox"]::after {
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  background: #ffffff;
-  box-shadow: 0 2px 5px rgba(31, 44, 82, 0.24);
+  background: #fffdf9;
+  box-shadow: 0 2px 5px rgba(76, 52, 39, 0.25);
   content: "";
   transition: transform 160ms ease;
 }
@@ -180,7 +182,7 @@ input[type="checkbox"]:checked::after {
 }
 
 input[type="checkbox"]:focus-visible {
-  outline: 3px solid rgba(56, 87, 214, 0.2);
+  outline: 3px solid rgba(111, 78, 55, 0.2);
   outline-offset: 2px;
 }
 
@@ -203,8 +205,8 @@ button:active {
 .primary {
   border-color: var(--accent);
   background: linear-gradient(135deg, var(--accent), var(--accent-strong));
-  box-shadow: 0 8px 18px rgba(56, 87, 214, 0.22);
-  color: #fff;
+  box-shadow: 0 8px 18px rgba(76, 52, 39, 0.24);
+  color: #fffaf3;
 }
 
 .danger {
@@ -229,7 +231,7 @@ button:active {
 #status {
   min-height: 18px;
   margin: 10px 0 6px;
-  color: #236b3d;
+  color: var(--positive);
   text-align: center;
 }
 
@@ -267,26 +269,28 @@ button:active {
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #151923;
-    --surface: #1f2532;
-    --surface-muted: #242c3b;
-    --text: #f3f5fa;
-    --muted: #aeb7cc;
-    --border: #3c455b;
-    --accent: #5676ee;
-    --accent-strong: #3857d6;
-    --danger: #ff7168;
+    --background: #17120f;
+    --surface: #241c18;
+    --surface-muted: #2e241e;
+    --text: #fff8ee;
+    --muted: #c7b8aa;
+    --border: #4b3a31;
+    --accent: #b9926f;
+    --accent-strong: #76533d;
+    --danger: #e29386;
+    --positive: #d8c2ac;
+    --shadow: rgba(0, 0, 0, 0.24);
   }
 
   body {
     background:
-      radial-gradient(circle at 50% -70px, rgba(86, 118, 238, 0.2), transparent 230px),
+      radial-gradient(circle at 50% -70px, rgba(210, 180, 140, 0.17), transparent 240px),
       var(--background);
   }
 
   input[type="checkbox"] {
-    border-color: #566078;
-    background: #343d50;
+    border-color: #655044;
+    background: #3b2e27;
   }
 }
 

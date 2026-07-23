@@ -5,16 +5,20 @@
 :root {
     color-scheme: light dark;
     font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", sans-serif;
-    --background: #f5f7fb;
-    --surface: #ffffff;
-    --text: #17213a;
-    --muted: #5f6b84;
-    --border: #dfe4ee;
-    --accent: #315bd6;
-    --accent-strong: #2449b8;
-    --accent-soft: #e9efff;
-    --success-soft: #e9f7ef;
-    --success-text: #25643b;
+    --background: #f7f2e8;
+    --surface: #fffcf7;
+    --text: #241c17;
+    --muted: #75695e;
+    --border: #d8c7b5;
+    --accent: #6f4e37;
+    --accent-strong: #4b3428;
+    --accent-soft: #eadac7;
+    --success-soft: #f0e4d5;
+    --success-text: #5b4435;
+    --danger: #8b3f35;
+    --button: #6f4e37;
+    --button-strong: #4b3428;
+    --shadow: rgba(76, 52, 39, 0.12);
 }
 
 html {
@@ -26,7 +30,7 @@ body {
     margin: 0;
     padding: max(30px, env(safe-area-inset-top)) 18px max(34px, env(safe-area-inset-bottom));
     background:
-        radial-gradient(circle at 100% 0, rgba(49, 91, 214, 0.13), transparent 34%),
+        radial-gradient(circle at 100% 0, rgba(197, 163, 124, 0.24), transparent 36%),
         var(--background);
     color: var(--text);
 }
@@ -47,7 +51,7 @@ main {
     display: block;
     flex: 0 0 auto;
     border-radius: 19px;
-    box-shadow: 0 10px 26px rgba(35, 55, 110, 0.17);
+    box-shadow: 0 12px 28px rgba(76, 52, 39, 0.18);
 }
 
 .eyebrow {
@@ -92,9 +96,9 @@ h1 {
 }
 
 .primary-action {
-    background: linear-gradient(135deg, var(--accent), var(--accent-strong));
-    box-shadow: 0 10px 22px rgba(49, 91, 214, 0.24);
-    color: #ffffff;
+    background: linear-gradient(135deg, var(--button), var(--button-strong));
+    box-shadow: 0 10px 22px rgba(76, 52, 39, 0.24);
+    color: #fffaf3;
 }
 
 .primary-action:active,
@@ -117,7 +121,7 @@ h1 {
 }
 
 .action-status.error {
-    color: #b42318;
+    color: var(--danger);
 }
 
 .fallback-note {
@@ -132,7 +136,7 @@ section {
     border: 1px solid var(--border);
     border-radius: 20px;
     background: var(--surface);
-    box-shadow: 0 8px 28px rgba(31, 44, 82, 0.07);
+    box-shadow: 0 10px 30px var(--shadow);
 }
 
 .guide {
@@ -196,8 +200,8 @@ details p,
     height: auto;
     border: 1px solid var(--border);
     border-radius: 14px;
-    background: #f2f3f8;
-    box-shadow: 0 5px 16px rgba(31, 44, 82, 0.08);
+    background: #f3eadf;
+    box-shadow: 0 6px 18px var(--shadow);
 }
 
 .guide-image figcaption {
@@ -227,7 +231,7 @@ details p {
 .secondary-action {
     min-height: 44px;
     margin-top: 12px;
-    border: 1px solid #b9c8f4;
+    border: 1px solid #c8ae90;
     background: var(--accent-soft);
     color: var(--accent-strong);
     font-size: 14px;
@@ -235,7 +239,7 @@ details p {
 
 .privacy {
     margin-top: 16px;
-    border-color: #b7dfc5;
+    border-color: #d2b994;
     background: var(--success-soft);
     padding: 18px;
 }
@@ -267,33 +271,37 @@ details p {
 
 @media (prefers-color-scheme: dark) {
     :root {
-        --background: #131722;
-        --surface: #1d2330;
-        --text: #f4f6fb;
-        --muted: #aeb7ca;
-        --border: #343d50;
-        --accent: #8eabff;
-        --accent-strong: #6f91ef;
-        --accent-soft: #28375f;
-        --success-soft: #1d3328;
-        --success-text: #8bd3a7;
+        --background: #17120f;
+        --surface: #241c18;
+        --text: #fff8ee;
+        --muted: #c7b8aa;
+        --border: #4b3a31;
+        --accent: #d2b48c;
+        --accent-strong: #a9805d;
+        --accent-soft: #3a2b23;
+        --success-soft: #2e241e;
+        --success-text: #e0c7a8;
+        --danger: #e29386;
+        --button: #8f6b4f;
+        --button-strong: #5e4334;
+        --shadow: rgba(0, 0, 0, 0.22);
     }
 
     body {
         background:
-            radial-gradient(circle at 100% 0, rgba(88, 125, 229, 0.18), transparent 34%),
+            radial-gradient(circle at 100% 0, rgba(210, 180, 140, 0.16), transparent 36%),
             var(--background);
     }
 
     .primary-action {
-        color: #ffffff;
+        color: #fffaf3;
     }
 
     .secondary-action {
-        border-color: #465c99;
+        border-color: #80634f;
     }
 
     .privacy {
-        border-color: #31543f;
+        border-color: #66503f;
     }
 }
