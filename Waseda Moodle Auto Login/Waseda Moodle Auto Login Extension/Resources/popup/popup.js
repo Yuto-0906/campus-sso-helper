@@ -11,6 +11,7 @@
   const status = document.getElementById("status");
   const openMoodleButton = document.getElementById("open-moodle");
   const clearSettingsButton = document.getElementById("clear-settings");
+  const clearTimetableButton = document.getElementById("clear-timetable");
 
   if (!core || !api?.storage?.local) {
     status.textContent = "Safari拡張機能APIを利用できません。";
@@ -65,6 +66,17 @@
     window.close();
   });
 
+  async function removeTimetableData() {
+    const all = await api.storage.local.get(null);
+    const keys = Object.keys(all).filter((key) => key.startsWith("csh-timetable-v1:"));
+    if (keys.length) await api.storage.local.remove(keys);
+  }
+
+  clearTimetableButton.addEventListener("click", async () => {
+    await removeTimetableData();
+    showStatus("時間割データを削除しました。Moodleを再読み込みすると自動取得します。");
+  });
+
   clearSettingsButton.addEventListener("click", async () => {
     await api.storage.local.remove([
       core.STORAGE_KEYS.enabled,
@@ -72,12 +84,13 @@
       core.STORAGE_KEYS.password,
       core.STORAGE_KEYS.flowStartedAt,
     ]);
+    await removeTimetableData();
     enabledInput.checked = false;
     userIdInput.value = "";
     passwordInput.value = "";
     storedPassword = "";
     passwordNote.textContent = "";
-    showStatus("資格情報を削除しました。");
+    showStatus("資格情報と時間割データを削除しました。");
   });
 
   await loadSettings();

@@ -3,3 +3,10 @@ DerivedData/
 *.xcuserstate
 **/xcuserdata/
 *.zip
+.secrets/
+.cache/
+build/
+*.p12
+*.p8
+*.key
+*.mobileprovision
