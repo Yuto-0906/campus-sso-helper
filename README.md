@@ -23,6 +23,7 @@ Waseda MoodleからMicrosoft SSOへのログインを補助し，Moodleのダッ
 
 - Moodleの履修科目APIから科目を取得し，早稲田大学のWebシラバスから年度，学期，曜日，時限，教室を補完する。取得できなかった科目は手動で配置できる。
 - 学期切替，科目からMoodle・シラバスへの移動，科目メモ，色，予定メモ，非表示に対応する。
+- 最後に選択した学期を端末に保存し，次にダッシュボードを開いたときに復元する。
 - 時間割はiPhone・iPadのSafari内に表示される。Chrome拡張機能に保存された時間割設定はSafariへ自動転送されない。
 - 元の拡張機能の仕様とMITライセンスは[THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)を参照。
 
@@ -35,4 +36,4 @@ Waseda MoodleからMicrosoft SSOへのログインを補助し，Moodleのダッ
 
 ## バージョン
 
-現在のバージョンは`1.3.2`である。
+現在のバージョンは`1.3.3`である。

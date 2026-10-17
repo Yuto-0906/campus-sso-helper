@@ -9,7 +9,7 @@
   const state = {
     courses: [], records: {}, failed: {}, hidden: {}, notes: [], selected: undefined,
     showHidden: false, status: "履修科目を読み込んでいます…", storageKey: null,
-    root: null, original: null, syncing: false,
+    root: null, original: null, syncing: false, coursesLoaded: false, revealSelectedTab: true,
   };
   const el = (tag, className, text) => {
     const node = document.createElement(tag);
@@ -152,6 +152,7 @@
       state.status = "履修科目を取得しています…";
       render();
       state.courses = await fetchCourses();
+      state.coursesLoaded = true;
       state.original?.classList.add("csh-original-overview");
       const choices = termChoices(state.courses);
       if (state.selected === undefined || state.selected !== null &&
@@ -325,7 +326,7 @@
 
     const visible = state.courses.filter((course) => state.showHidden || !(course.hiddenByMoodle || state.hidden[course.id]));
     const choices = termChoices(visible);
-    if (state.selected !== null && state.selected !== undefined &&
+    if (state.coursesLoaded && state.selected !== null && state.selected !== undefined &&
         !choices.some((item) => `${item.year}:${item.term}` === state.selected)) {
       const fallback = choices.at(-1);
       state.selected = fallback ? `${fallback.year}:${fallback.term}` : null;
@@ -354,6 +355,16 @@
     section.appendChild(list);
     state.root.appendChild(section);
     tabs.scrollLeft = tabScrollLeft;
+    if (state.coursesLoaded && state.revealSelectedTab) {
+      state.revealSelectedTab = false;
+      const active = tabs.querySelector(".csh-active");
+      if (active) {
+        const tabBounds = tabs.getBoundingClientRect();
+        const activeBounds = active.getBoundingClientRect();
+        if (activeBounds.right > tabBounds.right) tabs.scrollLeft += activeBounds.right - tabBounds.right;
+        else if (activeBounds.left < tabBounds.left) tabs.scrollLeft -= tabBounds.left - activeBounds.left;
+      }
+    }
   }
 
   function addField(parent, label, control) {
