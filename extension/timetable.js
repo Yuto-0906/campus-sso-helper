@@ -308,6 +308,7 @@
 
   function render() {
     if (!state.root) return;
+    const tabScrollLeft = state.root.querySelector(".csh-tabs")?.scrollLeft ?? 0;
     state.root.replaceChildren();
     const header = el("div", "csh-header");
     header.appendChild(el("h2", "", "コース概要・時間割"));
@@ -352,6 +353,7 @@
     if (!unplaced.length) list.appendChild(el("p", "", "該当する科目はありません。"));
     section.appendChild(list);
     state.root.appendChild(section);
+    tabs.scrollLeft = tabScrollLeft;
   }
 
   function addField(parent, label, control) {

@@ -1,1 +1,1 @@
-2026-10-17: Build the semester-filter fix for the approved iPad.
+2026-10-17: Preserve the semester tab scroll position on the approved iPad.
