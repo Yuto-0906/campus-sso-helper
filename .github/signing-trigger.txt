@@ -1,1 +1,1 @@
-2026-10-17: Restore the previously selected timetable term on the approved iPad.
+2026-10-17: Show cached courses while refreshing the timetable on the approved iPad.

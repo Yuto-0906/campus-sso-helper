@@ -9,7 +9,8 @@
   const state = {
     courses: [], records: {}, failed: {}, hidden: {}, notes: [], selected: undefined,
     showHidden: false, status: "履修科目を読み込んでいます…", storageKey: null,
-    root: null, original: null, syncing: false, coursesLoaded: false, revealSelectedTab: true,
+    root: null, original: null, syncing: false, coursesLoaded: false, coursesFresh: false,
+    revealSelectedTab: true,
   };
   const el = (tag, className, text) => {
     const node = document.createElement(tag);
@@ -72,9 +73,9 @@
   }
 
   async function loadStorage() {
-    const prefs = await api.storage.local.get(["userId"]);
     const profile = document.querySelector('a[href*="/user/profile.php?id="]')?.href.match(/[?&]id=(\d+)/)?.[1];
-    const moodleUser = document.documentElement.innerHTML.match(/["']userid["']\s*:\s*(\d+)/)?.[1];
+    const moodleUser = profile ? null : document.documentElement.innerHTML.match(/["']userid["']\s*:\s*(\d+)/)?.[1];
+    const prefs = profile || moodleUser ? {} : await api.storage.local.get(["userId"]);
     const identity = profile || moodleUser || prefs.userId || "local";
     state.storageKey = `csh-timetable-v1:${identity}`;
     const saved = (await api.storage.local.get(state.storageKey))[state.storageKey] ?? {};
@@ -83,14 +84,23 @@
     state.hidden = saved.hidden ?? {};
     state.notes = saved.notes ?? [];
     state.selected = saved.selected;
+    if (Array.isArray(saved.courses) && saved.courses.every((course) =>
+      course && typeof course.id === "string" && typeof course.name === "string" &&
+      typeof course.url === "string" && /^https:\/\/wsdmoodle\.waseda\.jp\//.test(course.url))) {
+      state.courses = saved.courses;
+      state.coursesLoaded = true;
+      state.original?.classList.add("csh-original-overview");
+    }
   }
 
   async function saveStorage() {
     if (!state.storageKey) return;
-    await api.storage.local.set({ [state.storageKey]: {
+    const saved = {
       records: state.records, failed: state.failed, hidden: state.hidden,
       notes: state.notes, selected: state.selected,
-    } });
+    };
+    if (state.coursesLoaded) saved.courses = state.courses;
+    await api.storage.local.set({ [state.storageKey]: saved });
   }
 
   async function syllabusHTML(path, fields) {
@@ -149,10 +159,13 @@
     if (state.syncing) return;
     state.syncing = true;
     try {
-      state.status = "履修科目を取得しています…";
+      state.status = state.coursesLoaded
+        ? `保存済みの${state.courses.length}科目を表示中。最新情報を確認しています…`
+        : "履修科目を取得しています…";
       render();
       state.courses = await fetchCourses();
       state.coursesLoaded = true;
+      state.coursesFresh = true;
       state.original?.classList.add("csh-original-overview");
       const choices = termChoices(state.courses);
       if (state.selected === undefined || state.selected !== null &&
@@ -216,8 +229,10 @@
       state.status = `${state.courses.length}科目を表示中。${completed - failures}科目のシラバスを取得しました。` +
         (failures ? ` ${failures}科目は手動で配置できます。` : "");
     } catch (error) {
-      state.status = error.message;
-      state.original?.classList.remove("csh-original-overview");
+      state.status = state.coursesLoaded
+        ? `${state.courses.length}科目を表示しています。更新に失敗しました：${error.message}`
+        : error.message;
+      if (!state.coursesLoaded) state.original?.classList.remove("csh-original-overview");
     } finally {
       state.syncing = false;
       render();
@@ -326,7 +341,7 @@
 
     const visible = state.courses.filter((course) => state.showHidden || !(course.hiddenByMoodle || state.hidden[course.id]));
     const choices = termChoices(visible);
-    if (state.coursesLoaded && state.selected !== null && state.selected !== undefined &&
+    if (state.coursesFresh && state.selected !== null && state.selected !== undefined &&
         !choices.some((item) => `${item.year}:${item.term}` === state.selected)) {
       const fallback = choices.at(-1);
       state.selected = fallback ? `${fallback.year}:${fallback.term}` : null;
@@ -356,9 +371,9 @@
     state.root.appendChild(section);
     tabs.scrollLeft = tabScrollLeft;
     if (state.coursesLoaded && state.revealSelectedTab) {
-      state.revealSelectedTab = false;
       const active = tabs.querySelector(".csh-active");
       if (active) {
+        state.revealSelectedTab = false;
         const tabBounds = tabs.getBoundingClientRect();
         const activeBounds = active.getBoundingClientRect();
         if (activeBounds.right > tabBounds.right) tabs.scrollLeft += activeBounds.right - tabBounds.right;
@@ -504,13 +519,12 @@
   if (!state.root) {
     const observer = new MutationObserver(() => {
       state.root = mount();
-      if (state.root) { observer.disconnect(); loadStorage().then(() => { render(); synchronize(); }); }
+      if (state.root) { observer.disconnect(); loadStorage().then(() => synchronize()); }
     });
     observer.observe(document.documentElement, { childList: true, subtree: true });
     setTimeout(() => observer.disconnect(), 15000);
   } else {
     await loadStorage();
-    render();
     synchronize();
   }
 })();
