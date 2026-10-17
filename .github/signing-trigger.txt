@@ -1,1 +1,1 @@
-2026-10-17: Build the approved iPad development IPA.
+2026-10-17: Build the semester-filter fix for the approved iPad.

@@ -59,6 +59,22 @@
     return false;
   }
 
+  function isUnplacedInTerm(course, record, selected) {
+    if (!selected) return true;
+    const year = record?.syllabusYear || course.year;
+    if (year && year !== selected.year) return false;
+    // A course with a timetable placement belongs in its scheduled term only.
+    if (record?.placements?.length) return false;
+    if (record?.syllabusTerm && TERMS[record.syllabusTerm]) {
+      return termContains(record.syllabusTerm, selected.term);
+    }
+    if (!course.startdate || !course.enddate) return true;
+    const range = selected.term.includes("fall") || selected.term === "winter_quarter"
+      ? [new Date(selected.year, 8, 1).getTime(), new Date(selected.year + 1, 3, 1).getTime()]
+      : [new Date(selected.year, 3, 1).getTime(), new Date(selected.year, 7, 1).getTime()];
+    return course.startdate * 1000 < range[1] && course.enddate * 1000 > range[0];
+  }
+
   function parseMeetings(value) {
     const text = normalize(value);
     const parts = text.split(/[／/]/).map((part) => part.replace(/^.*?:/, "").trim());
@@ -138,6 +154,11 @@
           if (!byYear.has(p.year)) byYear.set(p.year, new Set());
           byYear.get(p.year).add(p.term);
         }
+      } else if (record?.syllabusTerm && TERMS[record.syllabusTerm] &&
+          (record.syllabusYear || course.year)) {
+        const year = record.syllabusYear || course.year;
+        if (!byYear.has(year)) byYear.set(year, new Set());
+        byYear.get(year).add(record.syllabusTerm);
       } else if (course.year) {
         if (!byYear.has(course.year)) byYear.set(course.year, new Set());
         const start = course.startdate ? course.startdate * 1000 : null;
@@ -167,5 +188,5 @@
   }
 
   return Object.freeze({ TERMS, DAYS, PERIODS, normalize, schoolYear, termFromLabel,
-    termContains, parseMeetings, parseSyllabus, parseSearchResults, termChoices });
+    termContains, isUnplacedInTerm, parseMeetings, parseSyllabus, parseSearchResults, termChoices });
 });

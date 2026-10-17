@@ -166,9 +166,14 @@
       await saveStorage();
       render();
 
-      const candidates = state.courses.filter((course) => course.code &&
-        (!state.records[course.id]?.syllabusKey || force && !state.records[course.id]?.manual) &&
-        (force || !state.failed[course.id] || Date.now() - state.failed[course.id] > 24 * 60 * 60 * 1000));
+      const candidates = state.courses.filter((course) => {
+        const record = state.records[course.id];
+        // Older saved records have no term for classes without fixed periods.
+        const needsTerm = record?.syllabusKey && record.syllabusTerm === undefined &&
+          !record.placements?.length;
+        return course.code && (!record?.syllabusKey || needsTerm || force && !record.manual) &&
+          (force || !state.failed[course.id] || Date.now() - state.failed[course.id] > 24 * 60 * 60 * 1000);
+      });
       if (!candidates.length) {
         state.status = `${state.courses.length}科目を表示しています。`;
         return;
@@ -184,6 +189,7 @@
           if (syllabus) {
             const previous = state.records[course.id] ?? {};
             state.records[course.id] = { ...previous, syllabusKey: syllabus.key,
+              syllabusYear: syllabus.year, syllabusTerm: syllabus.term,
               modality: syllabus.modality, placements: previous.manual ? previous.placements : syllabus.placements };
             delete state.failed[course.id];
             const currentChoices = termChoices(state.courses);
@@ -227,16 +233,6 @@
     const noteCourses = state.notes.map((note) => ({ id: note.id }));
     const noteRecords = Object.fromEntries(state.notes.map((note) => [note.id, { placements: [note] }]));
     return core.termChoices([...courses, ...noteCourses], { ...state.records, ...noteRecords });
-  }
-
-  function belongsToSelected(course, selected) {
-    if (!selected) return true;
-    if (course.year && course.year !== selected.year) return false;
-    if (!course.startdate || !course.enddate) return true;
-    const range = selected.term.includes("fall") || selected.term === "winter_quarter"
-      ? [new Date(selected.year, 8, 1).getTime(), new Date(selected.year + 1, 3, 1).getTime()]
-      : [new Date(selected.year, 3, 1).getTime(), new Date(selected.year, 7, 1).getTime()];
-    return course.startdate * 1000 < range[1] && course.enddate * 1000 > range[0];
   }
 
   function makeButton(label, click, className = "") {
@@ -347,12 +343,8 @@
 
     const selected = selectedTerm();
     if (selected) renderGrid(state.root, selected, visible);
-    const unplaced = visible.filter((course) => {
-      if (!belongsToSelected(course, selected)) return false;
-      if (!selected) return true;
-      return !(state.records[course.id]?.placements ?? []).some((placement) =>
-        placement.year === selected.year && core.termContains(placement.term, selected.term));
-    });
+    const unplaced = visible.filter((course) =>
+      core.isUnplacedInTerm(course, state.records[course.id], selected));
     const section = el("section", "csh-unplaced");
     section.appendChild(el("h3", "", selected ? "時間割に未配置の科目" : "すべての科目"));
     const list = el("div", "csh-unplaced-list");

@@ -102,3 +102,39 @@ test("学期とクォーターが混在してもタブは開始順に並ぶ", ()
     { year: 2026, term: "winter_quarter" },
   ]);
 });
+
+test("春学期に配置済みの科目は秋学期の未配置欄に出ない", () => {
+  const course = {
+    id: "spring", year: 2026,
+    startdate: new Date(2026, 3, 1).getTime() / 1000,
+    enddate: new Date(2027, 2, 31).getTime() / 1000,
+  };
+  const record = { placements: [{ year: 2026, term: "spring_semester", day: 0, from: 2, to: 2 }] };
+  assert.equal(core.isUnplacedInTerm(course, record, { year: 2026, term: "fall_semester" }), false);
+  assert.equal(core.isUnplacedInTerm(course, record, { year: 2026, term: "spring_semester" }), false);
+  assert.equal(core.isUnplacedInTerm(course, record, null), true);
+});
+
+test("曜日・時限のない科目はシラバスの学期で未配置欄とタブを絞る", () => {
+  const course = {
+    id: "online", year: 2026,
+    startdate: new Date(2026, 3, 1).getTime() / 1000,
+    enddate: new Date(2027, 2, 31).getTime() / 1000,
+  };
+  const record = { syllabusYear: 2026, syllabusTerm: "spring_semester", placements: [] };
+  assert.equal(core.isUnplacedInTerm(course, record, { year: 2026, term: "fall_semester" }), false);
+  assert.equal(core.isUnplacedInTerm(course, record, { year: 2026, term: "spring_semester" }), true);
+  assert.deepEqual(core.termChoices([course], { online: record }), [
+    { year: 2026, term: "spring_semester" },
+  ]);
+});
+
+test("シラバスが未取得の科目はMoodleの開講期間を使う", () => {
+  const course = {
+    id: "unknown", year: 2026,
+    startdate: new Date(2026, 8, 21).getTime() / 1000,
+    enddate: new Date(2027, 2, 31).getTime() / 1000,
+  };
+  assert.equal(core.isUnplacedInTerm(course, {}, { year: 2026, term: "spring_semester" }), false);
+  assert.equal(core.isUnplacedInTerm(course, {}, { year: 2026, term: "fall_semester" }), true);
+});
