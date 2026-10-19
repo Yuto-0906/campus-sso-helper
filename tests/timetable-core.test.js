@@ -82,7 +82,7 @@ test("秋学期の科目は秋・冬クォーターの両方に表示する", ()
 
 test("9月に始まる未配置科目は秋学期の候補に入る", () => {
   const course = {
-    id: "3", year: 2026,
+    id: "3", year: 2026, code: "2603034001",
     startdate: new Date(2026, 8, 21).getTime() / 1000,
     enddate: new Date(2027, 2, 31).getTime() / 1000,
   };
@@ -131,10 +131,26 @@ test("曜日・時限のない科目はシラバスの学期で未配置欄と�
 
 test("シラバスが未取得の科目はMoodleの開講期間を使う", () => {
   const course = {
-    id: "unknown", year: 2026,
+    id: "unknown", year: 2026, code: "2603034001",
     startdate: new Date(2026, 8, 21).getTime() / 1000,
     enddate: new Date(2027, 2, 31).getTime() / 1000,
   };
   assert.equal(core.isUnplacedInTerm(course, {}, { year: 2026, term: "spring_semester" }), false);
   assert.equal(core.isUnplacedInTerm(course, {}, { year: 2026, term: "fall_semester" }), true);
+});
+
+test("年度のない連絡用コースから過去年度の学期タブを生成しない", () => {
+  assert.equal(core.academicYear("2026年度"), 2026);
+  assert.equal(core.academicYear("連絡用"), null);
+  assert.equal(core.academicYear("20201"), null);
+  const choices = core.termChoices([
+    { id: "notice", year: 2020, code: "", startdate: new Date(2020, 3, 1).getTime() / 1000 },
+    { id: "class", year: 2026, code: "2603034001" },
+  ], {});
+  assert.deepEqual([...new Set(choices.map((choice) => choice.year))], [2026]);
+});
+
+test("授業情報のないHTMLをシラバス取得成功として受け入れない", () => {
+  const doc = { querySelector: () => ({ querySelectorAll: () => [] }) };
+  assert.throws(() => core.parseSyllabus(doc, "empty"), /年度・科目名・学期/);
 });

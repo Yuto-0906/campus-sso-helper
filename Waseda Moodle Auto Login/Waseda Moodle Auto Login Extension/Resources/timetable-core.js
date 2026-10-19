@@ -34,6 +34,11 @@
     return d.getMonth() < 3 ? d.getFullYear() - 1 : d.getFullYear();
   }
 
+  function academicYear(value) {
+    const match = normalize(value).match(/^(20\d{2})(?:年度|年|$)/);
+    return match ? Number(match[1]) : null;
+  }
+
   function termFromLabel(label) {
     const value = normalize(label).toLowerCase();
     const names = [
@@ -104,6 +109,10 @@
     const get = (...labels) => labels.map((label) => fields[label]).find(Boolean) ?? "";
     const year = Number.parseInt(get("開講年度", "Year"), 10);
     const termDayPeriod = get("学期曜日時限", "Term/Day/Period");
+    const title = get("科目名", "Course Title");
+    if (!academicYear(year) || !title || !termDayPeriod) {
+      throw new Error("シラバスの年度・科目名・学期を確認できませんでした。");
+    }
     const term = termFromLabel(termDayPeriod);
     const meetingText = termDayPeriod.replace(/^(?:春クォーター|夏クォーター|秋クォーター|冬クォーター|春学期|秋学期|通年|spring quarter|summer quarter|fall quarter|winter quarter|spring semester|fall semester|full year)\s*/i, "");
     const meetings = parseMeetings(meetingText);
@@ -113,7 +122,7 @@
     return {
       key,
       year: Number.isFinite(year) ? year : null,
-      title: get("科目名", "Course Title"),
+      title,
       courseCode: get("コース・コード", "Course Code"),
       term,
       modality: get("授業方法区分", "Class Modality Categories"),
@@ -159,7 +168,7 @@
         const year = record.syllabusYear || course.year;
         if (!byYear.has(year)) byYear.set(year, new Set());
         byYear.get(year).add(record.syllabusTerm);
-      } else if (course.year) {
+      } else if (course.year && (course.code || academicYear(course.category))) {
         if (!byYear.has(course.year)) byYear.set(course.year, new Set());
         const start = course.startdate ? course.startdate * 1000 : null;
         const end = course.enddate ? course.enddate * 1000 : null;
@@ -187,6 +196,6 @@
     return choices.sort((a, b) => a.year - b.year || TERM_ORDER[a.term] - TERM_ORDER[b.term]);
   }
 
-  return Object.freeze({ TERMS, DAYS, PERIODS, normalize, schoolYear, termFromLabel,
+  return Object.freeze({ TERMS, DAYS, PERIODS, normalize, schoolYear, academicYear, termFromLabel,
     termContains, isUnplacedInTerm, parseMeetings, parseSyllabus, parseSearchResults, termChoices });
 });

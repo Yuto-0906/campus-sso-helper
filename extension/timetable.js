@@ -11,6 +11,7 @@
     showHidden: false, status: "履修科目を読み込んでいます…", storageKey: null,
     root: null, original: null, syncing: false, coursesLoaded: false, coursesFresh: false,
     revealSelectedTab: true,
+    syncReport: null,
   };
   const el = (tag, className, text) => {
     const node = document.createElement(tag);
@@ -62,9 +63,9 @@
     }
     return courses.map((course) => ({
       id: String(course.id), name: decodeCourseName(course.fullname || course.shortname || "科目名なし"),
-      code: course.idnumber?.length === 16 ? course.idnumber.slice(4, 14) : "",
-      year: Number.parseInt(course.coursecategory, 10) ||
-        (course.startdate ? core.schoolYear(new Date(course.startdate * 1000)) : null),
+      code: String(course.idnumber ?? "").trim().length === 16 ? String(course.idnumber).trim().slice(4, 14) : "",
+      category: decodeCourseName(course.coursecategory),
+      year: core.academicYear(decodeCourseName(course.coursecategory)),
       startdate: course.startdate, enddate: course.enddate,
       hiddenByMoodle: Boolean(course.hidden),
       url: /^https:\/\/wsdmoodle\.waseda\.jp\//.test(course.viewurl ?? "") ? course.viewurl :
@@ -84,6 +85,16 @@
     state.hidden = saved.hidden ?? {};
     state.notes = saved.notes ?? [];
     state.selected = saved.selected;
+    state.syncReport = saved.syncReport ?? null;
+    for (const [id, record] of Object.entries(state.records)) {
+      if (record.syllabusKey && !core.academicYear(record.syllabusYear)) {
+        delete record.syllabusKey;
+        delete record.syllabusYear;
+        delete record.syllabusTerm;
+        if (!record.manual) record.placements = [];
+        delete state.failed[id];
+      }
+    }
     if (Array.isArray(saved.courses) && saved.courses.every((course) =>
       course && typeof course.id === "string" && typeof course.name === "string" &&
       typeof course.url === "string" && /^https:\/\/wsdmoodle\.waseda\.jp\//.test(course.url))) {
@@ -98,6 +109,7 @@
     const saved = {
       records: state.records, failed: state.failed, hidden: state.hidden,
       notes: state.notes, selected: state.selected,
+      syncReport: state.syncReport,
     };
     if (state.coursesLoaded) saved.courses = state.courses;
     await api.storage.local.set({ [state.storageKey]: saved });
@@ -106,6 +118,10 @@
   async function syllabusHTML(path, fields) {
     const response = await api.runtime.sendMessage({ type: "campus-sso:syllabus-request", path, fields });
     if (!response?.ok) throw new Error(response?.error || "シラバスを取得できませんでした。");
+    if (state.syncReport) {
+      const transport = response.transport || "web";
+      state.syncReport.transports[transport] = (state.syncReport.transports[transport] || 0) + 1;
+    }
     return new DOMParser().parseFromString(response.html, "text/html");
   }
 
@@ -133,26 +149,40 @@
     ];
   }
 
-  async function lookupSyllabus(course, pastYears) {
+  async function lookupSyllabus(course, pastYears, trace) {
     if (!course.code) return null;
-    const isOld = pastYears.includes(course.year) || (pastYears.length === 0 && course.year < core.schoolYear());
+    const isOld = Number.isInteger(course.year) &&
+      (pastYears.includes(course.year) || (pastYears.length === 0 && course.year < core.schoolYear()));
+    trace.searchMode = isOld ? "past" : "now";
+    trace.searches = [];
+    let detailError;
     for (let page = 1; page <= 3; page++) {
       const doc = await syllabusHTML("/syllabus/index.php", searchForm(course, isOld, page));
       const results = core.parseSearchResults(doc, course);
+      trace.searches.push({ page, matches: results.length });
       for (const candidate of results) {
         await new Promise((resolve) => setTimeout(resolve, 500));
         try {
           const detail = await syllabusHTML(`/syllabus/JAA104.php?pKey=${encodeURIComponent(candidate.key)}&pLng=jp`);
           const parsed = core.parseSyllabus(detail, candidate.key);
+          trace.detail = { title: parsed.title, year: parsed.year, term: parsed.term, placements: parsed.placements.length };
           if (parsed.year && course.year && parsed.year !== course.year) continue;
-          if (parsed.courseCode && core.normalize(parsed.courseCode) !== course.code &&
+          if (core.normalize(parsed.courseCode) !== course.code &&
               core.normalize(parsed.title) !== core.normalize(course.name)) continue;
           return parsed;
-        } catch (_) { /* Another result may have the correct detail page. */ }
+        } catch (error) { detailError = error; }
       }
       if (doc.querySelectorAll(".ct-vh tr td").length < 900) break;
     }
+    if (detailError) throw detailError;
     return null;
+  }
+
+  function summary() {
+    const confirmed = state.courses.filter((course) => state.records[course.id]?.syllabusKey &&
+      core.academicYear(state.records[course.id].syllabusYear)).length;
+    const placed = state.courses.filter((course) => state.records[course.id]?.placements?.length).length;
+    return `履修${state.courses.length}科目。シラバス確認済み${confirmed}科目，時間割配置済み${placed}科目。`;
   }
 
   async function synchronize(force = false) {
@@ -189,24 +219,28 @@
           (force || !state.failed[course.id] || Date.now() - state.failed[course.id] > 24 * 60 * 60 * 1000);
       });
       if (!candidates.length) {
-        state.status = `${state.courses.length}科目を表示しています。`;
+        state.status = summary();
         return;
       }
+      state.syncReport = { attempted: candidates.length, success: 0, missing: 0, errors: 0, transports: {}, samples: [] };
+      if (force) oldYearsPromise = undefined;
       const pastYears = await oldYears();
       let completed = 0;
       let failures = 0;
       let lastFailure;
       for (const course of candidates) {
+        const trace = { name: course.name, category: course.category, year: course.year, code: course.code };
         state.status = `シラバスを取得中 ${completed + 1}/${candidates.length}：${course.name}`;
         renderStatus();
         try {
-          const syllabus = await lookupSyllabus(course, pastYears);
+          const syllabus = await lookupSyllabus(course, pastYears, trace);
           if (syllabus) {
             const previous = state.records[course.id] ?? {};
             state.records[course.id] = { ...previous, syllabusKey: syllabus.key,
               syllabusYear: syllabus.year, syllabusTerm: syllabus.term,
               modality: syllabus.modality, placements: previous.manual ? previous.placements : syllabus.placements };
             delete state.failed[course.id];
+            state.syncReport.success++;
             const currentChoices = termChoices(state.courses);
             if (!currentChoices.some((item) => `${item.year}:${item.term}` === state.selected)) {
               const sameSeason = currentChoices.find((item) =>
@@ -215,20 +249,25 @@
             }
           } else {
             failures++;
+            state.syncReport.missing++;
+            trace.result = "一致する検索結果なし";
             state.failed[course.id] = Date.now();
           }
         } catch (error) {
           failures++;
+          state.syncReport.errors++;
+          trace.error = error.message;
           state.failed[course.id] = Date.now();
           lastFailure = error.message;
           state.status = `シラバス取得に失敗しました：${error.message}`;
         }
         completed++;
+        if (state.syncReport.samples.length < 8 || /データベース/.test(course.name)) state.syncReport.samples.push(trace);
         await saveStorage();
         render();
         if (completed < candidates.length) await new Promise((resolve) => setTimeout(resolve, 500));
       }
-      state.status = `${state.courses.length}科目を表示中。${completed - failures}科目のシラバスを取得しました。` +
+      state.status = summary() +
         (failures ? ` ${failures}科目は手動で配置できます。` : "") +
         (completed === failures && lastFailure ? ` 最後のエラー：${lastFailure}` : "");
     } catch (error) {
@@ -338,6 +377,7 @@
       state.showHidden = !state.showHidden; render();
     }));
     actions.appendChild(makeButton("予定を追加", () => editNote(null)));
+    actions.appendChild(makeButton("取得状況", showDiagnostics));
     header.appendChild(actions);
     state.root.appendChild(header);
     state.root.appendChild(el("p", "csh-status", state.status));
@@ -414,6 +454,33 @@
     overlay.addEventListener("click", (event) => { if (event.target === overlay) overlay.remove(); });
     document.body.appendChild(overlay);
     return { overlay, panel };
+  }
+
+  function showDiagnostics() {
+    const { overlay, panel } = modal("時間割の取得状況");
+    panel.appendChild(el("p", "", summary()));
+    panel.appendChild(el("p", "", "パスワードやログイン情報は含みません。内容を選択してコピーできます。"));
+    const years = {};
+    for (const course of state.courses) years[course.year ?? "不明"] = (years[course.year ?? "不明"] || 0) + 1;
+    const report = {
+      version: api.runtime.getManifest?.().version,
+      selected: state.selected,
+      courses: state.courses.length,
+      withSyllabusCode: state.courses.filter((course) => course.code).length,
+      years,
+      sync: state.syncReport,
+      samples: state.courses.filter((course) => course.code).slice(0, 6).map((course) => {
+        const record = state.records[course.id];
+        return { name: course.name, category: course.category, year: course.year, code: course.code,
+          syllabusYear: record?.syllabusYear, syllabusTerm: record?.syllabusTerm, placements: record?.placements?.length ?? 0 };
+      }),
+    };
+    const text = addField(panel, "診断情報", el("textarea"));
+    text.readOnly = true;
+    text.rows = 14;
+    text.value = JSON.stringify(report, null, 2);
+    text.addEventListener("click", () => text.select());
+    panel.appendChild(makeButton("閉じる", () => overlay.remove()));
   }
 
   function placementEditor(parent, value = {}) {

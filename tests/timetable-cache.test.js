@@ -49,7 +49,9 @@ class Element {
 async function startWithCachedCourses(fetchResponse) {
   const region = new Element("div");
   const writes = [];
-  const saved = { courses: [cachedCourse], records: {}, failed: {}, hidden: {}, notes: [],
+  const saved = { courses: [cachedCourse], records: {
+    "42": { syllabusKey: "cached-key", syllabusYear: 2026, syllabusTerm: "fall_semester", placements: [] },
+  }, failed: {}, hidden: {}, notes: [],
     selected: "2026:fall_semester" };
   const document = {
     documentElement: { innerHTML: "logout.php?sesskey=abc123" },

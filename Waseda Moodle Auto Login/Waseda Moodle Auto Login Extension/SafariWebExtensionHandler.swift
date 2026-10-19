@@ -22,7 +22,7 @@ final class SafariWebExtensionHandler: NSObject, NSExtensionRequestHandling {
 
         var request = URLRequest(url: url)
         request.timeoutInterval = 25
-        if let rawFields = message["fields"] {
+        if let rawFields = message["fields"], !(rawFields is NSNull) {
             guard url.path == "/syllabus/index.php",
                   let fields = rawFields as? [[String]],
                   fields.count <= 50,

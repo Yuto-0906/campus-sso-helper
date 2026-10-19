@@ -42,17 +42,18 @@ browser.runtime.onMessage.addListener(async (message, sender) => {
     // Safari on iPhone can reject extension-background requests even when the
     // syllabus page itself opens normally. The containing app can fetch it.
     try {
-      const native = await browser.runtime.sendNativeMessage("jp.yuto.campusssohelper", {
+      const request = {
         type: "campus-sso:syllabus-native",
         path: `${url.pathname}${url.search}`,
-        fields: message.fields,
-      });
-      if (native?.ok && typeof native.html === "string") return native;
+      };
+      if (message.fields) request.fields = message.fields;
+      const native = await browser.runtime.sendNativeMessage("jp.yuto.campusssohelper", request);
+      if (native?.ok && typeof native.html === "string") return { ...native, transport: "native" };
       return { ok: false, error: `シラバスを取得できませんでした: ${error.message}。代替取得: ${native?.error || "応答なし"}` };
     } catch (nativeError) {
       return { ok: false, error: `シラバスを取得できませんでした: ${error.message}。代替取得: ${nativeError.message}` };
     }
   }
   if (!response.ok) return { ok: false, error: `シラバスの応答: HTTP ${response.status}` };
-  return { ok: true, html: await response.text() };
+  return { ok: true, html: await response.text(), transport: "web" };
 });

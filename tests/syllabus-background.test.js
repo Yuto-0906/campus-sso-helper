@@ -34,6 +34,8 @@ test("Safariの通信失敗時だけネイティブ取得へ切り替える", as
   assert.equal(response.html, "<html>syllabus</html>");
   assert.equal(nativeRequest.appId, "jp.yuto.campusssohelper");
   assert.equal(nativeRequest.request.path, "/syllabus/JAA102.php");
+  assert.equal(Object.hasOwn(nativeRequest.request, "fields"), false);
+  assert.equal(response.transport, "native");
 });
 
 test("許可外のURLはネイティブ側にも転送しない", async () => {
