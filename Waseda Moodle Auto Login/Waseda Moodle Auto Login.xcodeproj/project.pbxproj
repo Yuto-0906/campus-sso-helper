@@ -476,7 +476,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 7;
 				DEVELOPMENT_TEAM = BBV3F75BKG;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Waseda Moodle Auto Login Extension/Info.plist";
@@ -488,7 +488,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.3.4;
+				MARKETING_VERSION = 1.3.5;
 				OTHER_LDFLAGS = (
 					"-framework",
 					SafariServices,
@@ -510,7 +510,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 7;
 				DEVELOPMENT_TEAM = BBV3F75BKG;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Waseda Moodle Auto Login Extension/Info.plist";
@@ -522,7 +522,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.3.4;
+				MARKETING_VERSION = 1.3.5;
 				OTHER_LDFLAGS = (
 					"-framework",
 					SafariServices,
@@ -546,7 +546,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 7;
 				DEVELOPMENT_TEAM = BBV3F75BKG;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Waseda Moodle Auto Login/Info.plist";
@@ -561,7 +561,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.3.4;
+				MARKETING_VERSION = 1.3.5;
 				OTHER_LDFLAGS = (
 					"-framework",
 					SafariServices,
@@ -587,7 +587,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 7;
 				DEVELOPMENT_TEAM = BBV3F75BKG;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Waseda Moodle Auto Login/Info.plist";
@@ -602,7 +602,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.3.4;
+				MARKETING_VERSION = 1.3.5;
 				OTHER_LDFLAGS = (
 					"-framework",
 					SafariServices,

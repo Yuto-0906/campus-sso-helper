@@ -195,6 +195,7 @@
       const pastYears = await oldYears();
       let completed = 0;
       let failures = 0;
+      let lastFailure;
       for (const course of candidates) {
         state.status = `シラバスを取得中 ${completed + 1}/${candidates.length}：${course.name}`;
         renderStatus();
@@ -219,6 +220,7 @@
         } catch (error) {
           failures++;
           state.failed[course.id] = Date.now();
+          lastFailure = error.message;
           state.status = `シラバス取得に失敗しました：${error.message}`;
         }
         completed++;
@@ -227,7 +229,8 @@
         if (completed < candidates.length) await new Promise((resolve) => setTimeout(resolve, 500));
       }
       state.status = `${state.courses.length}科目を表示中。${completed - failures}科目のシラバスを取得しました。` +
-        (failures ? ` ${failures}科目は手動で配置できます。` : "");
+        (failures ? ` ${failures}科目は手動で配置できます。` : "") +
+        (completed === failures && lastFailure ? ` 最後のエラー：${lastFailure}` : "");
     } catch (error) {
       state.status = state.coursesLoaded
         ? `${state.courses.length}科目を表示しています。更新に失敗しました：${error.message}`

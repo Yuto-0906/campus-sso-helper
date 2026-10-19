@@ -21,24 +21,38 @@ browser.runtime.onMessage.addListener(async (message, sender) => {
     return { ok: false, error: "許可されていないシラバスURLです。" };
   }
 
-  try {
-    const options = { credentials: "include", redirect: "follow" };
-    if (message.fields && url.pathname === "/syllabus/index.php") {
-      const form = new FormData();
-      for (const pair of message.fields) {
-        if (!Array.isArray(pair) || pair.length !== 2 ||
-            typeof pair[0] !== "string" || typeof pair[1] !== "string") {
-          return { ok: false, error: "検索条件が正しくありません。" };
-        }
-        form.append(pair[0], pair[1]);
+  const options = { credentials: "include", redirect: "follow" };
+  if (message.fields && url.pathname === "/syllabus/index.php") {
+    const form = new FormData();
+    for (const pair of message.fields) {
+      if (!Array.isArray(pair) || pair.length !== 2 ||
+          typeof pair[0] !== "string" || typeof pair[1] !== "string") {
+        return { ok: false, error: "検索条件が正しくありません。" };
       }
-      options.method = "POST";
-      options.body = form;
+      form.append(pair[0], pair[1]);
     }
-    const response = await fetch(url.href, options);
-    if (!response.ok) return { ok: false, error: `シラバスの応答: HTTP ${response.status}` };
-    return { ok: true, html: await response.text() };
-  } catch (error) {
-    return { ok: false, error: `シラバスを取得できませんでした: ${error.message}` };
+    options.method = "POST";
+    options.body = form;
   }
+
+  let response;
+  try {
+    response = await fetch(url.href, options);
+  } catch (error) {
+    // Safari on iPhone can reject extension-background requests even when the
+    // syllabus page itself opens normally. The containing app can fetch it.
+    try {
+      const native = await browser.runtime.sendNativeMessage("jp.yuto.campusssohelper", {
+        type: "campus-sso:syllabus-native",
+        path: `${url.pathname}${url.search}`,
+        fields: message.fields,
+      });
+      if (native?.ok && typeof native.html === "string") return native;
+      return { ok: false, error: `シラバスを取得できませんでした: ${error.message}。代替取得: ${native?.error || "応答なし"}` };
+    } catch (nativeError) {
+      return { ok: false, error: `シラバスを取得できませんでした: ${error.message}。代替取得: ${nativeError.message}` };
+    }
+  }
+  if (!response.ok) return { ok: false, error: `シラバスの応答: HTTP ${response.status}` };
+  return { ok: true, html: await response.text() };
 });
