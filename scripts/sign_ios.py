@@ -1,4 +1,4 @@
-"""Build and verify a development IPA for the registered iPad in GitHub Actions.
+"""Build and verify a development IPA for registered iOS devices in GitHub Actions.
 
 Signing material is used only in an ephemeral macOS keychain and is never logged.
 """
@@ -113,9 +113,9 @@ def main() -> None:
             if not re.fullmatch(r"[A-Fa-f0-9-]{36}", profile["UUID"]):
                 raise ValueError(f"{kind} profile UUID invalid")
             device_sets.append(set(profile["ProvisionedDevices"]))
-        if len(device_sets[0] & device_sets[1]) != 1:
-            raise ValueError("App and extension profiles must share one registered device")
-        print("PASS: app and extension development profiles match the registered device", flush=True)
+        if not device_sets[0] or device_sets[0] != device_sets[1]:
+            raise ValueError("App and extension profiles must list the same registered devices")
+        print("PASS: app and extension development profiles match the registered devices", flush=True)
 
         original_keychains = shlex.split(run(["security", "list-keychains", "-d", "user"]).decode())
         (directory / "original-keychains.json").write_text(json.dumps(original_keychains))

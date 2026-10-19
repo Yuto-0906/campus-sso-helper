@@ -1,4 +1,4 @@
-name: Signed iPad development IPA
+name: Signed iOS development IPA
 
 on:
   workflow_dispatch:
