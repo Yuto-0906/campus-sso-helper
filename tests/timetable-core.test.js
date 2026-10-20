@@ -144,7 +144,7 @@ test("年度のない連絡用コースから過去年度の学期タブを生�
   assert.equal(core.academicYear("連絡用"), null);
   assert.equal(core.academicYear("20201"), null);
   const choices = core.termChoices([
-    { id: "notice", year: 2020, code: "", startdate: new Date(2020, 3, 1).getTime() / 1000 },
+    { id: "notice", year: 2020, category: "2020", code: "ZZ26000001", startdate: new Date(2020, 3, 1).getTime() / 1000 },
     { id: "class", year: 2026, code: "2603034001" },
   ], {});
   assert.deepEqual([...new Set(choices.map((choice) => choice.year))], [2026]);
@@ -153,4 +153,14 @@ test("年度のない連絡用コースから過去年度の学期タブを生�
 test("授業情報のないHTMLをシラバス取得成功として受け入れない", () => {
   const doc = { querySelector: () => ({ querySelectorAll: () => [] }) };
   assert.throws(() => core.parseSyllabus(doc, "empty"), /年度・科目名・学期/);
+});
+
+test("シラバス情報が混入した非表示設定を除去し，明示的な設定は保持する", () => {
+  const corrupt = { class: { syllabusYear: 2026, placements: [] }, keep: true, show: false };
+  const hidden = core.sanitizeHidden(corrupt);
+  assert.deepEqual(hidden, { keep: true, show: false });
+  assert.deepEqual(core.sanitizeHidden(null), {});
+  assert.deepEqual(core.visibleCourses([
+    { id: "class" }, { id: "keep" }, { id: "show" }, { id: "moodle", hiddenByMoodle: true },
+  ], corrupt).map((course) => course.id), ["class", "show"]);
 });

@@ -46,10 +46,10 @@ class Element {
   set innerHTML(value) { this.value = value; }
 }
 
-async function startWithCachedCourses(fetchResponse) {
+async function startWithCachedCourses(fetchResponse, savedOverride) {
   const region = new Element("div");
   const writes = [];
-  const saved = { courses: [cachedCourse], records: {
+  const saved = savedOverride ?? { courses: [cachedCourse], records: {
     "42": { syllabusKey: "cached-key", syllabusYear: 2026, syllabusTerm: "fall_semester", placements: [] },
   }, failed: {}, hidden: {}, notes: [],
     selected: "2026:fall_semester" };
@@ -65,7 +65,7 @@ async function startWithCachedCourses(fetchResponse) {
       return null;
     },
   };
-  const browser = { storage: { local: {
+  const browser = { runtime: { sendMessage: async () => ({ ok: false, error: "シラバス対象外" }) }, storage: { local: {
     get: async (key) => key === "csh-timetable-v1:123" ? { [key]: saved } : {},
     set: async (value) => { writes.push(value["csh-timetable-v1:123"]); },
   } } };
@@ -89,7 +89,7 @@ test("保存済みの科目と学期を通信完了前に表示し，取得後�
   assert.equal(page.root.querySelector(".csh-active").textContent, "2026年 秋学期");
 
   completeFetch({ ok: true, json: async () => [{ data: { courses: [{
-    id: 99, fullname: "最新の科目", idnumber: "", coursecategory: "2026",
+    id: 99, fullname: "最新の科目", idnumber: "2026260303400101", coursecategory: "2026",
   }] } }] });
   await new Promise(setImmediate);
   assert.equal(page.root.querySelector(".csh-card-title").textContent, "最新の科目");
@@ -105,4 +105,20 @@ test("更新に失敗しても保存済みの科目を表示し続ける", async
   await new Promise(setImmediate);
   assert.equal(page.root.querySelector(".csh-card-title").textContent, "前回の科目");
   assert.match(page.root.querySelector(".csh-status").textContent, /更新に失敗しました：offline/);
+});
+
+test("非表示設定に授業情報が混入した保存データから2026年の表示を復元する", async () => {
+  const record = { syllabusKey: "cached-key", syllabusYear: 2026, syllabusTerm: "fall_semester", placements: [] };
+  const shared = { "42": record };
+  const saved = { courses: [cachedCourse], records: shared, hidden: shared, failed: {}, notes: [],
+    selected: "2025:fall_semester" };
+  const page = await startWithCachedCourses(Promise.resolve({ ok: true, json: async () => [{ data: { courses: [{
+    id: 42, fullname: cachedCourse.name, idnumber: "2026260303400101", coursecategory: "2026",
+  }] } }] }), saved);
+  await new Promise(setImmediate);
+  assert.equal(page.root.querySelector(".csh-card-title").textContent, cachedCourse.name);
+  assert.equal(page.root.querySelector(".csh-active").textContent, "2026年 秋学期");
+  assert.equal(Object.keys(page.writes.at(-1).hidden).length, 0);
+  assert.equal(page.writes.at(-1).records["42"].syllabusKey, "cached-key");
+  assert.equal(page.writes.at(-1).selected, "2026:fall_semester");
 });

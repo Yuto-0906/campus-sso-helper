@@ -80,11 +80,14 @@
     const identity = profile || moodleUser || prefs.userId || "local";
     state.storageKey = `csh-timetable-v1:${identity}`;
     const saved = (await api.storage.local.get(state.storageKey))[state.storageKey] ?? {};
-    state.records = saved.records ?? {};
-    state.failed = saved.failed ?? {};
-    state.hidden = saved.hidden ?? {};
+    // Keep each map independent across the Safari storage bridge and accept
+    // only explicit booleans as visibility preferences.
+    state.records = JSON.parse(JSON.stringify(saved.records ?? {}));
+    state.failed = Object.fromEntries(Object.entries(saved.failed ?? {}).filter(([, timestamp]) => Number.isFinite(timestamp)));
+    state.hidden = core.sanitizeHidden(saved.hidden);
     state.notes = saved.notes ?? [];
     state.selected = saved.selected;
+    if (Object.values(saved.hidden ?? {}).some((value) => typeof value !== "boolean")) state.selected = undefined;
     state.syncReport = saved.syncReport ?? null;
     for (const [id, record] of Object.entries(state.records)) {
       if (record.syllabusKey && !core.academicYear(record.syllabusYear)) {
@@ -107,7 +110,7 @@
   async function saveStorage() {
     if (!state.storageKey) return;
     const saved = {
-      records: state.records, failed: state.failed, hidden: state.hidden,
+      records: state.records, failed: state.failed, hidden: core.sanitizeHidden(state.hidden),
       notes: state.notes, selected: state.selected,
       syncReport: state.syncReport,
     };
@@ -382,7 +385,7 @@
     state.root.appendChild(header);
     state.root.appendChild(el("p", "csh-status", state.status));
 
-    const visible = state.courses.filter((course) => state.showHidden || !(course.hiddenByMoodle || state.hidden[course.id]));
+    const visible = core.visibleCourses(state.courses, state.hidden, state.showHidden);
     const choices = termChoices(visible);
     if (state.coursesFresh && state.selected !== null && state.selected !== undefined &&
         !choices.some((item) => `${item.year}:${item.term}` === state.selected)) {
@@ -530,7 +533,7 @@
     const color = addField(panel, "カードの色", el("input"));
     color.type = "color"; color.value = /^#[0-9a-f]{6}$/i.test(record.color ?? "") ? record.color : "#00ad88";
     const hidden = addField(panel, "この科目を非表示", el("input"));
-    hidden.type = "checkbox"; hidden.checked = Boolean(state.hidden[course.id]);
+    hidden.type = "checkbox"; hidden.checked = state.hidden[course.id] === true;
     const error = el("p", "csh-error"); panel.appendChild(error);
     const buttons = el("div", "csh-modal-actions");
     buttons.appendChild(makeButton("キャンセル", () => overlay.remove()));

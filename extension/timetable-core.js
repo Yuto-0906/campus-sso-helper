@@ -39,6 +39,16 @@
     return match ? Number(match[1]) : null;
   }
 
+  function sanitizeHidden(value = {}) {
+    if (!value || typeof value !== "object" || Array.isArray(value)) return {};
+    return Object.fromEntries(Object.entries(value).filter(([, hidden]) => typeof hidden === "boolean"));
+  }
+
+  function visibleCourses(courses, hidden, showHidden = false) {
+    return courses.filter((course) => showHidden ||
+      !(course.hiddenByMoodle === true || hidden[course.id] === true));
+  }
+
   function termFromLabel(label) {
     const value = normalize(label).toLowerCase();
     const names = [
@@ -168,7 +178,7 @@
         const year = record.syllabusYear || course.year;
         if (!byYear.has(year)) byYear.set(year, new Set());
         byYear.get(year).add(record.syllabusTerm);
-      } else if (course.year && (course.code || academicYear(course.category))) {
+      } else if (course.year && course.code && !/^ZZ/i.test(course.code)) {
         if (!byYear.has(course.year)) byYear.set(course.year, new Set());
         const start = course.startdate ? course.startdate * 1000 : null;
         const end = course.enddate ? course.enddate * 1000 : null;
@@ -196,6 +206,6 @@
     return choices.sort((a, b) => a.year - b.year || TERM_ORDER[a.term] - TERM_ORDER[b.term]);
   }
 
-  return Object.freeze({ TERMS, DAYS, PERIODS, normalize, schoolYear, academicYear, termFromLabel,
+  return Object.freeze({ TERMS, DAYS, PERIODS, normalize, schoolYear, academicYear, sanitizeHidden, visibleCourses, termFromLabel,
     termContains, isUnplacedInTerm, parseMeetings, parseSyllabus, parseSearchResults, termChoices });
 });
