@@ -22,8 +22,12 @@ struct CredentialStoreTests {
             kSecReturnAttributes as String: true
         ] as CFDictionary, &result)
         assert(status == errSecSuccess)
+        // macOS command-line tests use the legacy login keychain, which does not
+        // expose iOS accessibility attributes. iOS uses the data-protection store.
+        #if os(iOS)
         let attributes = result as! [String: Any]
         assert(attributes[kSecAttrAccessible as String] as? String == kSecAttrAccessibleWhenUnlockedThisDeviceOnly as String)
+        #endif
         do {
             try store.save("")
             assertionFailure("Empty password must be rejected")
@@ -31,6 +35,6 @@ struct CredentialStoreTests {
         try store.remove()
         expect(try store.load(), nil)
         try store.remove()
-        print("PASS: native Keychain create, read, update, migration, accessibility, delete")
+        print("PASS: native Keychain create, read, update, migration, delete")
     }
 }
