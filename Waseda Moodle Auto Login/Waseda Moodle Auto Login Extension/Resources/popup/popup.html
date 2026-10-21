@@ -4,12 +4,12 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Campus SSO Helper</title>
-    <link rel="stylesheet" href="popup.css?v=1.3.0" />
+    <link rel="stylesheet" href="popup.css?v=2.1.0" />
   </head>
   <body>
     <main>
       <header class="brand">
-        <img src="../icons/icon.svg?v=1.3.0" alt="" />
+        <img src="../icons/icon.svg?v=2.1.0" alt="" />
         <div>
           <h1>Campus SSO</h1>
           <p>Login Helper</p>
@@ -51,8 +51,9 @@
 
       <section class="notice" aria-label="セキュリティ情報">
         <strong>パスワードの保存について</strong>
-        <p>資格情報はこのSafari拡張機能のローカル領域に保存され，Microsoftのログイン画面への自動入力だけに使用されます。</p>
+        <p>パスワードはiOSのKeychainに保存し，Microsoftのログイン画面への自動入力だけに使用します。端末のロック中は読み出せません。</p>
       </section>
+      <p><a href="https://yuto-0906.github.io/campus-sso-helper/privacy.html" target="_blank" rel="noopener noreferrer">プライバシーポリシー</a></p>
       <p class="disclaimer">本拡張機能は対象教育機関およびMicrosoftの公式アプリではありません。</p>
     </main>
     <script src="../core.js"></script>

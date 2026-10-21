@@ -9,8 +9,15 @@ final class SafariWebExtensionHandler: NSObject, NSExtensionRequestHandling {
 
     func beginRequest(with context: NSExtensionContext) {
         let item = context.inputItems.first as? NSExtensionItem
-        guard let message = item?.userInfo?[SFExtensionMessageKey] as? [String: Any],
-              message["type"] as? String == "campus-sso:syllabus-native",
+        guard let message = item?.userInfo?[SFExtensionMessageKey] as? [String: Any] else {
+            complete(context, ["ok": false, "error": "要求が正しくありません。"])
+            return
+        }
+        if message["type"] as? String == "campus-sso:credentials-native" {
+            handleCredentials(message, context: context)
+            return
+        }
+        guard message["type"] as? String == "campus-sso:syllabus-native",
               let path = message["path"] as? String,
               let url = URL(string: path, relativeTo: syllabusOrigin)?.absoluteURL,
               url.scheme == "https",
@@ -66,6 +73,33 @@ final class SafariWebExtensionHandler: NSObject, NSExtensionRequestHandling {
             complete(context, ["ok": true, "html": html])
         }
         task.resume()
+    }
+
+    private func handleCredentials(_ message: [String: Any], context: NSExtensionContext) {
+        let store = CredentialStore()
+        do {
+            switch message["action"] as? String {
+            case "status":
+                complete(context, ["ok": true, "hasPassword": try store.load() != nil])
+            case "get":
+                complete(context, ["ok": true, "password": try store.load() ?? ""])
+            case "set", "migrate":
+                guard let password = message["password"] as? String else {
+                    complete(context, ["ok": false, "error": "パスワードが正しくありません。"])
+                    return
+                }
+                try store.save(password, overwrite: message["action"] as? String != "migrate")
+                complete(context, ["ok": true, "hasPassword": true])
+            case "remove":
+                try store.remove()
+                complete(context, ["ok": true, "hasPassword": false])
+            default:
+                complete(context, ["ok": false, "error": "許可されていない資格情報の操作です。"])
+            }
+        } catch {
+            // Do not expose Keychain contents or request fields in diagnostics.
+            complete(context, ["ok": false, "error": "Keychainを利用できません。端末のロックを解除して再度お試しください。"])
+        }
     }
 
     private func complete(_ context: NSExtensionContext, _ result: [String: Any]) {

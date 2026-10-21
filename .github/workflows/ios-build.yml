@@ -17,7 +17,12 @@ jobs:
           node --check extension/timetable-core.js
           node --check extension/timetable.js
           node --check extension/syllabus-background.js
-          node --test tests/timetable-core.test.js
+          node --test
+      - name: Verify native Keychain storage
+        run: |
+          swiftc 'Waseda Moodle Auto Login/Waseda Moodle Auto Login Extension/CredentialStore.swift' \
+            tests/native/CredentialStoreTests.swift -o "$RUNNER_TEMP/credential-store-tests"
+          "$RUNNER_TEMP/credential-store-tests"
       - name: Build iOS app and Safari extension
         run: |
           xcodebuild -project 'Waseda Moodle Auto Login/Waseda Moodle Auto Login.xcodeproj' \

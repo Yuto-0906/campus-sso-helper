@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CA2100012026102200000001 /* CredentialStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA2100012026102200000002 /* CredentialStore.swift */; };
+		CA2100012026102200000003 /* legal in Resources */ = {isa = PBXBuildFile; fileRef = CA2100012026102200000004 /* legal */; };
 		D19A40AB300A43FD0063AF71 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D19A40AA300A43FD0063AF71 /* AppDelegate.swift */; };
 		D19A40AF300A43FD0063AF71 /* Main.html in Resources */ = {isa = PBXBuildFile; fileRef = D19A40AD300A43FD0063AF71 /* Main.html */; };
 		D19A40B1300A43FD0063AF71 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = D19A40B0300A43FD0063AF71 /* Icon.png */; };
@@ -58,6 +60,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		CA2100012026102200000002 /* CredentialStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CredentialStore.swift; sourceTree = "<group>"; };
+		CA2100012026102200000004 /* legal */ = {isa = PBXFileReference; lastKnownFileType = folder; name = legal; path = Resources/legal; sourceTree = "<group>"; };
 		D19A40A7300A43FD0063AF71 /* Waseda Moodle Auto Login.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Waseda Moodle Auto Login.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D19A40AA300A43FD0063AF71 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D19A40AE300A43FD0063AF71 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = Base; path = Base.lproj/Main.html; sourceTree = "<group>"; };
@@ -126,6 +130,7 @@
 		D19A40A9300A43FD0063AF71 /* Waseda Moodle Auto Login */ = {
 			isa = PBXGroup;
 			children = (
+				CA2100012026102200000004 /* legal */,
 				D19A40AA300A43FD0063AF71 /* AppDelegate.swift */,
 				D19A40B4300A43FD0063AF71 /* SceneDelegate.swift */,
 				D19A40B6300A43FD0063AF71 /* ViewController.swift */,
@@ -154,6 +159,7 @@
 		D19A40C8300A43FE0063AF71 /* Waseda Moodle Auto Login Extension */ = {
 			isa = PBXGroup;
 			children = (
+				CA2100012026102200000002 /* CredentialStore.swift */,
 				D19A40D6300A43FE0063AF71 /* Resources */,
 				D19A40C9300A43FE0063AF71 /* SafariWebExtensionHandler.swift */,
 				D19A40CB300A43FE0063AF71 /* Info.plist */,
@@ -272,6 +278,7 @@
 				D19A40BD300A43FD0063AF71 /* Main.storyboard in Resources */,
 				D19A40BA300A43FD0063AF71 /* LaunchScreen.storyboard in Resources */,
 				D19A40AF300A43FD0063AF71 /* Main.html in Resources */,
+				CA2100012026102200000003 /* legal in Resources */,
 				D19A40CC300A43FE0063AF71 /* Assets.xcassets in Resources */,
 				D19A40B3300A43FD0063AF71 /* Style.css in Resources */,
 			);
@@ -312,6 +319,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D19A40CA300A43FE0063AF71 /* SafariWebExtensionHandler.swift in Sources */,
+				CA2100012026102200000001 /* CredentialStore.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -476,7 +484,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 10;
 				DEVELOPMENT_TEAM = BBV3F75BKG;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Waseda Moodle Auto Login Extension/Info.plist";
@@ -488,7 +496,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.3.7;
+				MARKETING_VERSION = 2.1.0;
 				OTHER_LDFLAGS = (
 					"-framework",
 					SafariServices,
@@ -510,7 +518,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 10;
 				DEVELOPMENT_TEAM = BBV3F75BKG;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Waseda Moodle Auto Login Extension/Info.plist";
@@ -522,7 +530,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.3.7;
+				MARKETING_VERSION = 2.1.0;
 				OTHER_LDFLAGS = (
 					"-framework",
 					SafariServices,
@@ -546,7 +554,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 10;
 				DEVELOPMENT_TEAM = BBV3F75BKG;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Waseda Moodle Auto Login/Info.plist";
@@ -561,7 +569,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.3.7;
+				MARKETING_VERSION = 2.1.0;
 				OTHER_LDFLAGS = (
 					"-framework",
 					SafariServices,
@@ -587,7 +595,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 10;
 				DEVELOPMENT_TEAM = BBV3F75BKG;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Waseda Moodle Auto Login/Info.plist";
@@ -602,7 +610,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.3.7;
+				MARKETING_VERSION = 2.1.0;
 				OTHER_LDFLAGS = (
 					"-framework",
 					SafariServices,

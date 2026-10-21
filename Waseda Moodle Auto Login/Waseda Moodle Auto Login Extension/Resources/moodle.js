@@ -5,14 +5,10 @@
   const api = globalThis.browser;
   if (!core || !api?.storage?.local) return;
 
-  const { enabled, userId, password, flowStartedAt } = await api.storage.local.get([
-    core.STORAGE_KEYS.enabled,
-    core.STORAGE_KEYS.userId,
-    core.STORAGE_KEYS.password,
-    core.STORAGE_KEYS.flowStartedAt,
-  ]);
-
-  if (!enabled || !userId || !password) return;
+  let settings;
+  try { settings = await core.credentialRequest("status"); } catch (_) { return; }
+  const { enabled, userId, hasPassword, flowStartedAt } = settings;
+  if (!enabled || !userId || !hasPassword) return;
 
   const isLoginPage = location.pathname === "/login/index.php" || location.pathname === "/login/";
   if (isLoginPage) {

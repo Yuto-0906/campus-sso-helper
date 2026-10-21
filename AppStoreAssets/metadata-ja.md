@@ -38,7 +38,7 @@ Campus SSO Helperは，Waseda Moodleへのログインを補助し，時間割�
 
 プライバシー
 
-資格情報と時間割データはSafari機能拡張のローカル領域に保存されます。資格情報はMicrosoftのログイン画面への入力にだけ使用されます。履修科目の検索には早稲田大学のWebシラバスを利用します。開発者のサーバーへは送信しません。広告，アクセス解析，第三者トラッキングは使用していません。
+パスワードはiOSのKeychainに保存し，端末のロック解除中にMicrosoftのログイン画面への入力だけに使用します。メールアドレスと時間割データはSafari機能拡張の端末内領域に保存します。履修科目の検索には早稲田大学のWebシラバスを利用します。開発者のサーバーへは送信しません。広告，アクセス解析，第三者トラッキングは使用していません。
 
 ご注意
 
@@ -48,11 +48,14 @@ Campus SSO Helperは，Waseda Moodleへのログインを補助し，時間割�
 
 SSO,Safari,機能拡張,ログイン,大学,学生,学習支援,自動入力,Microsoft
 
-## What's New 1.3.0
+## What's New 2.1.0
 
 - Waseda Moodleのダッシュボードに時間割を追加しました。
 - シラバスから曜日・時限・教室を自動取得できるようにしました。
 - 科目の手動配置，メモ，色，予定メモ，学期切替に対応しました。
+- 前回の時間割と選択中の学期を復元し，最新情報を確認しながら表示できるようにしました。
+- ログイン補助の動作を改善し，パスワードの保存先をiOSのKeychainへ変更しました。
+- アプリ内にプライバシーポリシーとオープンソースライセンスの表示を追加しました。
 
 ## Review Notes
 
@@ -61,7 +64,7 @@ Campus SSO Helper is an unofficial Safari Web Extension that assists a user-cont
 Important security details:
 - The extension requests access to `wsdmoodle.waseda.jp`, `login.microsoftonline.com`, and `www.wsl.waseda.jp/syllabus/*`.
 - The syllabus host is used to look up course codes and titles and retrieve timetable details after sign-in.
-- Credentials are saved locally in Safari extension storage and are never sent to the developer.
+- Passwords are stored in the iOS Keychain using kSecAttrAccessibleWhenUnlockedThisDeviceOnly. The previous local-storage password is removed only after a successful migration. The email address and timetable preferences remain in local extension storage. Credentials are never sent to the developer.
 - The password is inserted only into the Microsoft-hosted password field during a user-initiated login flow.
 - MFA, consent, password-change, and other additional-verification screens are never bypassed.
 - The app contains no analytics, advertising, or tracking SDKs.
@@ -69,6 +72,8 @@ Important security details:
 The live flow requires an active account issued by the supported educational institution. Such credentials cannot be shared with App Review. The containing app explains setup and data handling. Please contact the developer through App Store Connect if additional review material is required.
 
 This app is not affiliated with or endorsed by Waseda University, Moodle Pty Ltd, or Microsoft.
+
+Changes from the released version 2.0.0: timetable display, public syllabus lookups, restored term selection, cached timetable display, and password storage protection. Timetable data is obtained for the signed-in user on their own device, not through a developer backend. Syllabus requests are sequential, paced, and cached. We do not distribute course materials or bypass access controls. The containing app includes the MIT license and attribution for the Better Waseda Moodle reference implementation.
 
 ## App Privacy
 

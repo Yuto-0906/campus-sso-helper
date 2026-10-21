@@ -1,8 +1,82 @@
 "use strict";
 
+let credentialQueue = Promise.resolve();
+
+async function nativeCredentials(action, password) {
+  const request = { type: "campus-sso:credentials-native", action };
+  if (password !== undefined) request.password = password;
+  const result = await browser.runtime.sendNativeMessage("jp.yuto.campusssohelper", request);
+  if (!result?.ok) throw new Error(result?.error || "Keychainを利用できません。端末のロックを解除して再度お試しください。");
+  return result;
+}
+
+async function handleCredentials(message, sender) {
+  const sourceURL = sender?.url || sender?.tab?.url;
+  let source;
+  try { source = new URL(sourceURL); } catch (_) { /* Reject below. */ }
+  const popup = sourceURL === browser.runtime.getURL("popup/popup.html");
+  const microsoft = source?.origin === "https://login.microsoftonline.com";
+  const moodle = source?.origin === "https://wsdmoodle.waseda.jp";
+  if (sender?.id && sender.id !== browser.runtime.id || !popup && !microsoft && !moodle ||
+      ["save", "clear"].includes(message.action) && !popup || message.action === "login" && !microsoft ||
+      !["status", "save", "login", "clear"].includes(message.action)) {
+    return { ok: false, error: "許可されていない資格情報の要求です。" };
+  }
+  try {
+    if (message.action === "clear") {
+      await nativeCredentials("remove");
+      await browser.storage.local.remove(["password", "enabled", "userId", "flowStartedAt"]);
+      return { ok: true };
+    }
+    const settings = await browser.storage.local.get(["enabled", "userId", "flowStartedAt"]);
+    if (message.action === "login") {
+      const started = Number(settings.flowStartedAt);
+      const elapsed = Date.now() - started;
+      if (!settings.enabled || !settings.userId || !Number.isFinite(started) || started <= 0 ||
+          elapsed < 0 || elapsed > 120000) {
+        return { ok: false, error: "有効なログイン操作がありません。" };
+      }
+    }
+    // Delete the legacy value only after the native store confirms the migration.
+    const legacy = await browser.storage.local.get("password");
+    if (typeof legacy.password === "string" && legacy.password) {
+      await nativeCredentials("migrate", legacy.password);
+      await browser.storage.local.remove("password");
+    }
+    if (message.action === "login") return nativeCredentials("get");
+    let result = await nativeCredentials("status");
+    if (message.action === "save") {
+      if (typeof message.userId !== "string" || message.userId.length > 254 ||
+          typeof message.enabled !== "boolean" || typeof message.password !== "string" ||
+          message.password.length > 4096) {
+        return { ok: false, error: "入力内容を確認してください。" };
+      }
+      const userId = message.userId.trim();
+      if (result.hasPassword && userId !== (settings.userId ?? "") && !message.password) {
+        return { ok: false, error: "メールアドレスを変更するときはパスワードも入力してください。" };
+      }
+      if (message.enabled && (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(userId) || !message.password && !result.hasPassword)) {
+        return { ok: false, error: "メールアドレスとパスワードを入力してください。" };
+      }
+      if (message.password) result = await nativeCredentials("set", message.password);
+      await browser.storage.local.set({ enabled: message.enabled, userId });
+      return { ok: true, hasPassword: Boolean(result.hasPassword), userId, enabled: message.enabled };
+    }
+    return { ok: true, hasPassword: Boolean(result.hasPassword), userId: settings.userId ?? "",
+      enabled: Boolean(settings.enabled), flowStartedAt: settings.flowStartedAt };
+  } catch (_) {
+    return { ok: false, error: "Keychainを利用できません。端末のロックを解除し，Safariを再読み込みしてください。" };
+  }
+}
+
 // The content script can read Moodle's DOM, while the extension background has
 // the host permission needed to request Waseda's separate syllabus origin.
 browser.runtime.onMessage.addListener(async (message, sender) => {
+  if (message?.type === "campus-sso:credentials") {
+    const result = credentialQueue.then(() => handleCredentials(message, sender));
+    credentialQueue = result.catch(() => undefined);
+    return result;
+  }
   if (message?.type !== "campus-sso:syllabus-request") return undefined;
   const sourceURL = sender?.url || sender?.tab?.url;
   let source;
