@@ -1,0 +1,21 @@
+{
+  "sourceCommit": "bf90ba7",
+  "workflow": "https://github.com/Yuto-0906/campus-sso-helper/actions/runs/39789978190",
+  "method": "Actual simulator screenshots; one launch stops at each requested public sample control state",
+  "files": {
+    "iPad-13/01-guide.png": "c05ab69b10246a90b7af4140b2637598baa62b2738c86d4c8ebb939a9add27ef",
+    "iPad-13/02-timetable-sample.png": "4d884b974770cafd63fa2308be2c7a6a41276f3805c0dfea03e9afbf868ee626",
+    "iPad-13/03-course-editor.png": "2d4482d8c395908182f3ca7fb5b8bb0f677610150f3ae171c2c7f4f5288a6df3",
+    "iPad-13/04-course-note.png": "c76fe8a822a52a7a8605068b7c5d2935c01c608362a41468c70530bdad517f72",
+    "iPad-13/05-spring-term.png": "69409714e8148771c220aa9fea47b40e59b898f19f2e6e4cf7e80d70dbfc72a0",
+    "iPad-13/06-note-editor.png": "d1dc1d091137da530c9a71e0b044999263f49b3e9ec884967c8f2e5bba28bb19",
+    "iPad-13/07-schedule-note.png": "4b140782ba0e9aeee28f320099c71facfed911c12eaa42ba00921d1aaa165471",
+    "iPhone-6.9/01-guide.png": "bb70742028ef82506a03f0187dbfc6f8609cb25ae55dcd93a9fa0a4c9a8187e7",
+    "iPhone-6.9/02-timetable-sample.png": "c3cdabdacea42266ddce802960d4ce66a4c1f3d642736cd909d6a576215351b1",
+    "iPhone-6.9/03-course-editor.png": "eadf9a9380bc8ccb4305134d4e78c778ac18e6340dd9ab655d0872367e12e79e",
+    "iPhone-6.9/04-course-note.png": "94a2071892bc3ef5ea7093b22bbb308605a3d42027b74d3578e319a23c25e898",
+    "iPhone-6.9/05-spring-term.png": "ac37a60b4b23719c59d6d1eb03e2dd04fd8c4979b8659782e1a8d4c4fce6af59",
+    "iPhone-6.9/06-note-editor.png": "6660508372fd7053fc8d630a6eb1b215d3ad69a1411504b4a119f83780d7e053",
+    "iPhone-6.9/07-schedule-note.png": "22f987b173a040683caa3490a5280af77e43e78026cc65e8fd0ac8b89054b6d5"
+  }
+}

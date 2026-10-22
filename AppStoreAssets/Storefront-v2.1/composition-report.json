@@ -1,0 +1,77 @@
+{
+  "name": "WasePlus｜Safari拡張",
+  "subtitle": "時間割とログイン",
+  "note": "Real simulator sample UI, only scaled and framed. Fictional data; no institutional credentials.",
+  "report": [
+    {
+      "family": "iPhone-6.9",
+      "files": [
+        {
+          "file": "AppStoreAssets/Storefront-v2.1/iPhone-6.9/01-timetable.png",
+          "source": "02-timetable-sample.png",
+          "width": 1320,
+          "height": 2868
+        },
+        {
+          "file": "AppStoreAssets/Storefront-v2.1/iPhone-6.9/02-customize.png",
+          "source": "03-course-editor.png",
+          "width": 1320,
+          "height": 2868
+        },
+        {
+          "file": "AppStoreAssets/Storefront-v2.1/iPhone-6.9/03-remember.png",
+          "source": "05-spring-term.png",
+          "width": 1320,
+          "height": 2868
+        },
+        {
+          "file": "AppStoreAssets/Storefront-v2.1/iPhone-6.9/04-sign-in.png",
+          "source": "01-guide.png",
+          "width": 1320,
+          "height": 2868
+        },
+        {
+          "file": "AppStoreAssets/Storefront-v2.1/iPhone-6.9/05-schedule.png",
+          "source": "07-schedule-note.png",
+          "width": 1320,
+          "height": 2868
+        }
+      ]
+    },
+    {
+      "family": "iPad-13",
+      "files": [
+        {
+          "file": "AppStoreAssets/Storefront-v2.1/iPad-13/01-timetable.png",
+          "source": "02-timetable-sample.png",
+          "width": 2064,
+          "height": 2752
+        },
+        {
+          "file": "AppStoreAssets/Storefront-v2.1/iPad-13/02-customize.png",
+          "source": "03-course-editor.png",
+          "width": 2064,
+          "height": 2752
+        },
+        {
+          "file": "AppStoreAssets/Storefront-v2.1/iPad-13/03-remember.png",
+          "source": "05-spring-term.png",
+          "width": 2064,
+          "height": 2752
+        },
+        {
+          "file": "AppStoreAssets/Storefront-v2.1/iPad-13/04-sign-in.png",
+          "source": "01-guide.png",
+          "width": 2064,
+          "height": 2752
+        },
+        {
+          "file": "AppStoreAssets/Storefront-v2.1/iPad-13/05-schedule.png",
+          "source": "07-schedule-note.png",
+          "width": 2064,
+          "height": 2752
+        }
+      ]
+    }
+  ]
+}

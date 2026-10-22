@@ -26,7 +26,7 @@ Waseda MoodleからMicrosoft SSOへのログインを補助し，Moodleのダッ
 - 学期切替，科目からMoodle・シラバスへの移動，科目メモ，色，予定メモ，非表示に対応する。
 - 最後に選択した学期を端末に保存し，次にダッシュボードを開いたときに復元する。
 - 時間割はiPhone・iPadのSafari内に表示される。Chrome拡張機能に保存された時間割設定はSafariへ自動転送されない。
-- 元の拡張機能の仕様とMITライセンスは[THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)を参照。
+- 時間割機能は，mkihr-ojisan氏の[Better Waseda Moodle](https://github.com/mkihr-ojisan/better-waseda-moodle)の仕様と公開実装（v0.9.5，MIT License）を参考に，iOS向けに実装した。作者名とMITライセンス全文はアプリ内と[THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)に掲載している。
 
 ## 構成
 

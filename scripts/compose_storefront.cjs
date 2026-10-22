@@ -3,6 +3,7 @@
 const fs = require("node:fs/promises");
 const path = require("node:path");
 const sharp = require("sharp");
+const { createHash } = require("node:crypto");
 
 const ROOT = path.resolve(__dirname, "..");
 const OUT = path.join(ROOT, "AppStoreAssets/Storefront-v2.1");
@@ -37,6 +38,9 @@ async function screen(source, width, height, radius) {
 }
 
 async function compose(family, width, height) {
+  const hashes = await Promise.all(slides.map(async (slide) => createHash("sha256")
+    .update(await fs.readFile(path.join(SOURCES, family, slide.image))).digest("hex")));
+  if (new Set(hashes).size !== slides.length) throw new Error(`${family}: expected distinct actual UI states`);
   const pad = family === "iPad-13";
   const x = pad ? 132 : 88;
   const brandY = pad ? 98 : 84;
@@ -47,7 +51,7 @@ async function compose(family, width, height) {
   const line = pad ? 148 : 120;
   const copyY = pad ? 636 : 618;
   const copySize = pad ? 42 : 33;
-  const deviceWidth = pad ? 1428 : 884;
+  const deviceWidth = pad ? 1400 : 884;
   const deviceHeight = Math.round(deviceWidth * (pad ? 2752 / 2064 : 2868 / 1320));
   const deviceX = Math.round((width - deviceWidth) / 2);
   const deviceY = pad ? 778 : 828;
