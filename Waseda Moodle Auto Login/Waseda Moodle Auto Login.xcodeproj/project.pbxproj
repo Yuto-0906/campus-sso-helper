@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CA2100012026102200000005 /* demo in Resources */ = {isa = PBXBuildFile; fileRef = CA2100012026102200000006 /* demo */; };
 		CA2100012026102200000001 /* CredentialStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA2100012026102200000002 /* CredentialStore.swift */; };
 		CA2100012026102200000003 /* legal in Resources */ = {isa = PBXBuildFile; fileRef = CA2100012026102200000004 /* legal */; };
 		D19A40AB300A43FD0063AF71 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D19A40AA300A43FD0063AF71 /* AppDelegate.swift */; };
@@ -60,6 +61,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		CA2100012026102200000006 /* demo */ = {isa = PBXFileReference; lastKnownFileType = folder; name = demo; path = Resources/demo; sourceTree = "<group>"; };
 		CA2100012026102200000002 /* CredentialStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CredentialStore.swift; sourceTree = "<group>"; };
 		CA2100012026102200000004 /* legal */ = {isa = PBXFileReference; lastKnownFileType = folder; name = legal; path = Resources/legal; sourceTree = "<group>"; };
 		D19A40A7300A43FD0063AF71 /* Waseda Moodle Auto Login.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Waseda Moodle Auto Login.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -131,6 +133,7 @@
 			isa = PBXGroup;
 			children = (
 				CA2100012026102200000004 /* legal */,
+				CA2100012026102200000006 /* demo */,
 				D19A40AA300A43FD0063AF71 /* AppDelegate.swift */,
 				D19A40B4300A43FD0063AF71 /* SceneDelegate.swift */,
 				D19A40B6300A43FD0063AF71 /* ViewController.swift */,
@@ -279,6 +282,7 @@
 				D19A40BA300A43FD0063AF71 /* LaunchScreen.storyboard in Resources */,
 				D19A40AF300A43FD0063AF71 /* Main.html in Resources */,
 				CA2100012026102200000003 /* legal in Resources */,
+				CA2100012026102200000005 /* demo in Resources */,
 				D19A40CC300A43FE0063AF71 /* Assets.xcassets in Resources */,
 				D19A40B3300A43FD0063AF71 /* Style.css in Resources */,
 			);

@@ -46,7 +46,7 @@ Campus SSO Helperは，Waseda Moodleへのログインを補助し，時間割�
 
 ## Keywords
 
-SSO,Safari,機能拡張,ログイン,大学,学生,学習支援,自動入力,Microsoft
+SSO,Safari,機能拡張,ログイン,大学,学生,時間割,シラバス,学習支援,自動入力,Microsoft
 
 ## What's New 2.1.0
 
@@ -56,6 +56,7 @@ SSO,Safari,機能拡張,ログイン,大学,学生,学習支援,自動入力,Mic
 - 前回の時間割と選択中の学期を復元し，最新情報を確認しながら表示できるようにしました。
 - ログイン補助の動作を改善し，パスワードの保存先をiOSのKeychainへ変更しました。
 - アプリ内にプライバシーポリシーとオープンソースライセンスの表示を追加しました。
+- 大学アカウントなしで試せる時間割サンプルを追加し，アプリアイコンを変更しました。
 
 ## Review Notes
 
@@ -68,6 +69,7 @@ Important security details:
 - The password is inserted only into the Microsoft-hosted password field during a user-initiated login flow.
 - MFA, consent, password-change, and other additional-verification screens are never bypassed.
 - The app contains no analytics, advertising, or tracking SDKs.
+- To review the timetable without an institutional account, open the containing app and tap "時間割のサンプルを試す" (Try the timetable sample). This offline page uses fictional courses and the same timetable renderer and editor as the extension. It supports term switching, course edits, colors, hiding, and schedule notes. Closing the sample discards its edits. It does not contact university or sign-in services.
 
 The live flow requires an active account issued by the supported educational institution. Such credentials cannot be shared with App Review. The containing app explains setup and data handling. Please contact the developer through App Store Connect if additional review material is required.
 

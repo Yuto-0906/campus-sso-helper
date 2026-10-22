@@ -1,4 +1,4 @@
-"""Build and verify a development IPA for registered iOS devices in GitHub Actions.
+"""Build and verify a development or App Store IPA in GitHub Actions.
 
 Signing material is used only in an ephemeral macOS keychain and is never logged.
 """
@@ -29,6 +29,10 @@ SECRETS = (
     "IOS_APP_PROFILE_BASE64",
     "IOS_EXTENSION_PROFILE_BASE64",
 )
+STORE_SECRETS = (
+    "APPLE_DISTRIBUTION_P12_BASE64", "APPLE_DISTRIBUTION_P12_PASSWORD",
+    "IOS_APP_STORE_PROFILE_BASE64", "IOS_EXTENSION_APP_STORE_PROFILE_BASE64",
+)
 
 
 def cleanup(directory: Path) -> None:
@@ -56,8 +60,9 @@ def cleanup(directory: Path) -> None:
     shutil.rmtree(directory)
 
 
-def main() -> None:
-    materials = {name: os.environ.pop(name, "") for name in SECRETS}
+def main(app_store: bool = False, upload: bool = False) -> None:
+    secret_names = STORE_SECRETS if app_store else SECRETS
+    materials = {name: os.environ.pop(name, "") for name in secret_names}
     if not all(materials.values()):
         raise ValueError("All four approved signing secrets are required")
     directory = Path(tempfile.mkdtemp(prefix="campus-sso-signing-", dir=os.environ["RUNNER_TEMP"]))
@@ -65,10 +70,10 @@ def main() -> None:
         stream.write(f"CAMPUS_SSO_SIGNING_TEMP={directory}\n")
     keychain = directory / "signing.keychain-db"
     keychain_password = secrets.token_urlsafe(40)
-    passwords = (materials["APPLE_DEVELOPMENT_P12_PASSWORD"], keychain_password)
+    passwords = (materials[secret_names[1]], keychain_password)
 
-    def run(args: list[str]) -> bytes:
-        result = subprocess.run(args, cwd=ROOT, capture_output=True)
+    def run(args: list[str], cwd: Path = ROOT) -> bytes:
+        result = subprocess.run(args, cwd=cwd, capture_output=True)
         if result.returncode:
             diagnostic = (result.stdout + b"\n" + result.stderr).decode("utf-8", errors="replace")
             for password in passwords:
@@ -85,9 +90,9 @@ def main() -> None:
             "app": directory / "app.mobileprovision",
             "extension": directory / "extension.mobileprovision",
         }
-        paths["p12"].write_bytes(base64.b64decode(materials.pop(SECRETS[0]), validate=True))
-        paths["app"].write_bytes(base64.b64decode(materials.pop(SECRETS[2]), validate=True))
-        paths["extension"].write_bytes(base64.b64decode(materials.pop(SECRETS[3]), validate=True))
+        paths["p12"].write_bytes(base64.b64decode(materials.pop(secret_names[0]), validate=True))
+        paths["app"].write_bytes(base64.b64decode(materials.pop(secret_names[2]), validate=True))
+        paths["extension"].write_bytes(base64.b64decode(materials.pop(secret_names[3]), validate=True))
         for path in paths.values():
             path.chmod(0o600)
 
@@ -106,16 +111,20 @@ def main() -> None:
                 raise ValueError(f"{kind} profile team mismatch")
             if entitlements.get("application-identifier") != f"{prefix}.{expected_ids[kind]}":
                 raise ValueError(f"{kind} profile Bundle ID mismatch")
-            if entitlements.get("get-task-allow") is not True or not profile.get("ProvisionedDevices"):
+            if app_store:
+                if entitlements.get("get-task-allow") is True or profile.get("ProvisionedDevices") or \
+                        profile.get("ProvisionsAllDevices") or entitlements.get("beta-reports-active") is not True:
+                    raise ValueError(f"{kind} is not an App Store distribution profile")
+            elif entitlements.get("get-task-allow") is not True or not profile.get("ProvisionedDevices"):
                 raise ValueError(f"{kind} is not an iOS development profile")
             if expiry[kind] <= datetime.now(timezone.utc):
                 raise ValueError(f"{kind} profile expired")
             if not re.fullmatch(r"[A-Fa-f0-9-]{36}", profile["UUID"]):
                 raise ValueError(f"{kind} profile UUID invalid")
-            device_sets.append(set(profile["ProvisionedDevices"]))
-        if not device_sets[0] or device_sets[0] != device_sets[1]:
+            device_sets.append(set(profile.get("ProvisionedDevices", [])))
+        if not app_store and (not device_sets[0] or device_sets[0] != device_sets[1]):
             raise ValueError("App and extension profiles must list the same registered devices")
-        print("PASS: app and extension development profiles match the registered devices", flush=True)
+        print("PASS: app and extension profiles match the requested distribution method", flush=True)
 
         original_keychains = shlex.split(run(["security", "list-keychains", "-d", "user"]).decode())
         (directory / "original-keychains.json").write_text(json.dumps(original_keychains))
@@ -123,7 +132,7 @@ def main() -> None:
         run(["security", "set-keychain-settings", "-lut", "21600", str(keychain)])
         run(["security", "unlock-keychain", "-p", keychain_password, str(keychain)])
         run(["security", "list-keychains", "-d", "user", "-s", str(keychain), *original_keychains])
-        run(["security", "import", str(paths["p12"]), "-P", materials.pop(SECRETS[1]), "-k", str(keychain),
+        run(["security", "import", str(paths["p12"]), "-P", materials.pop(secret_names[1]), "-k", str(keychain),
              "-T", "/usr/bin/codesign", "-T", "/usr/bin/security"])
         run(["security", "set-key-partition-list", "-S", "apple-tool:,apple:,codesign:",
              "-s", "-k", keychain_password, str(keychain)])
@@ -150,15 +159,36 @@ def main() -> None:
 
         project = ROOT / "Waseda Moodle Auto Login/Waseda Moodle Auto Login.xcodeproj"
         derived = ROOT / "build/signed-device"
-        run(["xcodebuild", "-quiet", "-project", str(project), "-scheme", "Waseda Moodle Auto Login",
-             "-configuration", "Debug", "-destination", "generic/platform=iOS", "-derivedDataPath", str(derived),
+        archive = ROOT / "build/CampusSSOHelper.xcarchive"
+        command = ["xcodebuild", "-quiet", "-project", str(project), "-scheme", "Waseda Moodle Auto Login",
+             "-configuration", "Release" if app_store else "Debug", "-destination", "generic/platform=iOS", "-derivedDataPath", str(derived),
              "CODE_SIGN_STYLE=Manual", f"DEVELOPMENT_TEAM={TEAM_ID}", f"CODE_SIGN_IDENTITY={identity}",
              f"IOS_APP_PROFILE_UUID={profiles['app']['UUID']}",
              f"IOS_EXTENSION_PROFILE_UUID={profiles['extension']['UUID']}",
-             f"OTHER_CODE_SIGN_FLAGS=--keychain {keychain}", "build"])
+             f"OTHER_CODE_SIGN_FLAGS=--keychain {keychain}"]
+        if app_store:
+            command += ["-archivePath", str(archive), "archive"]
+        else:
+            command += ["build"]
+        run(command)
         print("PASS: signed iOS device build", flush=True)
 
-        app = derived / "Build/Products/Debug-iphoneos/Waseda Moodle Auto Login.app"
+        exported_ipa = None
+        if app_store:
+            options = directory / "ExportOptions.plist"
+            options.write_bytes(plistlib.dumps({
+                "method": "app-store-connect", "signingStyle": "manual", "teamID": TEAM_ID,
+                "signingCertificate": identity, "manageAppVersionAndBuildNumber": False,
+                "provisioningProfiles": {expected_ids[kind]: profile["UUID"] for kind, profile in profiles.items()},
+            }))
+            exported = ROOT / "build/app-store-export"
+            run(["xcodebuild", "-quiet", "-exportArchive", "-archivePath", str(archive),
+                 "-exportOptionsPlist", str(options), "-exportPath", str(exported)])
+            exported_ipa = next(exported.glob("*.ipa"))
+            run(["ditto", "-x", "-k", str(exported_ipa), str(directory / "exported")])
+            app = directory / "exported/Payload/Waseda Moodle Auto Login.app"
+        else:
+            app = derived / "Build/Products/Debug-iphoneos/Waseda Moodle Auto Login.app"
         extension = app / "PlugIns/Waseda Moodle Auto Login Extension.appex"
         if not app.is_dir() or not extension.is_dir():
             raise ValueError("Signed app or Safari extension is missing")
@@ -174,21 +204,28 @@ def main() -> None:
             signed = plistlib.loads(run(["codesign", "-d", "--entitlements", ":-", str(bundle)]))
             expected = profiles[kind]["Entitlements"]
             for name in ("application-identifier", "com.apple.developer.team-identifier", "get-task-allow"):
-                if signed.get(name) != expected.get(name):
+                actual_value = bool(signed.get(name)) if name == "get-task-allow" else signed.get(name)
+                expected_value = bool(expected.get(name)) if name == "get-task-allow" else expected.get(name)
+                if actual_value != expected_value:
                     raise ValueError(f"{kind} signed entitlement mismatch: {name}")
             embedded = plistlib.loads(run(["security", "cms", "-D", "-i", str(bundle / "embedded.mobileprovision")]))
             if embedded["UUID"] != profiles[kind]["UUID"]:
                 raise ValueError(f"{kind} embedded profile mismatch")
         print("PASS: app and extension signatures, entitlements and embedded profiles verified", flush=True)
 
-        payload = directory / "Payload"
-        payload.mkdir()
-        run(["ditto", str(app), str(payload / app.name)])
+        if not (app / "legal/licenses.html").is_file() or not (app / "legal/privacy.html").is_file():
+            raise ValueError("Bundled license or privacy policy is missing")
         output = ROOT / "build/ipa"
         output.mkdir(parents=True, exist_ok=True)
         version = plistlib.loads((app / "Info.plist").read_bytes())
         ipa = output / f"CampusSSOHelper-{version['CFBundleShortVersionString']}-build{version['CFBundleVersion']}.ipa"
-        run(["ditto", "-c", "-k", "--keepParent", str(payload), str(ipa)])
+        if exported_ipa:
+            shutil.copyfile(exported_ipa, ipa)
+        else:
+            payload = directory / "Payload"
+            payload.mkdir()
+            run(["ditto", str(app), str(payload / app.name)])
+            run(["ditto", "-c", "-k", "--keepParent", str(payload), str(ipa)])
         digest = hashlib.sha256(ipa.read_bytes()).hexdigest()
         (output / f"{ipa.name}.sha256").write_text(f"{digest}  {ipa.name}\n")
         report = {
@@ -196,11 +233,27 @@ def main() -> None:
             "appBundleId": APP_ID, "extensionBundleId": EXTENSION_ID,
             "version": version["CFBundleShortVersionString"], "build": version["CFBundleVersion"],
             "platform": "iPhoneOS", "signatureVerified": True,
+            "distribution": "app-store" if app_store else "development", "uploadedToAppStoreConnect": False,
             "appProfileExpiresUTC": expiry["app"].isoformat(),
             "extensionProfileExpiresUTC": expiry["extension"].isoformat(), "sha256": digest,
         }
+        if upload:
+            key_id = os.environ.pop("APP_STORE_CONNECT_KEY_ID", "").strip()
+            issuer = os.environ.pop("APP_STORE_CONNECT_ISSUER_ID", "").strip()
+            encoded_key = os.environ.pop("APP_STORE_CONNECT_P8_BASE64", "")
+            if not app_store or not re.fullmatch(r"[A-Z0-9]{10}", key_id) or not re.fullmatch(r"[a-fA-F0-9-]{36}", issuer):
+                raise ValueError("App Store upload credentials are missing or invalid")
+            keys = directory / "private_keys"
+            keys.mkdir(mode=0o700)
+            key_file = keys / f"AuthKey_{key_id}.p8"
+            key_file.write_bytes(base64.b64decode(encoded_key, validate=True))
+            key_file.chmod(0o600)
+            run(["xcrun", "altool", "--upload-app", "--type", "ios", "-f", str(ipa),
+                 "--apiKey", key_id, "--apiIssuer", issuer], cwd=directory)
+            report["uploadedToAppStoreConnect"] = True
+            print("PASS: IPA uploaded to App Store Connect; no review submission requested", flush=True)
         (output / "build-report.json").write_text(json.dumps(report, indent=2) + "\n")
-        print(f"PASS: development IPA created for {APP_ID} {report['version']} ({report['build']})")
+        print(f"PASS: {report['distribution']} IPA created for {APP_ID} {report['version']} ({report['build']})")
     finally:
         materials.clear()
         cleanup(directory)
@@ -213,6 +266,10 @@ if __name__ == "__main__":
                 cleanup(Path(os.environ["CAMPUS_SSO_SIGNING_TEMP"]))
         elif len(sys.argv) == 1:
             main()
+        elif sys.argv[1:] == ["--app-store", "--upload"]:
+            main(app_store=True, upload=True)
+        elif sys.argv[1:] == ["--app-store"]:
+            main(app_store=True)
         else:
             raise ValueError("Unexpected arguments")
     except (ValueError, KeyError, RuntimeError) as error:

@@ -1,7 +1,6 @@
 """Keep the app's bundled resources in sync with the reviewed source files."""
 from html import escape
 from pathlib import Path
-import json
 import shutil
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -31,3 +30,5 @@ license_text = notice[notice.index("MIT License"):].strip()
 <pre style="white-space:pre-wrap;overflow-wrap:anywhere;font-size:14px;line-height:1.7">''' + escape(license_text) + '''</pre>
 </section></main></body></html>''', encoding="utf-8")
 print("PASS: extension resources, bundled privacy policy and complete MIT license synchronized")
+for name in ("timetable-core.js", "timetable.js", "timetable.css"):
+    shutil.copyfile(ROOT / "extension" / name, APP / "demo" / name)

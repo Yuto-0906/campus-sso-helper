@@ -1,8 +1,10 @@
 (async function startTimetable() {
   "use strict";
 
-  if (location.hostname !== "wsdmoodle.waseda.jp" || !location.pathname.startsWith("/my/")) return;
-  const api = globalThis.browser;
+  const sample = globalThis.CampusTimetableSample &&
+    (location.protocol === "file:" || location.hostname === "127.0.0.1") ? globalThis.CampusTimetableSample : null;
+  if (!sample && (location.hostname !== "wsdmoodle.waseda.jp" || !location.pathname.startsWith("/my/"))) return;
+  const api = sample ? { storage: { local: { set: async () => {} } } } : globalThis.browser;
   const core = globalThis.CampusTimetableCore;
   if (!api?.storage?.local || !core) return;
 
@@ -74,6 +76,14 @@
   }
 
   async function loadStorage() {
+    if (sample) {
+      Object.assign(state, JSON.parse(JSON.stringify(sample)), {
+        storageKey: "csh-timetable-sample", coursesLoaded: true, coursesFresh: true,
+        status: "架空の科目を使ったサンプルです。編集内容は画面を閉じると消えます。",
+      });
+      render();
+      return;
+    }
     const profile = document.querySelector('a[href*="/user/profile.php?id="]')?.href.match(/[?&]id=(\d+)/)?.[1];
     const moodleUser = profile ? null : document.documentElement.innerHTML.match(/["']userid["']\s*:\s*(\d+)/)?.[1];
     const prefs = profile || moodleUser ? {} : await api.storage.local.get(["userId"]);
@@ -189,6 +199,11 @@
   }
 
   async function synchronize(force = false) {
+    if (sample) {
+      state.status = "架空の科目を使ったサンプルです。編集内容は画面を閉じると消えます。";
+      render();
+      return;
+    }
     if (state.syncing) return;
     state.syncing = true;
     try {
@@ -316,6 +331,10 @@
     title.href = course.url;
     title.target = "_blank";
     title.rel = "noopener";
+    if (sample) {
+      title.removeAttribute("target");
+      title.addEventListener("click", (event) => { event.preventDefault(); editCourse(course); });
+    }
     card.appendChild(title);
     if (placement?.room) card.appendChild(el("div", "csh-card-room", `♟ ${placement.room}`));
     if (placement?.to > placement?.from) card.appendChild(el("div", "csh-card-room", `${placement.from}–${placement.to}限`));

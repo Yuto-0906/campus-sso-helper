@@ -29,6 +29,7 @@ class Element {
   prepend(node) { this.children.unshift(node); }
   replaceChildren(...nodes) { this.children = []; this.append(...nodes); }
   addEventListener() {}
+  removeAttribute() {}
   get lastChild() { return this.children.at(-1); }
   get childElementCount() { return this.children.length; }
   getBoundingClientRect() { return { left: 0, right: 100 }; }
@@ -46,7 +47,7 @@ class Element {
   set innerHTML(value) { this.value = value; }
 }
 
-async function startWithCachedCourses(fetchResponse, savedOverride) {
+async function startWithCachedCourses(fetchResponse, savedOverride, sample = null) {
   const region = new Element("div");
   const writes = [];
   const saved = savedOverride ?? { courses: [cachedCourse], records: {
@@ -71,13 +72,23 @@ async function startWithCachedCourses(fetchResponse, savedOverride) {
   } } };
   let fetchCalls = 0;
   await vm.runInNewContext(source, {
-    location: { hostname: "wsdmoodle.waseda.jp", pathname: "/my/" },
-    document, browser, CampusTimetableCore: core,
+    location: sample ? { hostname: "", pathname: "/demo/index.html", protocol: "file:" }
+      : { hostname: "wsdmoodle.waseda.jp", pathname: "/my/" },
+    document, browser, CampusTimetableCore: core, CampusTimetableSample: sample,
     fetch: () => { fetchCalls++; return fetchResponse; },
   }, { filename: "timetable.js" });
   const root = region.children[0];
   return { root, writes, fetchCalls: () => fetchCalls };
 }
+
+test("サンプルの時間割はログインやネットワーク通信なしで表示する", async () => {
+  const page = await startWithCachedCourses(Promise.resolve({}), undefined, {
+    courses: [cachedCourse], records: {}, selected: null, notes: [], hidden: {}, failed: {},
+  });
+  assert.equal(page.fetchCalls(), 0);
+  assert.match(page.root.querySelector(".csh-status").textContent, /サンプル/);
+  assert.equal(page.root.querySelector(".csh-card-title").textContent, cachedCourse.name);
+});
 
 test("保存済みの科目と学期を通信完了前に表示し，取得後に更新する", async () => {
   let completeFetch;
