@@ -14,12 +14,13 @@ def run(*args):
     return subprocess.check_output(args, cwd=ROOT, text=True).strip()
 
 
-def capture_sample(identifier, target, video=False):
+def capture_sample(identifier, target, video=False, stop=None):
     """Drive real sample controls and verify native checkpoint messages before capture."""
     script = (ROOT / "scripts/store-preview.js").read_text()
     mode = "video" if video else "stills"
     env = {**os.environ, "SIMCTL_CHILD_CSH_STORE_PREVIEW_SCRIPT":
-           f"globalThis.CSH_PREVIEW_MODE = '{mode}';\n" + script}
+           f"globalThis.CSH_PREVIEW_MODE = '{mode}';\n"
+           f"globalThis.CSH_PREVIEW_STOP = {json.dumps(stop)};\n" + script}
     subprocess.run(["xcrun", "simctl", "terminate", identifier, BUNDLE_ID], capture_output=True)
     recorder = None
     if video:
@@ -27,7 +28,7 @@ def capture_sample(identifier, target, video=False):
                                      "--force", str(target / "sample-recording.mov")],
                                     stdout=subprocess.DEVNULL, stderr=subprocess.PIPE)
         time.sleep(1)
-    log_path = target / f"{mode}-capture.log"
+    log_path = target / f"{stop or mode}-capture.log"
     stages = {"timetable": "02-timetable-sample.png", "editor": "03-course-editor.png",
               "saved": "04-course-note.png", "spring": "05-spring-term.png",
               "note-editor": "06-note-editor.png", "note-saved": "07-schedule-note.png"}
@@ -46,14 +47,14 @@ def capture_sample(identifier, target, video=False):
                     for stage, filename in stages.items():
                         if stage not in seen and f"STORE_PREVIEW:{stage}\n" in content:
                             seen.add(stage)
-                            if not video:
+                            if stop == stage:
                                 run("xcrun", "simctl", "io", identifier, "screenshot", str(target / filename))
-                    if "STORE_PREVIEW:complete" in content:
+                    if (stop and stop in seen) or "STORE_PREVIEW:complete" in content:
                         break
                     time.sleep(0.15)
                 else:
                     raise RuntimeError("Sample capture timed out before its final checkpoint")
-                if seen != set(stages):
+                if not stop and seen != set(stages):
                     raise RuntimeError(f"Missing actual UI checkpoints: {set(stages) - seen}")
             finally:
                 subprocess.run(["xcrun", "simctl", "terminate", identifier, BUNDLE_ID], capture_output=True)
@@ -103,7 +104,9 @@ def main():
         run("xcrun", "simctl", "launch", identifier, BUNDLE_ID)
         time.sleep(5)
         run("xcrun", "simctl", "io", identifier, "screenshot", str(target / "01-guide.png"))
-        stages = capture_sample(identifier, target)
+        stages = ["timetable", "editor", "saved", "spring", "note-editor", "note-saved"]
+        for stage in stages:
+            capture_sample(identifier, target, stop=stage)
         capture_sample(identifier, target, video=True)
         report.append({"family": family, "device": device["name"], "runtime": runtime,
                        "data": "fictional offline sample", "checkpoints": stages,

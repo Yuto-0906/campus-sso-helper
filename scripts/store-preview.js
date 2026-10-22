@@ -3,6 +3,12 @@
 (async () => {
   const pause = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
   const signal = (name) => window.webkit.messageHandlers.controller.postMessage(`STORE_PREVIEW:${name}`);
+  const checkpoint = async (name) => {
+    await pause(350);
+    signal(name);
+    // A still capture cannot advance until the CI process terminates this launch.
+    if (globalThis.CSH_PREVIEW_STOP === name) await new Promise(() => {});
+  };
   const requireElement = (selector) => {
     const node = document.querySelector(selector);
     if (!node) throw new Error(`Missing ${selector}`);
@@ -25,22 +31,22 @@
     const video = globalThis.CSH_PREVIEW_MODE === "video";
     // Leave enough time for the simulator's launch animation and status bar to settle.
     await pause(2000);
-    signal("timetable");
-    await pause(video ? 4000 : 2200);
+    await checkpoint("timetable");
+    await pause(video ? 4000 : 250);
     [...document.querySelectorAll(".csh-card-title")].find((item) => item.textContent === "情報デザイン").click();
     await pause(700);
     field("メモ").value = "教科書・ノートPCを持参";
     field("教室").value = "A-201";
-    signal("editor");
-    await pause(video ? 4500 : 2200);
+    await checkpoint("editor");
+    await pause(video ? 4500 : 250);
     button("保存", requireElement(".csh-modal")).click();
     await pause(700);
-    signal("saved");
-    await pause(video ? 3000 : 2200);
+    await checkpoint("saved");
+    await pause(video ? 3000 : 250);
     button("2026年 春学期").click();
     await pause(700);
-    signal("spring");
-    await pause(video ? 3500 : 2200);
+    await checkpoint("spring");
+    await pause(video ? 3500 : 250);
     button("2026年 秋学期").click();
     await pause(700);
     button("予定を追加").click();
@@ -49,13 +55,13 @@
     field("曜日").value = "0";
     field("開始").value = "3";
     field("終了").value = "3";
-    signal("note-editor");
-    await pause(video ? 3500 : 2200);
+    await checkpoint("note-editor");
+    await pause(video ? 3500 : 250);
     button("保存", requireElement(".csh-modal")).click();
     await pause(700);
     requireElement(".csh-note");
-    signal("note-saved");
-    await pause(video ? 4500 : 2200);
+    await checkpoint("note-saved");
+    await pause(video ? 4500 : 250);
     signal("complete");
   } catch (error) {
     signal(`error:${error.message}`);
