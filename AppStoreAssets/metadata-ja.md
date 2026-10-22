@@ -1,9 +1,9 @@
-# Campus SSO Helper App Store Metadata（日本語）
+# WasePlus App Store Metadata（日本語）
 
 ## App Information
 
-- App名: Campus SSO Helper
-- サブタイトル: ログイン補助と時間割表示
+- App名: WasePlus｜Safari拡張
+- サブタイトル: 時間割とログイン
 - プライマリカテゴリ: ユーティリティ
 - セカンダリカテゴリ: 仕事効率化
 - コンテンツ権利: 第三者サービスへアクセスする
@@ -24,7 +24,7 @@ Waseda Moodleへのログインを補助し，履修科目の時間割をSafari�
 
 ## Description
 
-Campus SSO Helperは，Waseda Moodleへのログインを補助し，時間割を表示する非公式のSafari機能拡張です。
+いつものMoodleに，見やすい時間割を。WasePlus（ワセプラス）は，Waseda Moodleの時間割とログインを使いやすくする，iPhone・iPad向けの非公式Safari機能拡張です。
 
 主な機能
 
@@ -36,13 +36,20 @@ Campus SSO Helperは，Waseda Moodleへのログインを補助し，時間割�
 ・ログイン後に履修科目とシラバスを取得し，時間割を表示
 ・学期の切替，曜日・時限の手動修正，科目メモ，予定メモ
 
+開き直しても，前回の学期と時間割からすぐに確認できます。シラバスから取得できなかった科目は手動で配置でき，教室やメモ，色も自分で変更できます。アプリ内では，大学へのログインなしで時間割のサンプルを試せます。
+
+Better Waseda Moodleについて
+
+時間割機能は，mkihr-ojisan氏のBetter Waseda Moodleの仕様と公開実装（MIT License）を参考に，iOS向けに実装しています。アプリ内の「オープンソースライセンス」に作者名，参照先，ライセンス全文を掲載しています。
+参照先：https://github.com/mkihr-ojisan/better-waseda-moodle
+
 プライバシー
 
 パスワードはiOSのKeychainに保存し，端末のロック解除中にMicrosoftのログイン画面への入力だけに使用します。メールアドレスと時間割データはSafari機能拡張の端末内領域に保存します。履修科目の検索には早稲田大学のWebシラバスを利用します。開発者のサーバーへは送信しません。広告，アクセス解析，第三者トラッキングは使用していません。
 
 ご注意
 
-本アプリの利用には，対象の教育機関から発行された有効なアカウントが必要です。Campus SSO Helperは，対象の教育機関，Moodle Pty LtdおよびMicrosoftの公式アプリではなく，これらの組織による承認・後援を示すものではありません。
+本アプリの利用には，対象の教育機関から発行された有効なアカウントが必要です。WasePlusは，対象の教育機関，Moodle Pty LtdおよびMicrosoftの公式アプリではなく，これらの組織による承認・後援を示すものではありません。
 
 ## Keywords
 
@@ -50,6 +57,7 @@ SSO,Safari,機能拡張,ログイン,大学,学生,時間割,シラバス,学習
 
 ## What's New 2.1.0
 
+- アプリ名を「WasePlus」に変更しました。Safariの時間割とログインを補助する機能拡張です。
 - Waseda Moodleのダッシュボードに時間割を追加しました。
 - シラバスから曜日・時限・教室を自動取得できるようにしました。
 - 科目の手動配置，メモ，色，予定メモ，学期切替に対応しました。
@@ -60,7 +68,7 @@ SSO,Safari,機能拡張,ログイン,大学,学生,時間割,シラバス,学習
 
 ## Review Notes
 
-Campus SSO Helper is an unofficial Safari Web Extension that assists a user-controlled sign-in flow from a specific university learning service to Microsoft SSO.
+WasePlus is an unofficial Safari Web Extension that assists a user-controlled sign-in flow from a specific university learning service to Microsoft SSO.
 
 Important security details:
 - The extension requests access to `wsdmoodle.waseda.jp`, `login.microsoftonline.com`, and `www.wsl.waseda.jp/syllabus/*`.

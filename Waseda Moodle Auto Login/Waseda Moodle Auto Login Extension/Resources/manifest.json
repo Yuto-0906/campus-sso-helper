@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
-  "name": "Campus SSO Helper",
-  "short_name": "Campus SSO",
+  "name": "WasePlus",
+  "short_name": "WasePlus",
   "description": "Waseda Moodleのログイン補助と時間割表示を行う非公式のSafari機能拡張です。",
   "version": "2.1.0",
   "permissions": ["storage", "nativeMessaging"],
@@ -30,7 +30,7 @@
   ],
   "background": { "service_worker": "syllabus-background.js" },
   "action": {
-    "default_title": "Campus SSO Helper",
+    "default_title": "WasePlus",
     "default_popup": "popup/popup.html"
   },
   "icons": {

@@ -1,4 +1,4 @@
-# Campus SSO Helper
+# WasePlus
 
 Waseda MoodleからMicrosoft SSOへのログインを補助し，Moodleのダッシュボードに時間割を表示するSafari Web Extensionである。早稲田大学およびMicrosoftの公式アプリではない。
 
