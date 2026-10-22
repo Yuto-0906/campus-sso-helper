@@ -2,6 +2,9 @@ name: Capture App Store media
 
 on:
   workflow_dispatch:
+  push:
+    branches: [codex/storefront-refresh]
+    paths: [.github/store-media-trigger.txt]
 
 permissions:
   contents: read

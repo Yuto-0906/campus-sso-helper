@@ -1,0 +1,1 @@
+WasePlus 2.1.0 — capture each sample state independently.
