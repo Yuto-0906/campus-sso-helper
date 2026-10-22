@@ -69,7 +69,7 @@ function run(args) {
     run(args);
     run(["-ss", "1", "-i", target, "-frames:v", "1", path.join(OUT, "Preview", `WasePlus-${family}-poster.png`)]);
     report.push({ family, file: path.relative(ROOT, target).replaceAll("\\", "/"), width, height, startSeconds,
-      status: "trial only; awaiting the user's judgment; not uploaded to App Store Connect",
+      status: "User chose not to publish; review artifact only; do not upload to App Store Connect",
       footage: "Actual simulator offline sample UI; fictional courses; no account credentials or external music" });
   }
   await fs.writeFile(path.join(OUT, "Preview", "preview-report.json"), JSON.stringify(report, null, 2) + "\n");

@@ -5,7 +5,7 @@
     "width": 886,
     "height": 1920,
     "startSeconds": 4,
-    "status": "trial only; awaiting the user's judgment; not uploaded to App Store Connect",
+    "status": "User chose not to publish these videos; retain as review artifacts only; do not upload to App Store Connect",
     "footage": "Actual simulator offline sample UI; fictional courses; no account credentials or external music"
   },
   {
@@ -14,7 +14,7 @@
     "width": 1200,
     "height": 1600,
     "startSeconds": 1,
-    "status": "trial only; awaiting the user's judgment; not uploaded to App Store Connect",
+    "status": "User chose not to publish these videos; retain as review artifacts only; do not upload to App Store Connect",
     "footage": "Actual simulator offline sample UI; fictional courses; no account credentials or external music"
   }
 ]
