@@ -1,0 +1,59 @@
+#csh-timetable {
+  --csh-line: #d9e1e8;
+  --csh-text: #18304a;
+  color: var(--csh-text);
+  margin: 0 0 1.5rem;
+  font: 14px/1.45 system-ui, -apple-system, BlinkMacSystemFont, "Hiragino Kaku Gothic ProN", sans-serif;
+}
+
+.csh-original-overview { display: none !important; }
+
+#csh-timetable .csh-header { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .5rem; }
+#csh-timetable h2 { margin: 0; font-size: 1.15rem; font-weight: 700; }
+#csh-timetable h3 { font-size: 1rem; margin: 1rem 0 .5rem; }
+#csh-timetable .csh-actions { display: flex; flex-wrap: wrap; gap: .4rem; }
+#csh-timetable button, .csh-modal button { appearance: none; border: 1px solid #a9b7c7; border-radius: 7px; background: #fff; color: #18304a; padding: .44rem .65rem; cursor: pointer; font: inherit; }
+#csh-timetable button:focus-visible, .csh-modal button:focus-visible, .csh-modal a:focus-visible { outline: 3px solid #f68526; outline-offset: 2px; }
+#csh-timetable button:disabled { opacity: .5; cursor: wait; }
+#csh-timetable .csh-status { min-height: 1.3rem; margin: .5rem 0; color: #526478; font-size: .85rem; }
+#csh-timetable .csh-tabs { display: flex; gap: 0; overflow-x: auto; border: 1px solid var(--csh-line); margin: .6rem 0; scrollbar-width: thin; }
+#csh-timetable .csh-tabs button { border: 0; border-bottom: 2px solid transparent; border-radius: 0; flex: none; white-space: nowrap; padding: .65rem .85rem; color: #526478; }
+#csh-timetable .csh-tabs button.csh-active { color: #db5700; border-bottom-color: #ed6600; font-weight: 700; }
+#csh-timetable .csh-scroll { max-width: 100%; overflow-x: auto; overscroll-behavior-inline: contain; }
+#csh-timetable .csh-grid { display: grid; grid-template-columns: 3.3rem repeat(var(--csh-days), minmax(7.6rem, 1fr)); min-width: calc(3.3rem + var(--csh-days) * 7.6rem); border-top: 1px solid var(--csh-line); border-left: 1px solid var(--csh-line); }
+#csh-timetable .csh-grid > * { border-right: 1px solid var(--csh-line); border-bottom: 1px solid var(--csh-line); }
+#csh-timetable .csh-corner, #csh-timetable .csh-day-heading { min-height: 2rem; display: grid; place-items: center; background: #f7f9fb; font-weight: 700; }
+#csh-timetable .csh-time { min-height: 7rem; display: flex; flex-direction: column; align-items: center; justify-content: space-between; padding: .3rem 0; box-sizing: border-box; background: #f9fbfc; }
+#csh-timetable .csh-time span { font-size: .72rem; color: #597087; }
+#csh-timetable .csh-cell { min-height: 7rem; padding: .35rem; box-sizing: border-box; display: flex; flex-direction: column; gap: .35rem; }
+#csh-timetable .csh-continuation { background: #f2f8f7; }
+#csh-timetable .csh-card { min-width: 0; min-height: 5.9rem; background: #fff; border: 1px solid #e1e6eb; border-left: 5px solid #adb8bf; border-radius: 5px; box-shadow: 0 1px 2px #142b3e1c; padding: .4rem .4rem .3rem .5rem; position: relative; box-sizing: border-box; }
+#csh-timetable .csh-card-title { display: block; color: #18304a; text-decoration: none; font-weight: 600; padding-right: 2.5rem; overflow-wrap: anywhere; }
+#csh-timetable .csh-card-title:hover { text-decoration: underline; }
+#csh-timetable .csh-card-room, #csh-timetable .csh-card-mode { color: #697987; font-size: .76rem; margin-top: .25rem; overflow-wrap: anywhere; }
+#csh-timetable .csh-card-edit { position: absolute; right: .3rem; top: .3rem; padding: .2rem .35rem; font-size: .72rem; }
+#csh-timetable .csh-note { border-left-color: #ef8a8a; }
+#csh-timetable .csh-unplaced-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(11.5rem, 1fr)); gap: .5rem; }
+#csh-timetable .csh-unplaced-list .csh-card { min-height: 6.2rem; }
+.csh-overlay { position: fixed; z-index: 2147483640; inset: 0; background: #0c203c8c; display: grid; place-items: center; padding: 1rem; box-sizing: border-box; }
+.csh-modal { width: min(100%, 32rem); max-height: min(90vh, 56rem); overflow-y: auto; background: #fff; color: #18304a; border-radius: 12px; padding: 1rem; box-shadow: 0 1rem 3rem #07172766; font: 14px/1.45 system-ui, -apple-system, sans-serif; }
+.csh-modal h3 { margin: 0 0 .6rem; font-size: 1.1rem; }
+.csh-modal-links { display: flex; gap: 1rem; margin-bottom: .8rem; }
+.csh-modal a { color: #005b9a; text-decoration: underline; }
+.csh-placement-editor { border: 1px solid #dae2ea; border-radius: 8px; margin: .6rem 0; padding: .7rem; display: grid; grid-template-columns: repeat(2, 1fr); gap: .4rem; }
+.csh-field { display: flex; flex-direction: column; gap: .2rem; margin: .45rem 0; font-weight: 600; }
+.csh-field input:not([type="checkbox"]), .csh-field select, .csh-field textarea { min-width: 0; width: 100%; border: 1px solid #9baabb; border-radius: 6px; background: #fff; color: #18304a; padding: .4rem; box-sizing: border-box; font: inherit; }
+.csh-field textarea { min-height: 4rem; }
+.csh-field input[type="checkbox"] { width: 1.25rem; height: 1.25rem; }
+.csh-modal-actions { display: flex; justify-content: flex-end; flex-wrap: wrap; gap: .5rem; margin-top: 1rem; }
+.csh-modal button.csh-primary { background: #006d58; color: #fff; border-color: #006d58; }
+.csh-modal button.csh-danger { color: #ae2e2e; border-color: #ddaaaa; }
+.csh-error { color: #ad2424; min-height: 1rem; }
+
+@media (max-width: 600px) {
+  #csh-timetable .csh-header { align-items: flex-start; }
+  #csh-timetable .csh-actions { width: 100%; }
+  #csh-timetable .csh-grid { grid-template-columns: 3rem repeat(var(--csh-days), minmax(8.5rem, 1fr)); min-width: calc(3rem + var(--csh-days) * 8.5rem); }
+  .csh-overlay { align-items: end; padding: 0; }
+  .csh-modal { max-height: 92vh; width: 100%; border-radius: 16px 16px 0 0; padding-bottom: max(1rem, env(safe-area-inset-bottom)); }
+}

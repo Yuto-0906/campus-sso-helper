@@ -1,0 +1,14 @@
+[
+  {
+    "family": "iPhone-6.9",
+    "device": "iPhone 17 Pro Max",
+    "runtime": "com.apple.CoreSimulator.SimRuntime.iOS-26-5",
+    "data": "fictional offline sample"
+  },
+  {
+    "family": "iPad-13",
+    "device": "iPad Pro 13-inch (M5)",
+    "runtime": "com.apple.CoreSimulator.SimRuntime.iOS-26-5",
+    "data": "fictional offline sample"
+  }
+]

@@ -8,11 +8,10 @@
   const settings = await api.storage.local.get([
     core.STORAGE_KEYS.enabled,
     core.STORAGE_KEYS.userId,
-    core.STORAGE_KEYS.password,
     core.STORAGE_KEYS.flowStartedAt,
   ]);
 
-  if (!settings.enabled || !settings.userId || !settings.password) return;
+  if (!settings.enabled || !settings.userId) return;
   if (!core.isFlowActive(settings.flowStartedAt)) {
     await api.storage.local.remove(core.STORAGE_KEYS.flowStartedAt);
     return;
@@ -23,6 +22,11 @@
     sessionStorage.setItem(tabFlowKey, String(settings.flowStartedAt));
   }
   if (!core.isFlowActive(sessionStorage.getItem(tabFlowKey))) return;
+  try {
+    const secret = await core.credentialRequest("login");
+    if (!secret.password) return;
+    settings.password = secret.password;
+  } catch (_) { return; }
 
   const handledSteps = new Set();
 

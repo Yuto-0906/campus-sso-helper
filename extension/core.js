@@ -45,12 +45,19 @@
     return null;
   }
 
+  async function credentialRequest(action, values = {}) {
+    const result = await globalThis.browser.runtime.sendMessage({ type: "campus-sso:credentials", action, ...values });
+    if (!result?.ok) throw new Error(result?.error || "Keychainを利用できません。Safariを再読み込みしてください。");
+    return result;
+  }
+
   return Object.freeze({
     FLOW_TIMEOUT_MS,
     STORAGE_KEYS,
     MOODLE_HOME_URL,
     MOODLE_SAML_LOGIN_URL,
     classifyMicrosoftPage,
+    credentialRequest,
     isFlowActive,
     isWasedaSamlUrl,
   });

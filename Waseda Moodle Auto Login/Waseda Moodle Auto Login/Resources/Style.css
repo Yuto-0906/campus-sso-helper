@@ -190,25 +190,55 @@ details p,
     line-height: 1.65;
 }
 
-.guide-image {
-    margin: 14px 0 2px;
-}
-
-.guide-image img {
-    display: block;
-    width: 100%;
-    height: auto;
+.guide-example {
+    margin-top: 12px;
+    padding: 10px;
     border: 1px solid var(--border);
-    border-radius: 14px;
-    background: #f3eadf;
-    box-shadow: 0 6px 18px var(--shadow);
+    border-radius: 12px;
+    background: var(--background);
+    font-size: 13px;
 }
 
-.guide-image figcaption {
-    margin-top: 8px;
+.step-copy .example-caption {
+    margin: 0 6px 4px;
     color: var(--muted);
+    font-size: 11px;
+}
+
+.example-row {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    min-height: 38px;
+    padding: 7px;
+    border-radius: 8px;
+}
+
+.example-row img {
+    border-radius: 7px;
+}
+
+.example-target {
+    border: 1px solid var(--accent);
+    font-weight: 700;
+}
+
+.example-on {
+    margin-left: auto;
+    padding: 3px 10px;
+    border-radius: 16px;
+    background: var(--accent-soft);
+    color: var(--accent);
     font-size: 12px;
-    line-height: 1.55;
+    font-weight: 700;
+}
+
+main > .secondary-action {
+    margin-bottom: 16px;
+}
+
+.guide + .guide {
+    margin-top: 16px;
 }
 
 details {

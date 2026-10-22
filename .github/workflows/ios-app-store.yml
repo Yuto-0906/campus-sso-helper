@@ -1,0 +1,48 @@
+name: App Store Connect build and upload
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [codex/ios-timetable]
+    paths: [.github/app-store-trigger.txt]
+
+permissions:
+  contents: read
+
+jobs:
+  app-store:
+    runs-on: macos-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check extension logic
+        run: node --test
+      - name: Archive, verify, and upload without submitting for review
+        env:
+          APPLE_DISTRIBUTION_P12_BASE64: ${{ secrets.APPLE_DISTRIBUTION_P12_BASE64 }}
+          APPLE_DISTRIBUTION_P12_PASSWORD: ${{ secrets.APPLE_DISTRIBUTION_P12_PASSWORD }}
+          IOS_APP_STORE_PROFILE_BASE64: ${{ secrets.IOS_APP_STORE_PROFILE_BASE64 }}
+          IOS_EXTENSION_APP_STORE_PROFILE_BASE64: ${{ secrets.IOS_EXTENSION_APP_STORE_PROFILE_BASE64 }}
+          APP_STORE_CONNECT_P8_BASE64: ${{ secrets.APP_STORE_CONNECT_P8_BASE64 }}
+          APP_STORE_CONNECT_KEY_ID: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
+          APP_STORE_CONNECT_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
+        run: python3 scripts/sign_ios.py --app-store --upload
+      - name: Clean signing materials
+        if: always()
+        run: python3 scripts/sign_ios.py --cleanup
+      - name: Save verified IPA and build report
+        uses: actions/upload-artifact@v4
+        with:
+          name: CampusSSOHelper-AppStore-${{ github.run_id }}
+          path: build/ipa/
+          retention-days: 7
+          if-no-files-found: error
+      - name: Capture containing app and fictional timetable on iPhone and iPad
+        run: python3 scripts/capture_store_screens.py
+      - name: Save App Store screenshots
+        uses: actions/upload-artifact@v4
+        with:
+          name: CampusSSOHelper-Screenshots-${{ github.run_id }}
+          path: build/store-screenshots/
+          retention-days: 7
+          if-no-files-found: error

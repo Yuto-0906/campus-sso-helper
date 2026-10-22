@@ -1,0 +1,32 @@
+name: iOS build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: macos-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check JavaScript and timetable logic
+        run: |
+          node --check extension/timetable-core.js
+          node --check extension/timetable.js
+          node --check extension/syllabus-background.js
+          node --test
+      - name: Verify native Keychain storage
+        run: |
+          swiftc 'Waseda Moodle Auto Login/Waseda Moodle Auto Login Extension/CredentialStore.swift' \
+            tests/native/CredentialStoreTests.swift -o "$RUNNER_TEMP/credential-store-tests"
+          "$RUNNER_TEMP/credential-store-tests"
+      - name: Build iOS app and Safari extension
+        run: |
+          xcodebuild -project 'Waseda Moodle Auto Login/Waseda Moodle Auto Login.xcodeproj' \
+            -scheme 'Waseda Moodle Auto Login' -configuration Debug \
+            -destination 'generic/platform=iOS' -derivedDataPath "$RUNNER_TEMP/campus-sso-build" \
+            CODE_SIGNING_ALLOWED=NO build

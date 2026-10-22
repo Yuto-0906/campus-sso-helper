@@ -4,12 +4,12 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Campus SSO Helper</title>
-    <link rel="stylesheet" href="popup.css" />
+    <link rel="stylesheet" href="popup.css?v=2.1.0" />
   </head>
   <body>
     <main>
-      <header>
-        <img src="../icons/icon.svg" alt="" />
+      <header class="brand">
+        <img src="../icons/icon.svg?v=2.1.0" alt="" />
         <div>
           <h1>Campus SSO</h1>
           <p>Login Helper</p>
@@ -17,21 +17,26 @@
       </header>
 
       <form id="settings-form">
-        <label class="toggle-row">
-          <span>自動ログイン</span>
-          <input id="enabled" type="checkbox" />
-        </label>
+        <div class="settings-card">
+          <label class="toggle-row">
+            <span class="toggle-copy">
+              <strong>自動ログイン</strong>
+              <small>対象サイトでログインを補助</small>
+            </span>
+            <input id="enabled" type="checkbox" role="switch" />
+          </label>
 
-        <label>
-          大学メールアドレス
-          <input id="user-id" type="email" autocomplete="username" placeholder="大学のメールアドレス" required />
-        </label>
+          <label>
+            大学メールアドレス
+            <input id="user-id" type="email" autocomplete="username" placeholder="大学のメールアドレス" required />
+          </label>
 
-        <label>
-          パスワード
-          <input id="password" type="password" autocomplete="current-password" placeholder="変更するときだけ入力" />
-        </label>
-        <p id="password-note" class="note"></p>
+          <label>
+            パスワード
+            <input id="password" type="password" autocomplete="current-password" placeholder="変更するときだけ入力" />
+          </label>
+          <p id="password-note" class="note"></p>
+        </div>
 
         <button class="primary" type="submit">設定を保存</button>
       </form>
@@ -41,12 +46,14 @@
       <div class="actions">
         <button id="open-moodle" type="button">対象サイトを開く</button>
         <button id="clear-settings" class="danger" type="button">資格情報を削除</button>
+        <button id="clear-timetable" class="danger" type="button">時間割データを削除</button>
       </div>
 
       <section class="notice" aria-label="セキュリティ情報">
         <strong>パスワードの保存について</strong>
-        <p>資格情報はこのSafari拡張機能のローカル領域に保存され，Microsoftのログイン画面への自動入力だけに使用されます。</p>
+        <p>パスワードはiOSのKeychainに保存し，Microsoftのログイン画面への自動入力だけに使用します。端末のロック中は読み出せません。</p>
       </section>
+      <p><a href="https://yuto-0906.github.io/campus-sso-helper/privacy.html" target="_blank" rel="noopener noreferrer">プライバシーポリシー</a></p>
       <p class="disclaimer">本拡張機能は対象教育機関およびMicrosoftの公式アプリではありません。</p>
     </main>
     <script src="../core.js"></script>

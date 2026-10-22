@@ -2,12 +2,13 @@
   "manifest_version": 3,
   "name": "Campus SSO Helper",
   "short_name": "Campus SSO",
-  "description": "大学のMicrosoft SSOに資格情報を自動入力する非公式のSafari機能拡張です。",
-  "version": "1.2.1",
-  "permissions": ["storage"],
+  "description": "Waseda Moodleのログイン補助と時間割表示を行う非公式のSafari機能拡張です。",
+  "version": "2.1.0",
+  "permissions": ["storage", "nativeMessaging"],
   "host_permissions": [
     "https://wsdmoodle.waseda.jp/*",
-    "https://login.microsoftonline.com/*"
+    "https://login.microsoftonline.com/*",
+    "https://www.wsl.waseda.jp/syllabus/*"
   ],
   "content_scripts": [
     {
@@ -19,8 +20,15 @@
       "matches": ["https://login.microsoftonline.com/*"],
       "js": ["core.js", "microsoft.js"],
       "run_at": "document_start"
+    },
+    {
+      "matches": ["https://wsdmoodle.waseda.jp/my/*"],
+      "js": ["timetable-core.js", "timetable.js"],
+      "css": ["timetable.css"],
+      "run_at": "document_idle"
     }
   ],
+  "background": { "service_worker": "syllabus-background.js" },
   "action": {
     "default_title": "Campus SSO Helper",
     "default_popup": "popup/popup.html"
