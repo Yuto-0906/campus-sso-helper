@@ -1,1 +1,1 @@
-Prepare Campus SSO Helper 2.1.0 build 10 for App Store Connect. Do not submit for review.
+Prepare Campus SSO Helper 2.1.0 build 11 with current setup illustrations. Do not submit for review.

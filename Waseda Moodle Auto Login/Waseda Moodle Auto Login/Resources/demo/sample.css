@@ -1,9 +1,12 @@
-body { margin: 0; padding: 28px 20px 48px; background: #f7f2e8; color: #241c17; }
+* { box-sizing: border-box; }
+body { margin: 0; padding: 28px 20px 48px; background: #f7f2e8; color: #241c17;
+  font: 15px/1.55 -apple-system, BlinkMacSystemFont, "Hiragino Sans", sans-serif; }
 header, main { max-width: 1100px; margin-inline: auto; }
 header { padding-bottom: 12px; }
 header nav a { color: #6f4e37; text-decoration: none; font-weight: 600; }
-header h1 { font-size: 26px; letter-spacing: -.03em; margin-top: 22px; }
-header p { color: #75695e; line-height: 1.7; }
-.csh-title { color: #4b3428; }
-.csh-tabs button.csh-active { border-color: #8c6445; color: #6f4e37; }
+header h1 { font-size: 26px; letter-spacing: -.03em; margin: 20px 0 10px; }
+header p { color: #75695e; line-height: 1.7; margin: 0; }
+#csh-timetable .csh-cell { background: #fffcf7; }
+#csh-timetable .csh-title { color: #4b3428; }
+#csh-timetable .csh-tabs button.csh-active { border-color: #8c6445; color: #6f4e37; }
 @media (max-width: 500px) { body { padding: 20px 14px 40px; } header h1 { font-size: 24px; } }
