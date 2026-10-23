@@ -1,0 +1,20 @@
+{
+  "assets": [
+    {
+      "file": "WasePlus-header.png",
+      "width": 3840,
+      "height": 1646,
+      "hasAlpha": false,
+      "sha256": "9405913de253b91e62b29d46f16580430e477916204d6132e1e60bca5c550060"
+    },
+    {
+      "file": "WasePlus-search.png",
+      "width": 3840,
+      "height": 2560,
+      "hasAlpha": false,
+      "sha256": "a2e184a5c7653c824b0f411e21deb33a1b356c48ed27befd23d5337d3e603a7e"
+    }
+  ],
+  "source": "AppStoreAssets/Storefront-v2.1/Sources/iPad-13/02-timetable-sample.png",
+  "notes": "Static artwork. Existing icon unchanged. Search image includes only a crop of actual fictional sample UI. No video."
+}
