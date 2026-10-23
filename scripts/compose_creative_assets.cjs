@@ -36,12 +36,11 @@ function background(w,h) {
   const uiMeta=await sharp(ui).metadata();
   body=background(3840,2560);
   body += `<rect x="735" y="770" width="2370" height="1020" rx="82" fill="#fffbf5" opacity=".9"/>`;
-  body += text(880,1040,'WasePlus',82);
-  body += text(880,1180,'いつものMoodleに，',59);
-  body += text(880,1270,'見やすい時間割を。',67);
-  body += text(884,1400,'時間割とログインを整える',39,'#76695d',500);
-  body += text(884,1464,'非公式Safari機能拡張',39,'#76695d',500);
-  body += text(884,1600,'シラバスから曜日・時限・教室を取得',30,'#76695d',500);
+  body += text(880,1010,'WasePlus',106);
+  body += text(880,1210,'Safariで，',116);
+  body += text(880,1350,'時間割を',116);
+  body += text(880,1490,'ひと目に。',116);
+  body += text(884,1610,'時間割とログインの非公式機能拡張',34,'#76695d',500);
   body += `<rect x="1804" y="830" width="1216" height="${uiMeta.height+56}" rx="36" fill="#d7cabc"/><rect x="1812" y="838" width="1200" height="${uiMeta.height+40}" rx="32" fill="#fffaf2"/>`;
   body += text(1838,1694,'アプリ内の架空サンプル画面',28,'#76695d',500);
   await sharp(svg(3840,2560,body)).composite([{input:ui,left:1832,top:858}]).flatten({background:'#f7f2e8'}).removeAlpha().png().toFile(path.join(out,'WasePlus-search.png'));
