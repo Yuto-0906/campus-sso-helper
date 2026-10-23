@@ -39,6 +39,15 @@ class ViewController: UIViewController, WKNavigationDelegate, WKScriptMessageHan
 
         let script = "document.documentElement.dataset.directSettings = '\(supportsDirectSettings ? "true" : "false")';"
         webView.evaluateJavaScript(script)
+
+        #if DEBUG
+        // CI operates the real offline sample. This hook is absent from App Store builds.
+        if let url = webView.url, url.isFileURL,
+           url.deletingLastPathComponent().lastPathComponent == "demo",
+           let captureScript = ProcessInfo.processInfo.environment["CSH_STORE_PREVIEW_SCRIPT"] {
+            webView.evaluateJavaScript(captureScript)
+        }
+        #endif
     }
 
     func webView(
@@ -65,7 +74,13 @@ class ViewController: UIViewController, WKNavigationDelegate, WKScriptMessageHan
     }
 
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
-        // Override point for customization.
+        #if DEBUG
+        if ProcessInfo.processInfo.environment["CSH_STORE_PREVIEW_SCRIPT"] != nil,
+           let event = message.body as? String,
+           event.hasPrefix("STORE_PREVIEW:") {
+            FileHandle.standardOutput.write(Data((event + "\n").utf8))
+        }
+        #endif
     }
 
     private func openExtensionSettings() {

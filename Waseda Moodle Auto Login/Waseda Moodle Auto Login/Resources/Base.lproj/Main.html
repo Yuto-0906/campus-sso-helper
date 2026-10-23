@@ -4,17 +4,17 @@
     <meta charset="utf-8">
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Campus SSO Helper</title>
+    <title>WasePlus</title>
     <link rel="stylesheet" href="../Style.css">
 </head>
 <body>
     <main>
         <header class="hero">
-            <img class="app-icon" src="../Icon.png" width="76" height="76" alt="Campus SSO Helperのアイコン">
+            <img class="app-icon" src="../Icon.png" width="76" height="76" alt="WasePlusのアイコン">
             <div>
-                <p class="eyebrow">初回設定ガイド</p>
-                <h1>Campus SSO Helper</h1>
-                <p class="lead">Safariのログイン補助と時間割表示を準備できます。</p>
+                <p class="eyebrow">SAFARI機能拡張</p>
+                <h1>WasePlus</h1>
+                <p class="lead">時間割とログイン</p>
             </div>
         </header>
 
@@ -23,7 +23,7 @@
             Safari機能拡張の設定を開く
         </a>
         <p id="action-status" class="action-status" role="status" aria-live="polite"></p>
-        <p class="fallback-note">iOS 26.2以降では，Campus SSO Helperの設定画面を直接開きます。</p>
+        <p class="fallback-note">iOS 26.2以降では，WasePlusの設定画面を直接開きます。</p>
         <a class="secondary-action" href="../demo/index.html">時間割のサンプルを試す</a>
 
         <section class="guide" aria-labelledby="guide-title">
@@ -39,7 +39,7 @@
                     <p>上のボタンを使うか，Safariのページメニューで「機能拡張を管理」をタップします。</p>
                     <div class="guide-example" aria-label="Safariのメニューの例">
                         <p class="example-caption">Safariのページメニュー</p>
-                        <div class="example-row"><img src="../Icon.png" width="28" height="28" alt="">Campus SSO</div>
+                        <div class="example-row"><img src="../Icon.png" width="28" height="28" alt="">WasePlus</div>
                         <div class="example-row example-target"><span aria-hidden="true">✚</span>機能拡張を管理</div>
                     </div>
                 </div>
@@ -48,10 +48,10 @@
             <article class="step-card">
                 <span class="step-number">2</span>
                 <div class="step-copy">
-                    <h3>Campus SSO Helperをオンにする</h3>
+                    <h3>WasePlusをオンにする</h3>
                     <p>設定画面で「機能拡張を許可」をオンにします。</p>
                     <div class="guide-example" aria-label="機能拡張設定の例">
-                        <div class="example-row"><img src="../Icon.png" width="28" height="28" alt="">Campus SSO Helper</div>
+                        <div class="example-row"><img src="../Icon.png" width="28" height="28" alt="">WasePlus</div>
                         <div class="example-row">機能拡張を許可<span class="example-on">オン</span></div>
                     </div>
                 </div>
@@ -69,7 +69,7 @@
                 <span class="step-number">4</span>
                 <div class="step-copy">
                     <h3>Safariで資格情報を保存</h3>
-                    <p>Safariのアドレスバーにある機能拡張メニューからCampus SSO Helperを開き，大学メールアドレスとパスワードを保存します。</p>
+                    <p>Safariのアドレスバーにある機能拡張メニューからWasePlusを開き，大学メールアドレスとパスワードを保存します。</p>
                     <div class="guide-example" aria-label="機能拡張メニューで設定する項目">
                         <div class="example-row">自動ログイン<span class="example-on">オン</span></div>
                         <div class="example-row">大学メールアドレス・パスワード</div>
@@ -80,7 +80,7 @@
 
             <details>
                 <summary>設定画面が直接開かない場合</summary>
-                <p>「設定」→「アプリ」→「Safari」→「機能拡張」→「Campus SSO Helper」の順に開いてください。</p>
+                <p>「設定」→「アプリ」→「Safari」→「機能拡張」→「WasePlus」の順に開いてください。</p>
                 <a class="secondary-action" href="campus-sso-helper://app-settings">アプリ設定を開く</a>
             </details>
         </section>
@@ -93,6 +93,7 @@
             <p>SafariでWaseda Moodleのダッシュボードを開くと，履修科目とシラバスの曜日・時限・教室を取得して時間割に表示します。科目カードの「編集」から配置やメモを変更できます。</p>
             <p>Safariの機能拡張設定で，シラバスサイト <strong>www.wsl.waseda.jp</strong> へのアクセスも許可してください。</p>
             <a class="secondary-action" href="../demo/index.html">時間割のサンプルを試す</a>
+            <p>時間割機能は，mkihr-ojisan氏の<a href="https://github.com/mkihr-ojisan/better-waseda-moodle">Better Waseda Moodle</a>の仕様と公開実装（MIT License）を参考に，iOS向けに実装しています。<a href="../legal/licenses.html">作者の表示とライセンス全文</a>をご確認いただけます。</p>
         </section>
 
         <section class="privacy">
@@ -101,7 +102,7 @@
             <p><a href="../legal/privacy.html">プライバシーポリシー</a> · <a href="../legal/licenses.html">オープンソースライセンス</a></p>
         </section>
 
-        <p class="disclaimer">本アプリは対象教育機関およびMicrosoftの公式アプリではありません。</p>
+        <p class="disclaimer">本アプリは早稲田大学，Moodle Pty LtdおよびMicrosoftの公式アプリではありません。</p>
     </main>
 </body>
 </html>

@@ -2,7 +2,7 @@
 
 最終更新日：2026年10月22日
 
-Campus SSO Helper（以下「本アプリ」という）は，Waseda Moodleへのログインを補助し，時間割を表示するSafari機能拡張である。本アプリは早稲田大学，Moodle Pty LtdおよびMicrosoftの公式アプリではない。
+WasePlus（以下「本アプリ」という）は，Waseda Moodleへのログインを補助し，時間割を表示するSafari機能拡張である。本アプリは早稲田大学，Moodle Pty LtdおよびMicrosoftの公式アプリではない。
 
 ## 保存する情報
 

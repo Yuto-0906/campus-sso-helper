@@ -1,6 +1,8 @@
 """Capture real simulator UI with fictional data and no institutional sign-in."""
 import json
+import os
 from pathlib import Path
+import signal
 import subprocess
 import time
 
@@ -10,6 +12,64 @@ BUNDLE_ID = "jp.yuto.campusssohelper"
 
 def run(*args):
     return subprocess.check_output(args, cwd=ROOT, text=True).strip()
+
+
+def capture_sample(identifier, target, video=False, stop=None):
+    """Drive real sample controls and verify native checkpoint messages before capture."""
+    script = (ROOT / "scripts/store-preview.js").read_text()
+    mode = "video" if video else "stills"
+    env = {**os.environ, "SIMCTL_CHILD_CSH_STORE_PREVIEW_SCRIPT":
+           f"globalThis.CSH_PREVIEW_MODE = '{mode}';\n"
+           f"globalThis.CSH_PREVIEW_STOP = {json.dumps(stop)};\n" + script}
+    subprocess.run(["xcrun", "simctl", "terminate", identifier, BUNDLE_ID], capture_output=True)
+    recorder = None
+    if video:
+        recorder = subprocess.Popen(["xcrun", "simctl", "io", identifier, "recordVideo", "--codec=h264",
+                                     "--force", str(target / "sample-recording.mov")],
+                                    stdout=subprocess.DEVNULL, stderr=subprocess.PIPE)
+        time.sleep(1)
+    log_path = target / f"{stop or mode}-capture.log"
+    stages = {"timetable": "02-timetable-sample.png", "editor": "03-course-editor.png",
+              "saved": "04-course-note.png", "spring": "05-spring-term.png",
+              "note-editor": "06-note-editor.png", "note-saved": "07-schedule-note.png"}
+    seen = set()
+    try:
+        with log_path.open("w") as log:
+            process = subprocess.Popen(["xcrun", "simctl", "launch", "--console", identifier,
+                                        BUNDLE_ID, "--timetable-sample"],
+                                       cwd=ROOT, env=env, stdout=log, stderr=subprocess.STDOUT)
+            try:
+                deadline = time.monotonic() + 65
+                while time.monotonic() < deadline:
+                    content = log_path.read_text(errors="replace")
+                    if "STORE_PREVIEW:error:" in content:
+                        raise RuntimeError(content.split("STORE_PREVIEW:error:", 1)[1].splitlines()[0])
+                    for stage, filename in stages.items():
+                        if stage not in seen and f"STORE_PREVIEW:{stage}\n" in content:
+                            seen.add(stage)
+                            if stop == stage:
+                                run("xcrun", "simctl", "io", identifier, "screenshot", str(target / filename))
+                    if (stop and stop in seen) or "STORE_PREVIEW:complete" in content:
+                        break
+                    time.sleep(0.15)
+                else:
+                    raise RuntimeError("Sample capture timed out before its final checkpoint")
+                if not stop and seen != set(stages):
+                    raise RuntimeError(f"Missing actual UI checkpoints: {set(stages) - seen}")
+            finally:
+                subprocess.run(["xcrun", "simctl", "terminate", identifier, BUNDLE_ID], capture_output=True)
+                try:
+                    process.wait(timeout=8)
+                except subprocess.TimeoutExpired:
+                    process.terminate()
+                    process.wait(timeout=8)
+    finally:
+        if recorder:
+            recorder.send_signal(signal.SIGINT)
+            _, error = recorder.communicate(timeout=15)
+            if recorder.returncode != 0:
+                raise RuntimeError(f"Simulator recording failed: {error.decode(errors='replace')[-800:]}")
+    return sorted(seen)
 
 
 def main():
@@ -41,16 +101,19 @@ def main():
         run("xcrun", "simctl", "install", identifier, str(app))
         target = output / family
         target.mkdir(parents=True, exist_ok=True)
-        for filename, arguments in (("01-guide.png", []), ("02-timetable-sample.png", ["--timetable-sample"])):
-            subprocess.run(["xcrun", "simctl", "terminate", identifier, BUNDLE_ID], capture_output=True)
-            run("xcrun", "simctl", "launch", identifier, BUNDLE_ID, *arguments)
-            time.sleep(4)
-            run("xcrun", "simctl", "io", identifier, "screenshot", str(target / filename))
+        run("xcrun", "simctl", "launch", identifier, BUNDLE_ID)
+        time.sleep(5)
+        run("xcrun", "simctl", "io", identifier, "screenshot", str(target / "01-guide.png"))
+        stages = ["timetable", "editor", "saved", "spring", "note-editor", "note-saved"]
+        for stage in stages:
+            capture_sample(identifier, target, stop=stage)
+        capture_sample(identifier, target, video=True)
         report.append({"family": family, "device": device["name"], "runtime": runtime,
-                       "data": "fictional offline sample"})
+                       "data": "fictional offline sample", "checkpoints": stages,
+                       "recording": "sample-recording.mov", "source": run("git", "rev-parse", "HEAD")})
         run("xcrun", "simctl", "shutdown", identifier)
     (output / "capture-report.json").write_text(json.dumps(report, indent=2) + "\n")
-    print("PASS: containing app and offline timetable captured on iPhone and iPad")
+    print("PASS: actual guide, course editing, term selection and schedule notes captured on iPhone and iPad")
 
 
 if __name__ == "__main__":

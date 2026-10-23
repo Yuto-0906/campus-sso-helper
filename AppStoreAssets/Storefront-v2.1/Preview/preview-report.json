@@ -1,0 +1,20 @@
+[
+  {
+    "family": "iPhone-6.9",
+    "file": "AppStoreAssets/Storefront-v2.1/Preview/WasePlus-iPhone-6.9-trial.mp4",
+    "width": 886,
+    "height": 1920,
+    "startSeconds": 4,
+    "status": "User chose not to publish these videos; retain as review artifacts only; do not upload to App Store Connect",
+    "footage": "Actual simulator offline sample UI; fictional courses; no account credentials or external music"
+  },
+  {
+    "family": "iPad-13",
+    "file": "AppStoreAssets/Storefront-v2.1/Preview/WasePlus-iPad-13-trial.mp4",
+    "width": 1200,
+    "height": 1600,
+    "startSeconds": 1,
+    "status": "User chose not to publish these videos; retain as review artifacts only; do not upload to App Store Connect",
+    "footage": "Actual simulator offline sample UI; fictional courses; no account credentials or external music"
+  }
+]

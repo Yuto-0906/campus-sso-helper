@@ -1,0 +1,27 @@
+name: Capture App Store media
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [codex/storefront-refresh]
+    paths: [.github/store-media-trigger.txt]
+
+permissions:
+  contents: read
+
+jobs:
+  media:
+    runs-on: macos-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - name: Capture actual offline sample UI and video
+        run: python3 scripts/capture_store_screens.py
+      - name: Save captures and checkpoint logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: WasePlus-Media-${{ github.run_id }}
+          path: build/store-screenshots/
+          retention-days: 7
+          if-no-files-found: warn
